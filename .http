@@ -1,0 +1,26 @@
+
+GET http://localhost:5279/WeatherForecast
+Content-Type: application/json
+Authorization: Bearer Put-the-bearer-token-here
+
+###
+
+POST http://localhost:5279/api/Auth/Register
+Content-Type: application/json
+
+{
+    "Email": "user@email.com",
+    "Username": "user",
+    "Password": "password"
+}
+
+
+###
+
+POST http://localhost:5279/api/Auth/Login
+Content-Type: application/json
+
+{
+    "username": "user",
+    "password": "password"
+}
