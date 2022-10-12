@@ -1,1 +1,4 @@
 .vscode/
+Server/*.db
+Server/*.db-wal
+Server/*.db-shm
