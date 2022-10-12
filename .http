@@ -1,19 +1,23 @@
-POST https://localhost:7182/api/test
+
+GET http://localhost:5279/WeatherForecast
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJqdGkiOiI1ZmM1MWJmMC04OWVlLTQxYjctYjNkMC02ZjE3Y2VjMmZlZGMiLCJleHAiOjE2NjU0MTgxNTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMCIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6NTE3MyJ9.58Oe8S3X7VG-r17euHDbmUi2BuBGi9pWl9l15WkyVnM
-
-"Hello World"
-###
-
-POST https://192.168.0.15:7182/Auth/Login
+Authorization: Bearer Put-the-bearer-token-here
 
 ###
 
-GET https://localhost:7182/WeatherForecast
+POST http://localhost:5279/api/Auth/Register
+Content-Type: application/json
+
+{
+    "Email": "user@email.com",
+    "Username": "user",
+    "Password": "password"
+}
+
 
 ###
 
-POST https://localhost:7182/api/Auth/Login
+POST http://localhost:5279/api/Auth/Login
 Content-Type: application/json
 
 {
