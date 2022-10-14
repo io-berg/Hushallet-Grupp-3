@@ -7,6 +7,7 @@ export default function HomeScreen() {
   const [state, setState] = useState(0);
   const dispatch = useAppDispatch();
   const count = useAppSelector((state) => state.counter.count);
+  const household = useAppSelector((state) => state.household[0].name);
 
   useEffect(() => {
     setState(count);
@@ -17,6 +18,7 @@ export default function HomeScreen() {
       <Text style={styles.title}>Count: {count}</Text>
       <Button title="Increment" onPress={() => dispatch(increment())} />
       <Button title="Decrement" onPress={() => dispatch(decrement())} />
+      <Text>Household: {household}</Text>
     </View>
   );
 }

@@ -1,42 +1,42 @@
 interface User {
   id: number;
-  userName: string;
+  username: string;
   email: string;
 }
 
 interface Task {
   id: number;
-  household: HouseHold;
   title: string;
   description: string;
   effort: number;
   frequency: number;
+  taskHistory: TaskHistory[];
 }
 
 interface TaskHistory {
   id: number;
-  task: Task;
-  profile: number;
-  date: Date;
+  profileId: number;
+  date: string;
 }
 
-interface HouseHold {
+interface Household {
   id: number;
   name: string;
   code: string;
+  profiles: Profile[];
+  tasks: Task[];
 }
 
 interface Application {
   id: number;
   user: User;
-  household: HouseHold;
+  household: Household;
   accepted: boolean;
 }
 
 interface Profile {
   id: number;
   user: User;
-  houshold: HouseHold;
   role: "admin" | "user";
   avatar: Avatar;
   name: string;
@@ -47,4 +47,4 @@ interface Avatar {
   icon: string;
 }
 
-export type { User, Task, TaskHistory, HouseHold, Application, Profile, Avatar };
+export type { User, Task, TaskHistory, Household, Application, Profile, Avatar };
