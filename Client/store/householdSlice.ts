@@ -18,8 +18,8 @@ const initialState: Household[] = [
         },
         role: "admin",
         avatar: {
-          color: "red",
-          icon: "squid",
+          color: "#ED5949",
+          icon: "🐙",
         },
         name: "Mock User",
       },
