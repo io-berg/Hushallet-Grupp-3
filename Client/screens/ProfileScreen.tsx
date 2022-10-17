@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { useAppSelector } from "../store/store";
 import { Avatar } from "react-native-paper";
@@ -8,19 +8,21 @@ import { RootStackParamList } from "../navigation/RootNavigator";
 type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 export default function ProfileScreen({ navigation, route }: Props) {
-  const profileName = useAppSelector((state) => state.household[0].profiles[0].name);
-  const profileAvatar = useAppSelector((state) => state.household[0].profiles[0].avatar.color);
+  const profile = useAppSelector((state) => state.household[0].profiles[0]);
+  const profileAvatarColor = useAppSelector((state) => state.household[0].profiles[0].avatar.color);
   const profileAvatarIcon = useAppSelector((state) => state.household[0].profiles[0].avatar.icon);
 
   return (
+    //Header component
     <View style={styles.container}>
       <View>
-        <Avatar.Text size={150} label={profileAvatarIcon} />
+        <Avatar.Text size={250} label={profile.avatar.icon} />
       </View>
       <View>
-        <Text style={styles.title}>{profileName}</Text>
+        <Text style={styles.title}>{profile.name}</Text>
       </View>
     </View>
+    //Footer component
   );
 }
 
@@ -28,13 +30,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    padding: 50,
   },
   title: {
+    marginTop: 15,
     fontSize: 20,
     fontWeight: "bold",
   },
   avatar: {
+    padding: 2,
     fontSize: 150,
     backgroundColor: "#ED5949",
   },
