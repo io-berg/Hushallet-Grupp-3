@@ -4,13 +4,16 @@ import { Provider as ReduxProvider } from "react-redux";
 import { RootNavigator } from "./navigation/RootNavigator";
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { store } from "./store/store";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function App() {
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={theme}>
-        <StatusBar />
-        <RootNavigator />
+        <SafeAreaProvider>
+          <StatusBar />
+          <RootNavigator />
+        </SafeAreaProvider>
       </PaperProvider>
     </ReduxProvider>
   );
