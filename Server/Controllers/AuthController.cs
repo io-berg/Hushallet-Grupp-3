@@ -50,11 +50,13 @@ public class AuthController : ControllerBase
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo
+                expiration = token.ValidTo,
+                user = new { username = user.UserName, email = user.Email }
             });
         }
         return Unauthorized();
     }
+
 
     [HttpPost]
     [Route("register")]
@@ -76,6 +78,17 @@ public class AuthController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
         return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+    }
+
+    public Task<IActionResult> Me()
+    {
+        return Task.FromResult<IActionResult>(Ok(
+            new
+            {
+                User.Identity.Name,
+                User.Identity.IsAuthenticated,
+                User.Identity.AuthenticationType,
+            }));
     }
 
     private JwtSecurityToken GetToken(List<Claim> authClaims)
