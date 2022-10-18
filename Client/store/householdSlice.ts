@@ -12,7 +12,6 @@ const initialState: Household[] = [
       {
         id: 0,
         user: {
-          id: 0,
           username: "Mock User",
           email: "mock@mock.com",
         },
