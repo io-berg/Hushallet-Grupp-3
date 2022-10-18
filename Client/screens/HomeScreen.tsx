@@ -25,6 +25,10 @@ export default function HomeScreen({ navigation, route }: Props) {
       <Text>Household: {household}</Text>
 
       <Button title="Profile" onPress={() => navigation.navigate("Profile")}></Button>
+      <Button
+        title="ProfileCreate"
+        onPress={() => navigation.navigate("CreateProfileScreen")}
+      ></Button>
     </View>
   );
 }

@@ -43,8 +43,10 @@ interface Profile {
 }
 
 interface Avatar {
+  id: string;
   color: string;
   icon: string;
+  token: boolean;
 }
 
 export type { User, Task, TaskHistory, Household, Application, Profile, Avatar };

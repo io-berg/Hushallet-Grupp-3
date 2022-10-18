@@ -20,6 +20,7 @@ const initialState: Household[] = [
         avatar: {
           color: "#ED5949",
           icon: "🐙",
+          token: true,
         },
         name: "Mock User",
       },

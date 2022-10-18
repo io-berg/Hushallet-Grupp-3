@@ -15,9 +15,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
       <View>
         <Avatar.Text size={250} label={profile.avatar.icon} />
       </View>
-      <View>
-        <Text style={styles.title}>{profile.name}</Text>
-      </View>
+      <View></View>
     </View>
   );
 }
