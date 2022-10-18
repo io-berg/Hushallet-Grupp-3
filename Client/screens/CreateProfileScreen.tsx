@@ -23,7 +23,7 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
     })();
   }, []);
 
-  const handleSubmit = (name: string, avatar: avatar) => {
+  const handleSubmit = (name: string, avatar: avatar | null) => {
     //save new profile
   };
 
