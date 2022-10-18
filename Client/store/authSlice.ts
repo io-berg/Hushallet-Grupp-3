@@ -12,29 +12,32 @@ export interface AuthState {
   user: User | null;
   token: string | null;
   expirationDate: string | null;
-  errors: ErrorResponse;
+  loginErrors: ErrorResponse | null;
+  registerErrors: ErrorResponse | null;
   loading: boolean;
   registerSuccess: boolean;
 }
 
 const initialState: AuthState = {
-  // user: {
-  //   id: 0,
-  //   username: "me",
-  //   email: "email@email.com",
-  // },
-  // token: "1234567890",
-  // expirationDate: new Date(9999, 12, 31).toISOString(),
-  // errors: [],
-  // loading: false,
+  user: {
+    username: "me",
+    email: "email@email.com",
+  },
+  token: "1234567890",
+  expirationDate: new Date(9999, 12, 31).toISOString(),
+  loginErrors: null,
+  registerErrors: null,
+  registerSuccess: false,
+  loading: false,
 
   // FÖR ATT SE LOGIN, ÄNDRA TILL NULL
-  user: null,
-  token: "",
-  expirationDate: "",
-  errors: { errors: {} },
-  loading: false,
-  registerSuccess: false,
+  // user: null,
+  // token: "",
+  // expirationDate: "",
+  // loginErrors: null,
+  // registerErrors: null,
+  // loading: false,
+  // registerSuccess: false,
 };
 
 export const login = createAsyncThunk<
@@ -54,7 +57,11 @@ export const register = createAsyncThunk<
   { username: string; email: string; password: string }
 >("auth/register", async (data, { rejectWithValue }) => {
   try {
-    const response = await registerRequest(data.username, data.email, data.password);
+    const response: RegisterResponse = await registerRequest(
+      data.username,
+      data.email,
+      data.password
+    );
     return response;
   } catch (error) {
     return rejectWithValue(error);
@@ -66,7 +73,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     hydrateAuth: (state, action) => {
-      state.errors = { errors: {} };
+      state.loginErrors = null;
+      state.registerErrors = null;
       state.loading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
@@ -89,21 +97,26 @@ const authSlice = createSlice({
       state.token = data.token;
       state.user = data.user;
       state.registerSuccess = false;
+      state.loginErrors = null;
+      state.registerErrors = null;
     });
     builder.addCase(login.rejected, (state, error) => {
       state.loading = false;
-      state.errors = error.payload as ErrorResponse;
+      state.loginErrors = error.payload as ErrorResponse;
     });
     builder.addCase(register.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(register.fulfilled, (state, action) => {
+    builder.addCase(register.fulfilled, (state) => {
       state.loading = false;
       state.registerSuccess = true;
+      state.loginErrors = null;
+      state.registerErrors = null;
     });
     builder.addCase(register.rejected, (state, error) => {
       state.loading = false;
-      state.errors = error.payload as ErrorResponse;
+      console.log(error);
+      state.registerErrors = error.payload as ErrorResponse;
     });
   },
 });

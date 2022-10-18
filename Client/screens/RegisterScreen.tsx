@@ -15,7 +15,7 @@ export default function RegisterScreen({ navigation }: Props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const errors = useAppSelector((state) => state.auth.errors);
+  const errors = useAppSelector((state) => state.auth.registerErrors?.errors);
   const registerSuccess = useAppSelector((state) => state.auth.registerSuccess);
   const dispatch = useAppDispatch();
 
@@ -23,15 +23,15 @@ export default function RegisterScreen({ navigation }: Props) {
     dispatch(register({ username, email, password }));
   };
 
-  const emailErrors = errors.errors?.Email || [];
-  const usernameErrors = errors.errors?.Username || [];
-  const passwordErrors = errors.errors?.Password || [];
+  const usernameErrors = errors?.Username;
+  const emailErrors = errors?.Email;
+  const passwordErrors = errors?.Password;
 
   useEffect(() => {
     if (registerSuccess) {
       dispatch(login({ username, password }));
     }
-  }, [registerSuccess]);
+  }, [registerSuccess, dispatch, username, password]);
 
   return (
     <ScrollView>

@@ -89,8 +89,12 @@ const initialState: Household[] = [
 const householdSlice = createSlice({
   name: "household",
   initialState,
-  reducers: {},
+  reducers: {
+    addHousehold: (state, action) => {
+      state.push(action.payload);
+    },
+  },
 });
 
 export default householdSlice.reducer;
-export const {} = householdSlice.actions;
+export const { addHousehold } = householdSlice.actions;
