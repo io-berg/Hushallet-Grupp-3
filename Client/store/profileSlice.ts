@@ -1,22 +1,22 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { Avatar, Profile, User } from "../utils/type";
-import { useRoute } from "@react-navigation/native";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { Avatar } from "../utils/type";
 
 export interface ProfileState {
-  id: string;
   user: {
     id: 0;
     username: "Mock User";
     email: "mock@mock.com";
   };
   role: "admin";
-  avatar: Avatar;
+  avatar: {
+    color: "#ED5949";
+    icon: "🐙";
+    token: true;
+  };
   name: string;
 }
 
-/*const initialState: ProfileState = {
-  id: 0,
+const initialState: ProfileState = {
   user: {
     id: 0,
     username: "Mock User",
@@ -24,24 +24,22 @@ export interface ProfileState {
   },
   role: "admin",
   avatar: {
-    color: "#f7ad71",
-    icon: "🦊",
-    token: false,
+    color: "#ED5949",
+    icon: "🐙",
+    token: true,
   },
   name: "Mock User",
-};*/
+};
 
-/*const profileSlice = createSlice({
+const profileSlice = createSlice({
   name: "profile",
-  initialState: [] as ProfileState[],
+  initialState,
   reducers: {
-    addProfile: {
-      reducer: (state, action: PayloadAction<ProfileState>) => {
-        state.push(action.payload);
-      },
+    addProfile: (state) => {
+      state.name;
     },
   },
 });
 
 export default profileSlice.reducer;
-export const {} = profileSlice.actions;*/
+export const {} = profileSlice.actions;

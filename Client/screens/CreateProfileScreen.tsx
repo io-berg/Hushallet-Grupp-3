@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
+import { Image, View, Text, StyleSheet, FlatList } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { Avatar as avatar } from "../utils/type";
@@ -22,6 +22,10 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
       setState(household.avatars);
     })();
   }, []);
+
+  const handleSubmit = (name: string, icon: string) => {
+    //save new profile
+  };
 
   return (
     <View style={styles.container}>
@@ -61,7 +65,10 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
             marginLeft: 35,
           }}
         >
-          <FullWidthButton onPress={() => console.log("Pressed")} text={"Skapa profil"} />
+          <FullWidthButton
+            onPress={() => handleSubmit(profileAvatar, profileName)}
+            text={"Skapa profil"}
+          />
         </View>
       </View>
     </View>

@@ -47,7 +47,7 @@ const initialState: Household[] = [
         token: false,
       },
       {
-        color: "",
+        color: "#af7e5f",
         icon: "🦉",
         token: false,
       },
