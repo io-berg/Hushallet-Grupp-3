@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Household } from "../utils/type";
+import avatars from "../utils/mockdata";
 
 // export interface HouseholdState = Household;
 
@@ -22,6 +23,48 @@ const initialState: Household[] = [
           token: true,
         },
         name: "Mock User",
+      },
+    ],
+    avatars: [
+      {
+        color: "#ee7e86",
+        icon: "🐙",
+        token: false,
+      },
+      {
+        color: "#f7ad71",
+        icon: "🦊",
+        token: false,
+      },
+      {
+        color: "#f795e0",
+        icon: "🦄",
+        token: false,
+      },
+      {
+        color: "#94c3f9",
+        icon: "🐋",
+        token: false,
+      },
+      {
+        color: "",
+        icon: "🦉",
+        token: false,
+      },
+      {
+        color: "#f9c9c9",
+        icon: "🐷",
+        token: false,
+      },
+      {
+        color: "#79f189",
+        icon: "🐸",
+        token: false,
+      },
+      {
+        color: "#f1ec79",
+        icon: "🐥",
+        token: false,
       },
     ],
     tasks: [

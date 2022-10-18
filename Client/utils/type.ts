@@ -24,6 +24,7 @@ interface Household {
   code: string;
   profiles: Profile[];
   tasks: Task[];
+  avatars: Avatar[];
 }
 
 interface Application {
@@ -42,7 +43,6 @@ interface Profile {
 }
 
 interface Avatar {
-  id: string;
   color: string;
   icon: string;
   token: boolean;

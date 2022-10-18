@@ -13,9 +13,9 @@ export default function ProfileScreen({ navigation, route }: Props) {
   return (
     <View style={styles.container}>
       <View>
-        <Avatar.Text size={250} label={profile.avatar.icon} />
+        <Text style={styles.icon}>{profile.avatar.icon}</Text>
+        <Text style={styles.title}>{profile.name}</Text>
       </View>
-      <View></View>
     </View>
   );
 }
@@ -24,11 +24,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    padding: 50,
   },
   title: {
     marginTop: 15,
     fontSize: 20,
+    fontWeight: "bold",
+    alignItems: "center",
+  },
+  icon: {
+    marginTop: 15,
+    fontSize: 200,
     fontWeight: "bold",
   },
 });
