@@ -13,8 +13,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 export default function LoginScreen({ navigation }: Props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const errors = useAppSelector((state) => state.auth.errors);
-  const auth = useAppSelector((state) => state.auth);
+  const errors = useAppSelector((state) => state.auth.loginErrors?.errors);
 
   const dispatch = useAppDispatch();
 
@@ -22,8 +21,8 @@ export default function LoginScreen({ navigation }: Props) {
     dispatch(login({ username, password }));
   };
 
-  const usernameErrors = errors.errors?.Username;
-  const passwordErrors = errors.errors?.Password;
+  const usernameErrors = errors?.Username;
+  const passwordErrors = errors?.Password;
 
   return (
     <View style={styles.container}>

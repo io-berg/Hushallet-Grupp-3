@@ -1,7 +1,3 @@
-import Constants from "expo-constants";
-
-const { manifest } = Constants;
-
 const url = "http://10.0.2.2:5279/api/Auth";
 
 export interface LoginResponse {
@@ -10,6 +6,7 @@ export interface LoginResponse {
   user: { username: string; email: string };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface RegisterResponse {}
 
 export interface ErrorResponse {
@@ -33,8 +30,8 @@ const loginRequest = async (username: string, password: string) => {
     return data as LoginResponse;
   }
 
-  const error = await response.json();
-  throw error as ErrorResponse;
+  const data = await response.json();
+  throw data as ErrorResponse;
 };
 
 const registerRequest = async (username: string, email: string, password: string) => {
@@ -52,11 +49,11 @@ const registerRequest = async (username: string, email: string, password: string
 
   if (response.ok) {
     const data = await response.json();
-    return data as any;
+    return data as RegisterResponse;
   }
 
-  const error = await response.json();
-  throw error as ErrorResponse;
+  const data = await response.json();
+  throw data as ErrorResponse;
 };
 
 export { loginRequest, registerRequest };

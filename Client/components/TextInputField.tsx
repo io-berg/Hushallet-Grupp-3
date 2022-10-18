@@ -7,7 +7,7 @@ interface TextInputFieldProps {
   type?: string;
   placeholder: string;
   error?: string;
-  style?: any;
+  style?: object;
 }
 
 const TextInputField = ({
