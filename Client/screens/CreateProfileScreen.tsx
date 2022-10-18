@@ -23,7 +23,7 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
     })();
   }, []);
 
-  const handleSubmit = (name: string, icon: string) => {
+  const handleSubmit = (name: string, avatar: avatar) => {
     //save new profile
   };
 
@@ -66,7 +66,7 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
           }}
         >
           <FullWidthButton
-            onPress={() => handleSubmit(profileAvatar, profileName)}
+            onPress={() => handleSubmit(profileName, profileAvatar)}
             text={"Skapa profil"}
           />
         </View>
