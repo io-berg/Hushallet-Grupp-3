@@ -7,3 +7,9 @@ interface props {
   icon?: string;
   disabled?: boolean;
 }
+
+const DualBottomButton = ({ onPress, text, icon, disabled }: Props) => {
+  return <Button></Button>;
+};
+
+export default DualBottomButton;
