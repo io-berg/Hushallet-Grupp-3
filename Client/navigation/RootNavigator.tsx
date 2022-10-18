@@ -20,7 +20,7 @@ export const RootNavigator = () => {
   const auth = useAppSelector((state) => state.auth);
 
   const isAuthenticated = auth.expirationDate
-    ? new Date(auth.expirationDate!).getTime() > new Date().getTime() && !!auth.token
+    ? new Date(auth.expirationDate).getTime() > new Date().getTime() && !!auth.token
     : false;
 
   const dispatch = useAppDispatch();
@@ -31,7 +31,8 @@ export const RootNavigator = () => {
         token: "",
         user: null,
         expirationDate: "",
-        errors: { errors: {} },
+        loginErrors: null,
+        registerErrors: null,
         loading: false,
         registerSuccess: false,
       };
@@ -45,7 +46,8 @@ export const RootNavigator = () => {
           token,
           expirationDate,
           user: JSON.parse(user),
-          errors: { errors: {} },
+          loginErrors: null,
+          registerErrors: null,
           loading: false,
           registerSuccess: false,
         };
@@ -53,7 +55,7 @@ export const RootNavigator = () => {
 
       dispatch(hydrateAuth(values));
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <NavigationContainer>

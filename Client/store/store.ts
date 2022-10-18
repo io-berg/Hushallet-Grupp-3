@@ -14,15 +14,14 @@ export const store = configureStore({
 });
 
 store.subscribe(() => {
-  store.getState().auth.token
-    ? save("auth.token", store.getState().auth.token)
-    : remove("auth.token");
-  store.getState().auth.expirationDate
-    ? save("auth.expirationDate", store.getState().auth.expirationDate)
-    : remove("auth.expirationDate");
-  store.getState().auth.user
-    ? save("auth.user", JSON.stringify(store.getState().auth.user))
-    : remove("auth.user");
+  const token = store.getState().auth.token;
+  token ? save("auth.token", token) : remove("auth.token");
+
+  const expirationDate = store.getState().auth.expirationDate;
+  expirationDate ? save("auth.expirationDate", expirationDate) : remove("auth.expirationDate");
+
+  const user = store.getState().auth.user;
+  user ? save("auth.user", JSON.stringify(user)) : remove("auth.user");
 });
 
 export type AppState = ReturnType<typeof store.getState>;
