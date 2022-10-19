@@ -2,8 +2,8 @@ import * as React from "react";
 import { Image, View, Text, StyleSheet, FlatList } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { Avatar as avatar } from "../utils/type";
-import AvatarItem from "../components/avatarListComponent";
+import { Avatar as avatar, Profile } from "../utils/type";
+import AvatarButton from "../components/avatarButton";
 import TextInputField from "../components/TextInputField";
 import FullWidthButton from "../components/FullWidthButton";
 import { useAppSelector } from "../store/store";
@@ -16,6 +16,7 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
   const [profileAvatar, setProfileAvatar] = React.useState<avatar | null>(null);
 
   const household = useAppSelector((state) => state.household[0]);
+  const currentUser = useAppSelector((state) => state.auth.user);
 
   React.useEffect(() => {
     (() => {
@@ -24,7 +25,16 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
   }, []);
 
   const handleSubmit = (name: string, avatar: avatar | null) => {
-    //save new profile
+    const profile = {
+      role: "user",
+      avatar: {
+        icon: profileAvatar?.icon,
+        color: profileAvatar?.color,
+        token: true,
+      },
+      name: profileName,
+      user: currentUser,
+    };
   };
 
   return (
@@ -52,10 +62,11 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
           numColumns={4}
           style={styles.flatList}
           renderItem={({ item }) => (
-            <AvatarItem
+            <AvatarButton
               buttonColor={item.color}
               icon={item.icon}
               onPress={() => setProfileAvatar(item)}
+              disabled={item.token}
             />
           )}
         />

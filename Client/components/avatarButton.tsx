@@ -16,7 +16,14 @@ interface Props {
   disabled?: boolean;
 }
 
-const AvatarItem = ({ buttonColor, icon, onPress, disabled }: Props) => {
+const AvatarButton = ({ buttonColor, icon, onPress, disabled }: Props) => {
+  function isDisabled(state: boolean | undefined) {
+    if (state) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   return (
     <Button
       buttonColor={buttonColor}
@@ -24,10 +31,11 @@ const AvatarItem = ({ buttonColor, icon, onPress, disabled }: Props) => {
       onPress={onPress}
       style={styles.button}
       contentStyle={{ borderRadius: 50 }}
+      disabled={isDisabled(disabled)}
     >
       <Text style={{ fontSize: 15 }}>{icon}</Text>
     </Button>
   );
 };
 
-export default AvatarItem;
+export default AvatarButton;
