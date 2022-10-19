@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function MinaHushållScreen() {
+export default function LogOutScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mina hushåll screen</Text>
+      <Text style={styles.title}>Logga ut screen</Text>
     </View>
   );
 }

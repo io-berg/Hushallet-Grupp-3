@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Statistik2Screen() {
+export default function Statistics3Screen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Statistik 2 Screen</Text>
+      <Text style={styles.title}>Statistik 3 Screen</Text>
     </View>
   );
 }

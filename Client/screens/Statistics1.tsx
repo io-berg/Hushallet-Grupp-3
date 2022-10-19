@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function HushållÖversiktScreen() {
+export default function Statistics1Screen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hushålls översikt screen</Text>
+      <Text style={styles.title}>Statistik 1 Screen</Text>
     </View>
   );
 }

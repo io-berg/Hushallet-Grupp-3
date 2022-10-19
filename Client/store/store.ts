@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { remove, save } from "../utils/localStorage";
 import authSlice from "./authSlice";
 import counterReducer from "./counterSlice";
 import householdReducer from "./householdSlice";
@@ -10,6 +11,17 @@ export const store = configureStore({
     household: householdReducer,
     auth: authSlice,
   },
+});
+
+store.subscribe(() => {
+  const token = store.getState().auth.token;
+  token ? save("auth.token", token) : remove("auth.token");
+
+  const expirationDate = store.getState().auth.expirationDate;
+  expirationDate ? save("auth.expirationDate", expirationDate) : remove("auth.expirationDate");
+
+  const user = store.getState().auth.user;
+  user ? save("auth.user", JSON.stringify(user)) : remove("auth.user");
 });
 
 export type AppState = ReturnType<typeof store.getState>;

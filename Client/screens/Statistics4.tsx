@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Statistik4Screen() {
+export default function Statistics4Screen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Statistik 4 Screen</Text>
