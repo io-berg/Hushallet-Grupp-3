@@ -1,6 +1,6 @@
-import { MD3LightTheme } from "react-native-paper";
+import { MD3LightTheme, MD3DarkTheme } from "react-native-paper";
 
-const theme = {
+const lightTheme = {
   ...MD3LightTheme,
   roundness: 10,
   colors: {
@@ -9,5 +9,14 @@ const theme = {
     accent: "#ffff",
   },
 };
+const darkTheme = {
+  ...MD3DarkTheme,
+  roundness: 10,
+  colors: {
+    ...MD3DarkTheme.colors,
+    primary: "#000",
+    accent: "#ffff",
+  },
+};
 
-export default theme;
+export { lightTheme, darkTheme };
