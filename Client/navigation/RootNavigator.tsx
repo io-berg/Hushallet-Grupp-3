@@ -1,5 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { CustomNavigationBar } from "../components/CustomNavigationBar";
+import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
+import LogOutScreen from "../screens/LogOutScreen";
+import MyHouseholdScreen from "../screens/MyHouseholdScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import ThemeScreen from "../screens/Theme";
+import { TabNavigator } from "./TabsNavigator";
 import React, { useEffect } from "react";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
@@ -12,6 +19,13 @@ export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Register: undefined;
+  Tema: undefined;
+  Profil: undefined;
+  Hushållet: undefined;
+  LoggaUt: undefined;
+  LoggaIn: undefined;
+  HusHållÖversikt: undefined;
+  MinaHushåll: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -61,7 +75,32 @@ export const RootNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         {isAuthenticated ? (
-          <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              header: (props) => <CustomNavigationBar {...props} />,
+            }}
+          >
+            <Stack.Screen
+              name="Hushållet"
+              component={TabNavigator}
+              options={{ title: "Hushållet" }}
+            />
+
+            <Stack.Screen name="LoggaUt" component={LogOutScreen} options={{ title: "LoggaUt" }} />
+            <Stack.Screen
+              name="HusHållÖversikt"
+              component={HouseholdOverviewScreen}
+              options={{ title: "HushållÖversikt" }}
+            />
+            <Stack.Screen
+              name="MinaHushåll"
+              component={MyHouseholdScreen}
+              options={{ title: "MinaHushåll" }}
+            />
+            <Stack.Screen name="Profil" component={ProfileScreen} options={{ title: "Profil" }} />
+            <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
+          </Stack.Navigator>
         ) : (
           <Stack.Group>
             <Stack.Screen name="Login" component={LoginScreen} options={{ title: "Login" }} />
