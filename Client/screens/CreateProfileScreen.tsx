@@ -3,7 +3,7 @@ import { Image, View, Text, StyleSheet, FlatList } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { Avatar as avatar, Profile } from "../utils/type";
-import AvatarButton from "../components/avatarButton";
+import AvatarButton from "../components/AvatarButton";
 import TextInputField from "../components/TextInputField";
 import FullWidthButton from "../components/FullWidthButton";
 import { useAppSelector } from "../store/store";
@@ -35,6 +35,7 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
       name: profileName,
       user: currentUser,
     };
+    //ska uppdateras
   };
 
   return (

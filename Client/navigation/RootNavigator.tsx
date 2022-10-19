@@ -40,7 +40,7 @@ export const RootNavigator = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  /*useEffect(() => {
     (async () => {
       let values: AuthState = {
         token: "",
@@ -70,7 +70,7 @@ export const RootNavigator = () => {
 
       dispatch(hydrateAuth(values));
     })();
-  }, [dispatch]);
+  }, [dispatch]);*/
 
   return (
     <NavigationContainer>

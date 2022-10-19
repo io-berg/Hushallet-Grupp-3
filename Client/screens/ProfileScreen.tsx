@@ -1,19 +1,15 @@
 import * as React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
+import AvatarIcon from "../components/avatarIcon";
 import { useAppSelector } from "../store/store";
-import { Avatar } from "react-native-paper";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/RootNavigator";
 
 export default function ProfileScreen() {
   const profile = useAppSelector((state) => state.household[0].profiles[0]);
-
+  const color = profile.avatar.color;
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.icon}>{profile.avatar.icon}</Text>
-        <Text style={styles.title}>{profile.name}</Text>
-      </View>
+      <AvatarIcon></AvatarIcon>
+      <Text style={styles.title}>{profile.name}</Text>
     </View>
   );
 }
@@ -25,9 +21,8 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 15,
-    fontSize: 20,
+    fontSize: 45,
     fontWeight: "bold",
-    alignItems: "center",
   },
   icon: {
     marginTop: 15,
