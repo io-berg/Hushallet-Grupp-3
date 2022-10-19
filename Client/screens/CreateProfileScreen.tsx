@@ -6,7 +6,8 @@ import { Avatar as avatar, Profile } from "../utils/type";
 import AvatarButton from "../components/AvatarButtonComponent";
 import TextInputField from "../components/TextInputField";
 import FullWidthButton from "../components/FullWidthButton";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { addProfile } from "../store/profileSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "SkapaProfil">;
 
@@ -14,9 +15,10 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
   const [availibleAvatars, setState] = React.useState<avatar[] | null>(null);
   const [profileName, setProfileName] = React.useState("");
   const [profileAvatar, setProfileAvatar] = React.useState<avatar | null>(null);
-
   const household = useAppSelector((state) => state.household[0]);
   const currentUser = useAppSelector((state) => state.auth.user);
+
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     (() => {
@@ -25,17 +27,21 @@ export default function CreateProfileScreen({ navigation, route }: Props) {
   }, []);
 
   const handleSubmit = (name: string, avatar: avatar | null) => {
-    const profile = {
-      role: "user",
-      avatar: {
-        icon: profileAvatar?.icon,
-        color: profileAvatar?.color,
-        token: true,
-      },
-      name: profileName,
-      user: currentUser,
-    };
-    //ska uppdateras
+    if (currentUser != null && name != null && avatar != null) {
+      const profile: Profile | null = {
+        id: 1456435,
+        user: currentUser,
+        role: "user",
+        avatar: {
+          icon: avatar.icon,
+          color: avatar.color,
+          token: true,
+        },
+        name: profileName,
+      };
+      dispatch(addProfile(profile));
+      console.log(profile.name);
+    }
   };
 
   return (

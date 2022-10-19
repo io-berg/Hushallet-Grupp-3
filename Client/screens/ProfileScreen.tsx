@@ -2,14 +2,23 @@ import * as React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import AvatarIcon from "../components/AvatarIconComponent";
 import { useAppSelector } from "../store/store";
+import { Profile } from "../utils/type";
 
 export default function ProfileScreen() {
-  const profile = useAppSelector((state) => state.household[0].profiles[0]);
+  const [currentProfile, setProfile] = React.useState<Profile>();
+  const profile = useAppSelector((state) => state.profile);
+
+  React.useEffect(() => {
+    (() => {
+      setProfile(profile);
+      console.log(profile.name);
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
       <AvatarIcon></AvatarIcon>
-      <Text style={styles.title}>{profile.name}</Text>
+      <Text style={styles.title}>{currentProfile?.name}</Text>
     </View>
   );
 }
