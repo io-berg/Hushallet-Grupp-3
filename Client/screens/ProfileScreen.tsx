@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
-import AvatarIcon from "../components/AvatarIcon";
+import AvatarIcon from "../components/AvatarIconComponent";
 import { useAppSelector } from "../store/store";
 
 export default function ProfileScreen() {
