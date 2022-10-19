@@ -1,10 +1,15 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import * as React from "react";
+import { View, Text, StyleSheet, ViewStyle } from "react-native";
+import AvatarIcon from "../components/AvatarIcon";
+import { useAppSelector } from "../store/store";
 
 export default function ProfileScreen() {
+  const profile = useAppSelector((state) => state.household[0].profiles[0]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profil screen</Text>
+      <AvatarIcon></AvatarIcon>
+      <Text style={styles.title}>{profile.name}</Text>
     </View>
   );
 }
@@ -13,10 +18,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
   title: {
-    fontSize: 20,
-    // fontWeight: "bold",
+    marginTop: 15,
+    fontSize: 45,
+    fontWeight: "bold",
+  },
+  icon: {
+    marginTop: 15,
+    fontSize: 200,
+    fontWeight: "bold",
   },
 });

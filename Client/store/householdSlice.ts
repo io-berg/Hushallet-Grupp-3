@@ -17,10 +17,53 @@ const initialState: Household[] = [
         },
         role: "admin",
         avatar: {
-          color: "red",
-          icon: "squid",
+          color: "#ED5949",
+          icon: "🐙",
+          token: true,
         },
         name: "Mock User",
+      },
+    ],
+    avatars: [
+      {
+        color: "#ee7e86",
+        icon: "🐙",
+        token: true,
+      },
+      {
+        color: "#f7ad71",
+        icon: "🦊",
+        token: true,
+      },
+      {
+        color: "#f795e0",
+        icon: "🦄",
+        token: false,
+      },
+      {
+        color: "#94c3f9",
+        icon: "🐋",
+        token: false,
+      },
+      {
+        color: "#af7e5f",
+        icon: "🦉",
+        token: true,
+      },
+      {
+        color: "#f9c9c9",
+        icon: "🐷",
+        token: false,
+      },
+      {
+        color: "#79f189",
+        icon: "🐸",
+        token: false,
+      },
+      {
+        color: "#f1ec79",
+        icon: "🐥",
+        token: false,
       },
     ],
     tasks: [

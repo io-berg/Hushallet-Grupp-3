@@ -7,6 +7,7 @@ import LoginScreen from "../screens/LoginScreen";
 import LogOutScreen from "../screens/LogOutScreen";
 import MyHouseholdScreen from "../screens/MyHouseholdScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import CreateProfileScreen from "../screens/CreateProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import ThemeScreen from "../screens/Theme";
 import { AuthState, hydrateAuth } from "../store/authSlice";
@@ -25,6 +26,7 @@ export type RootStackParamList = {
   LoggaIn: undefined;
   HusHållÖversikt: undefined;
   MinaHushåll: undefined;
+  SkapaProfil: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -38,7 +40,7 @@ export const RootNavigator = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  /*useEffect(() => {
     (async () => {
       let values: AuthState = {
         token: "",
@@ -68,7 +70,7 @@ export const RootNavigator = () => {
 
       dispatch(hydrateAuth(values));
     })();
-  }, [dispatch]);
+  }, [dispatch]);*/
 
   return (
     <NavigationContainer>
@@ -98,6 +100,11 @@ export const RootNavigator = () => {
               options={{ title: "MinaHushåll" }}
             />
             <Stack.Screen name="Profil" component={ProfileScreen} options={{ title: "Profil" }} />
+            <Stack.Screen
+              name="SkapaProfil"
+              component={CreateProfileScreen}
+              options={{ title: "Skapa Profil" }}
+            />
             <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
           </Stack.Group>
         ) : (
