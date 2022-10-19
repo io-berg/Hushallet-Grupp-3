@@ -5,9 +5,7 @@ import { Avatar } from "react-native-paper";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigator";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
-
-export default function ProfileScreen({ navigation, route }: Props) {
+export default function ProfileScreen() {
   const profile = useAppSelector((state) => state.household[0].profiles[0]);
 
   return (

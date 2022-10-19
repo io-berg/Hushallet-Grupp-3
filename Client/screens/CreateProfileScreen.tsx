@@ -8,7 +8,7 @@ import TextInputField from "../components/TextInputField";
 import FullWidthButton from "../components/FullWidthButton";
 import { useAppSelector } from "../store/store";
 
-type Props = NativeStackScreenProps<RootStackParamList, "CreateProfileScreen">;
+type Props = NativeStackScreenProps<RootStackParamList, "SkapaProfil">;
 
 export default function CreateProfileScreen({ navigation, route }: Props) {
   const [availibleAvatars, setState] = React.useState<avatar[] | null>(null);

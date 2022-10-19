@@ -1,21 +1,32 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import CreateProfileScreen from "../screens/CreateProfileScreen";
-import HomeScreen from "../screens/HomeScreen";
+import { CustomNavigationBar } from "../components/CustomNavigationBar";
+import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
+import LogOutScreen from "../screens/LogOutScreen";
+import MyHouseholdScreen from "../screens/MyHouseholdScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import CreateProfileScreen from "../screens/CreateProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import ThemeScreen from "../screens/Theme";
 import { AuthState, hydrateAuth } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { get } from "../utils/localStorage";
+import { TabNavigator } from "./TabsNavigator";
 
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Register: undefined;
-  Profile: undefined;
-  CreateProfileScreen: undefined;
+  Tema: undefined;
+  Profil: undefined;
+  Hushållet: undefined;
+  LoggaUt: undefined;
+  LoggaIn: undefined;
+  HusHållÖversikt: undefined;
+  MinaHushåll: undefined;
+  SkapaProfil: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -63,16 +74,39 @@ export const RootNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
-        <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: "Profile" }} />
-        <Stack.Screen
-          name="CreateProfileScreen"
-          component={CreateProfileScreen}
-          options={{ title: "Create Profile" }}
-        />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          header: (props) => <CustomNavigationBar {...props} />,
+        }}
+      >
         {isAuthenticated ? (
-          <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
+          <Stack.Group>
+            <Stack.Screen
+              name="Hushållet"
+              component={TabNavigator}
+              options={{ title: "Hushållet" }}
+            />
+
+            <Stack.Screen name="LoggaUt" component={LogOutScreen} options={{ title: "LoggaUt" }} />
+            <Stack.Screen
+              name="HusHållÖversikt"
+              component={HouseholdOverviewScreen}
+              options={{ title: "HushållÖversikt" }}
+            />
+            <Stack.Screen
+              name="MinaHushåll"
+              component={MyHouseholdScreen}
+              options={{ title: "MinaHushåll" }}
+            />
+            <Stack.Screen name="Profil" component={ProfileScreen} options={{ title: "Profil" }} />
+            <Stack.Screen
+              name="SkapaProfil"
+              component={CreateProfileScreen}
+              options={{ title: "Skapa Profil" }}
+            />
+            <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
+          </Stack.Group>
         ) : (
           <Stack.Group>
             <Stack.Screen name="Login" component={LoginScreen} options={{ title: "Login" }} />
