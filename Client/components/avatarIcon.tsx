@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, ViewStyle } from "react-native";
+import { View, Text } from "react-native";
 import { useAppSelector } from "../store/store";
 
 export default function AvatarIcon() {
