@@ -1,19 +1,18 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useEffect } from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
+import LoginScreen from "../screens/LoginScreen";
 import LogOutScreen from "../screens/LogOutScreen";
 import MyHouseholdScreen from "../screens/MyHouseholdScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import ThemeScreen from "../screens/Theme";
-import { TabNavigator } from "./TabsNavigator";
-import React, { useEffect } from "react";
-import HomeScreen from "../screens/HomeScreen";
-import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import ThemeScreen from "../screens/Theme";
 import { AuthState, hydrateAuth } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { get } from "../utils/localStorage";
+import { TabNavigator } from "./TabsNavigator";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -73,14 +72,14 @@ export const RootNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          header: (props) => <CustomNavigationBar {...props} />,
+        }}
+      >
         {isAuthenticated ? (
-          <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-              header: (props) => <CustomNavigationBar {...props} />,
-            }}
-          >
+          <Stack.Group>
             <Stack.Screen
               name="Hushållet"
               component={TabNavigator}
@@ -100,7 +99,7 @@ export const RootNavigator = () => {
             />
             <Stack.Screen name="Profil" component={ProfileScreen} options={{ title: "Profil" }} />
             <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
-          </Stack.Navigator>
+          </Stack.Group>
         ) : (
           <Stack.Group>
             <Stack.Screen name="Login" component={LoginScreen} options={{ title: "Login" }} />
