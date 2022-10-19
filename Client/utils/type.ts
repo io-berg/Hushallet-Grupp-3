@@ -46,4 +46,17 @@ interface Avatar {
   icon: string;
 }
 
+export interface LoginResponse {
+  expiration: string;
+  token: string;
+  user: { username: string; email: string };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface RegisterResponse {}
+
+export interface ErrorResponse {
+  errors: { [key: string]: string[] };
+}
+
 export type { User, Task, TaskHistory, Household, Application, Profile, Avatar };

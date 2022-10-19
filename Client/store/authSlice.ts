@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  ErrorResponse,
-  loginRequest,
-  LoginResponse,
-  registerRequest,
-  RegisterResponse,
-} from "../utils/authService";
-import { User } from "../utils/type";
+import { loginRequest, registerRequest } from "../utils/api";
+import { ErrorResponse, LoginResponse, RegisterResponse, User } from "../utils/type";
 
 export interface AuthState {
   user: User | null;
@@ -19,25 +13,25 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: {
-    username: "me",
-    email: "email@email.com",
-  },
-  token: "1234567890",
-  expirationDate: new Date(9999, 12, 31).toISOString(),
-  loginErrors: null,
-  registerErrors: null,
-  registerSuccess: false,
-  loading: false,
-
-  // FÖR ATT SE LOGIN, ÄNDRA TILL NULL
-  // user: null,
-  // token: "",
-  // expirationDate: "",
+  // user: {
+  //   username: "Mock User",
+  //   email: "mock@mock.com",
+  // },
+  // token: "1234567890",
+  // expirationDate: new Date(9999, 12, 31).toISOString(),
   // loginErrors: null,
   // registerErrors: null,
-  // loading: false,
   // registerSuccess: false,
+  // loading: false,
+
+  // FÖR ATT SE LOGIN, ÄNDRA TILL NULL
+  user: null,
+  token: "",
+  expirationDate: "",
+  loginErrors: null,
+  registerErrors: null,
+  loading: false,
+  registerSuccess: false,
 };
 
 export const login = createAsyncThunk<

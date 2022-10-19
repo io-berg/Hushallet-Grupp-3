@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import StartScreen from "../screens/StartScreen";
 import { AuthState, hydrateAuth } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { get } from "../utils/localStorage";
@@ -12,6 +13,7 @@ export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Register: undefined;
+  Start: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -59,9 +61,16 @@ export const RootNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={isAuthenticated ? "Start" : "Login"}>
         {isAuthenticated ? (
-          <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
+          <Stack.Group>
+            <Stack.Screen
+              name="Start"
+              component={StartScreen}
+              options={{ title: "Mina hushåll" }}
+            />
+            <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
+          </Stack.Group>
         ) : (
           <Stack.Group>
             <Stack.Screen name="Login" component={LoginScreen} options={{ title: "Login" }} />

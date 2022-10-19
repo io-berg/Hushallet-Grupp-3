@@ -96,3 +96,10 @@
       hushållet och roteras baserat på ett intervall i dagar.
 
 - [ ] En användare ska kunna lägga till en ljudinspelning och en bild för att beskriva sysslan ytterligare.
+
+### Handledning
+
+#### v1:
+
+- Screens godkännda
+- Designa en meny för navigering och få godkänt på den nästa handledningstillfälle

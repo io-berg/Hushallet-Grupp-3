@@ -8,7 +8,7 @@ export default function HomeScreen() {
   const dispatch = useAppDispatch();
 
   const count = useAppSelector((state) => state.counter.count);
-  const household = useAppSelector((state) => state.household[0].name);
+  // const household = useAppSelector((state) => state.household.households[0].name);
   const username = useAppSelector((state) => state.auth.user?.username);
   const email = useAppSelector((state) => state.auth.user?.email);
 
@@ -20,7 +20,7 @@ export default function HomeScreen() {
       <Button title="Increment" onPress={() => dispatch(increment())} />
       <Button title="Decrement" onPress={() => dispatch(decrement())} />
       <Button title="Logout" onPress={() => dispatch(logout())} />
-      <Text>Household: {household}</Text>
+      {/* <Text>Household: {household}</Text> */}
     </View>
   );
 }
