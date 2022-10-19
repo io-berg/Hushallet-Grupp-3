@@ -92,7 +92,7 @@ export const RootNavigator = () => {
             <Stack.Screen
               name="HusHållÖversikt"
               component={HouseholdOverviewScreen}
-              options={{ title: "HushållÖversikt" }}
+              options={{ title: "HusållÖversikt" }}
             />
             <Stack.Screen
               name="MinaHushåll"
