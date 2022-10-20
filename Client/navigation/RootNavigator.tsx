@@ -7,13 +7,14 @@ import LoginScreen from "../screens/LoginScreen";
 import LogOutScreen from "../screens/LogOutScreen";
 import MyHouseholdScreen from "../screens/MyHouseholdScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import CreateProfileScreen from "../screens/CreateProfileScreen";
+import EditProfileScreen from "../screens/EditProfile";
 import RegisterScreen from "../screens/RegisterScreen";
 import ThemeScreen from "../screens/Theme";
 import { AuthState, hydrateAuth } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { get } from "../utils/localStorage";
 import { TabNavigator } from "./TabsNavigator";
+import { Profile } from "../utils/type";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -26,7 +27,7 @@ export type RootStackParamList = {
   LoggaIn: undefined;
   HusHållÖversikt: undefined;
   MinaHushåll: undefined;
-  SkapaProfil: undefined;
+  RedigeraProfil: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -101,8 +102,8 @@ export const RootNavigator = () => {
             />
             <Stack.Screen name="Profil" component={ProfileScreen} options={{ title: "Profil" }} />
             <Stack.Screen
-              name="SkapaProfil"
-              component={CreateProfileScreen}
+              name="RedigeraProfil"
+              component={EditProfileScreen}
               options={{ title: "Skapa Profil" }}
             />
             <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />

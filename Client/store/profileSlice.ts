@@ -16,18 +16,18 @@ const initialState: Profile = {
   name: "Mock User",
 };
 
-//use thunk to save profile
-
 const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    addProfile: (state, action) => {
-      state = action.payload;
+    updateProfile: (state, action) => {
+      state.avatar.color = action.payload.avatar.color;
+      state.avatar.icon = action.payload.avatar.icon;
+      state.name = action.payload.name;
       console.log(state.name);
     },
   },
 });
 
 export default profileSlice.reducer;
-export const { addProfile } = profileSlice.actions;
+export const { updateProfile } = profileSlice.actions;

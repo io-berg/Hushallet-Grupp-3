@@ -1,10 +1,15 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
-import AvatarIcon from "../components/AvatarIconComponent";
+import { Button } from "react-native-paper";
+//import AvatarIcon from "../components/AvatarIconComponent";
+import { RootStackParamList } from "../navigation/RootNavigator";
 import { useAppSelector } from "../store/store";
 import { Profile } from "../utils/type";
 
-export default function ProfileScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, "Profil">;
+
+export default function ProfileScreen({ navigation }: Props) {
   const [currentProfile, setProfile] = React.useState<Profile>();
   const profile = useAppSelector((state) => state.profile);
 
@@ -17,8 +22,30 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <AvatarIcon></AvatarIcon>
+      <View
+        style={{
+          marginTop: 15,
+          height: 320,
+          width: 320,
+          borderRadius: 170,
+          backgroundColor: currentProfile?.avatar.color,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text
+          style={{
+            marginTop: 15,
+            fontSize: 200,
+            fontWeight: "bold",
+          }}
+        >
+          {currentProfile?.avatar.icon}
+        </Text>
+      </View>
       <Text style={styles.title}>{currentProfile?.name}</Text>
+
+      <Button onPress={() => navigation.navigate("RedigeraProfil")}>Redigera Profil</Button>
     </View>
   );
 }

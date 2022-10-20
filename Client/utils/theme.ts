@@ -5,8 +5,8 @@ const lightTheme = {
   roundness: 10,
   colors: {
     ...MD3LightTheme.colors,
-    primary: "#000",
-    accent: "#ffff",
+    primary: "#FFFFFF",
+    accent: "#000000",
   },
 };
 const darkTheme = {
@@ -14,8 +14,8 @@ const darkTheme = {
   roundness: 10,
   colors: {
     ...MD3DarkTheme.colors,
-    primary: "#000",
-    accent: "#ffff",
+    primary: "#000000",
+    accent: "#FFFFFF",
   },
 };
 
