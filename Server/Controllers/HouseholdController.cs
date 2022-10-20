@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,9 @@ public class HouseholdController : ControllerBase
     [Route("MyHouseholds")]
     public async Task<IActionResult> MyHouseholds()
     {
-        var userId = _userManager.GetUserId(User);
-        var households = await _householdService.GetHouseholdsForUser(userId);
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+        var households = await _householdService.GetHouseholdsForUser(user.Id);
 
         return Ok(households);
     }
@@ -34,12 +36,37 @@ public class HouseholdController : ControllerBase
     [Route("CreateApplication")]
     public async Task<IActionResult> CreateApplication([FromBody] ApplicationCreationModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         var userId = _userManager.GetUserId(User);
         var result = await _householdService.CreateApplication(model.Code, userId);
 
         if (result)
         {
             return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPost]
+    [Route("CreateHousehold")]
+    public async Task<IActionResult> CreateHousehold([FromBody] HouseholdCreationModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var result = await _householdService.CreateHousehold(model.Name, user.Id);
+
+        if (result != null)
+        {
+            return Ok(result);
         }
 
         return BadRequest();

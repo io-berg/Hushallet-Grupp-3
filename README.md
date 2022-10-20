@@ -101,5 +101,5 @@
 
 #### v1:
 
-- Screens godkännda
+- Screens och modeller godkännda
 - Designa en meny för navigering och få godkänt på den nästa handledningstillfälle

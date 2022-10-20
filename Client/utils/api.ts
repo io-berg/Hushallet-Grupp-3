@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, LoginResponse, RegisterResponse } from "./type";
+import { ErrorResponse, Household, LoginResponse, RegisterResponse } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
@@ -57,14 +57,60 @@ const fetchMyHouseholdsRequest = async () => {
 
   if (response.ok) {
     const data = await response.json();
+    console.log(data);
     return data;
   }
-  console.log(response.status);
 
-  console.log("Error fetching households");
+  // const data = await response.json();
+  throw response;
+};
+
+const applicationRequest = async (code: string) => {
+  const response = await fetch(`${url}/household/CreateApplication`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      code,
+    }),
+  });
+
+  if (response.ok) {
+    const data: Household[] = await response.json();
+    return data;
+  }
+
   const data = await response.json();
-  console.log(data);
   throw data as ErrorResponse;
 };
 
-export { loginRequest, registerRequest, fetchMyHouseholdsRequest };
+const createHouseholdRequest = async (name: string) => {
+  const response = await fetch(`${url}/household/CreateHousehold`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      name,
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+
+  const data = await response.json();
+  throw data as ErrorResponse;
+};
+
+export {
+  loginRequest,
+  registerRequest,
+  fetchMyHouseholdsRequest,
+  applicationRequest,
+  createHouseholdRequest,
+};
