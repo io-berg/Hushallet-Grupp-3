@@ -1,15 +1,10 @@
-import * as React from "react";
-import { View, Text, StyleSheet, ViewStyle } from "react-native";
-import AvatarIcon from "../components/AvatarIconComponent";
-import { useAppSelector } from "../store/store";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function ProfileScreen() {
-  const profile = useAppSelector((state) => state.household[0].profiles[0]);
-
   return (
     <View style={styles.container}>
-      <AvatarIcon></AvatarIcon>
-      <Text style={styles.title}>{profile.name}</Text>
+      <Text>Profile Screen</Text>
     </View>
   );
 }
