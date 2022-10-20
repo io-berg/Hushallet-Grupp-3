@@ -4,6 +4,7 @@ import { logout } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen({ navigation }: any) {
   const dispatch = useAppDispatch();

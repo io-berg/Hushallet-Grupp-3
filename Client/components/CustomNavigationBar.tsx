@@ -9,13 +9,14 @@ export function CustomNavigationBar({ navigation, back }: any) {
 
   return (
     <Appbar.Header style={styles.headern}>
-      <Appbar.Content title="HusHållet" />
-      {!back ? (
+      {<Appbar.BackAction onPress={navigation.goBack} />}
+      <Appbar.Content title="Hushållet" />
+      {
         <Menu
           style={styles.meny}
           visible={visible}
           onDismiss={closeMenu}
-          anchor={<Appbar.Action icon="menu" color="white" onPress={openMenu} />}
+          anchor={<Appbar.Action icon="menu" color="black" onPress={openMenu} />}
         >
           <View style={styles.menyback}>
             <Menu.Item
@@ -28,7 +29,7 @@ export function CustomNavigationBar({ navigation, back }: any) {
             <Menu.Item
               leadingIcon="calendar-month-outline"
               style={styles.button}
-              onPress={() => navigation.navigate("HushållÖversikt")}
+              onPress={() => navigation.navigate("HusHållÖversikt")}
               title="HushållÖversikt"
             />
 
@@ -61,7 +62,7 @@ export function CustomNavigationBar({ navigation, back }: any) {
             />
           </View>
         </Menu>
-      ) : null}
+      }
     </Appbar.Header>
   );
 }
