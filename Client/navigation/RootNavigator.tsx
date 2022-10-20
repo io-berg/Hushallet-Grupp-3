@@ -1,18 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
-import LogOutScreen from "../screens/LogOutScreen";
-import MyHouseholdScreen from "../screens/MyHouseholdScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import EditProfileScreen from "../screens/EditProfile";
+import EditProfileScreen from "../screens/EditProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import StartScreen from "../screens/StartScreen";
 import ThemeScreen from "../screens/Theme";
-import { AuthState, hydrateAuth } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { get } from "../utils/localStorage";
 import { TabNavigator } from "./TabsNavigator";
 import { Profile } from "../utils/type";
 
@@ -21,13 +18,11 @@ export type RootStackParamList = {
   Home: undefined;
   Register: undefined;
   Tema: undefined;
-  Profil: undefined;
-  Hushållet: undefined;
-  LoggaUt: undefined;
-  LoggaIn: undefined;
-  HusHållÖversikt: undefined;
-  MinaHushåll: undefined;
-  RedigeraProfil: undefined;
+  Profile: undefined;
+  Household: undefined;
+  HouseholdOverview: undefined;
+  Start: undefined;
+  EditProfile: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -39,7 +34,11 @@ export const RootNavigator = () => {
     ? new Date(auth.expirationDate).getTime() > new Date().getTime() && !!auth.token
     : false;
 
-  const dispatch = useAppDispatch();
+  console.log(auth);
+
+  console.log("isAuthenticated", isAuthenticated);
+
+  // const dispatch = useAppDispatch();
 
   /*useEffect(() => {
     (async () => {
@@ -52,11 +51,9 @@ export const RootNavigator = () => {
         loading: false,
         registerSuccess: false,
       };
-
       const token = await get("auth.token");
       const expirationDate = await get("auth.expirationDate");
       const user = await get("auth.user");
-
       if (token && expirationDate && user) {
         values = {
           token,
@@ -68,7 +65,6 @@ export const RootNavigator = () => {
           registerSuccess: false,
         };
       }
-
       dispatch(hydrateAuth(values));
     })();
   }, [dispatch]);*/
@@ -83,26 +79,20 @@ export const RootNavigator = () => {
       >
         {isAuthenticated ? (
           <Stack.Group>
+            <Stack.Screen name="Home" component={TabNavigator} options={{ title: "Hushållet" }} />
             <Stack.Screen
-              name="Hushållet"
-              component={TabNavigator}
-              options={{ title: "Hushållet" }}
-            />
-
-            <Stack.Screen name="LoggaUt" component={LogOutScreen} options={{ title: "LoggaUt" }} />
-            <Stack.Screen
-              name="HusHållÖversikt"
+              name="HouseholdOverview"
               component={HouseholdOverviewScreen}
-              options={{ title: "HushållÖversikt" }}
+              options={{ title: "Husålls Översikt" }}
             />
             <Stack.Screen
-              name="MinaHushåll"
-              component={MyHouseholdScreen}
-              options={{ title: "MinaHushåll" }}
+              name="Start"
+              component={StartScreen}
+              options={{ title: "Mina Hushåll" }}
             />
-            <Stack.Screen name="Profil" component={ProfileScreen} options={{ title: "Profil" }} />
+            <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: "Profil" }} />
             <Stack.Screen
-              name="RedigeraProfil"
+              name="EditProfile"
               component={EditProfileScreen}
               options={{ title: "Skapa Profil" }}
             />
@@ -114,7 +104,7 @@ export const RootNavigator = () => {
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
-              options={{ title: "Register" }}
+              options={{ title: "Registring" }}
             />
           </Stack.Group>
         )}

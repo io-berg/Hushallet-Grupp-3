@@ -10,7 +10,7 @@ import FullWidthButton from "../components/FullWidthButton";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { updateProfile } from "../store/profileSlice";
 
-type Props = NativeStackScreenProps<RootStackParamList, "RedigeraProfil">;
+type Props = NativeStackScreenProps<RootStackParamList, "EditProfile">;
 
 export default function EditProfileScreen({ navigation, route }: Props) {
   const [availibleAvatars, setState] = React.useState<avatar[] | null>(null);
@@ -31,7 +31,7 @@ export default function EditProfileScreen({ navigation, route }: Props) {
       avatar: profileAvatar,
     };
     dispatch(updateProfile(newProfile));
-    navigation.navigate("Profil");
+    navigation.navigate("Profile");
   };
 
   return (

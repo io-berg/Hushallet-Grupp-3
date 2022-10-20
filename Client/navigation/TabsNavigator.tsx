@@ -5,16 +5,24 @@ import Statistics2Screen from "../screens/Statistics2";
 import Statistics3Screen from "../screens/Statistics3";
 import Statistics4Screen from "../screens/Statistics4";
 
-const Tab = createMaterialTopTabNavigator();
+type TabsParamList = {
+  Overview: undefined;
+  Statistics1: undefined;
+  Statistics2: undefined;
+  Statistics3: undefined;
+  Statistics4: undefined;
+};
+
+const Tab = createMaterialTopTabNavigator<TabsParamList>();
 
 export function TabNavigator() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Hem" component={HomeScreen} />
-      <Tab.Screen name="statistik 1" component={Statistics1Screen} />
-      <Tab.Screen name="statistik 2" component={Statistics2Screen} />
-      <Tab.Screen name="statistik 3" component={Statistics3Screen} />
-      <Tab.Screen name="statistik 4" component={Statistics4Screen} />
+      <Tab.Screen name="Overview" component={HomeScreen} />
+      <Tab.Screen name="Statistics1" component={Statistics1Screen} />
+      <Tab.Screen name="Statistics2" component={Statistics2Screen} />
+      <Tab.Screen name="Statistics3" component={Statistics3Screen} />
+      <Tab.Screen name="Statistics4" component={Statistics4Screen} />
     </Tab.Navigator>
   );
 }

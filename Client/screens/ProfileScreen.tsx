@@ -7,7 +7,7 @@ import { RootStackParamList } from "../navigation/RootNavigator";
 import { useAppSelector } from "../store/store";
 import { Profile } from "../utils/type";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Profil">;
+type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 export default function ProfileScreen({ navigation }: Props) {
   const [currentProfile, setProfile] = React.useState<Profile>();
@@ -45,7 +45,7 @@ export default function ProfileScreen({ navigation }: Props) {
       </View>
       <Text style={styles.title}>{currentProfile?.name}</Text>
 
-      <Button onPress={() => navigation.navigate("RedigeraProfil")}>Redigera Profil</Button>
+      <Button onPress={() => navigation.navigate("EditProfile")}>Redigera Profil</Button>
     </View>
   );
 }

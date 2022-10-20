@@ -24,3 +24,19 @@ Content-Type: application/json
     "username": "user",
     "password": "password"
 }
+
+###
+
+GET http://localhost:5279/api/household/myhouseholds
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlciIsImp0aSI6IjMwYTZiZmUxLTBiYTgtNDM5My1iNmVjLTljNjgwMTc0OGUwNCIsImV4cCI6MTY2NjI2NjgwOCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1Mjc5In0.IbXw2PEgSnjZwbBlnl0dS7nRM2bFZ0F4Lv1G0yj1Y0s
+
+###
+
+POST http://localhost:5279/api/household/CreateApplication
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlciIsImp0aSI6ImVjY2YzYWNkLTM1OGItNGQ4OC05NDgxLTI1Mzk4MjlkNzc4ZCIsImV4cCI6MTY2NjI1NTA1NCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1Mjc5In0.bnNCon5Hm2MZleGh8xF48wiMkvNst5KewpAMJzbFFEA
+
+{
+    "Code": "123456"
+}

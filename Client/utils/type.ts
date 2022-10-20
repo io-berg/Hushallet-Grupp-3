@@ -24,7 +24,7 @@ interface Household {
   code: string;
   profiles: Profile[];
   tasks: Task[];
-  avatars: Avatar[];
+  //avatars: Avatar[];
 }
 
 interface Application {
@@ -46,6 +46,19 @@ interface Avatar {
   color: string;
   icon: string;
   token: boolean;
+}
+
+export interface LoginResponse {
+  expiration: string;
+  token: string;
+  user: { username: string; email: string };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface RegisterResponse {}
+
+export interface ErrorResponse {
+  errors: { [key: string]: string[] };
 }
 
 export type { User, Task, TaskHistory, Household, Application, Profile, Avatar };

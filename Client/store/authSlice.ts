@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  ErrorResponse,
-  loginRequest,
-  LoginResponse,
-  registerRequest,
-  RegisterResponse,
-} from "../utils/authService";
-import { User } from "../utils/type";
+import { loginRequest, registerRequest } from "../utils/api";
+import { ErrorResponse, LoginResponse, RegisterResponse, User } from "../utils/type";
 
 export interface AuthState {
   user: User | null;
@@ -20,8 +14,8 @@ export interface AuthState {
 
 const initialState: AuthState = {
   user: {
-    username: "me",
-    email: "email@email.com",
+    username: "Mock User",
+    email: "mock@mock.com",
   },
   token: "1234567890",
   expirationDate: new Date(9999, 12, 31).toISOString(),
@@ -115,7 +109,6 @@ const authSlice = createSlice({
     });
     builder.addCase(register.rejected, (state, error) => {
       state.loading = false;
-      console.log(error);
       state.registerErrors = error.payload as ErrorResponse;
     });
   },

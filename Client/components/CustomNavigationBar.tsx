@@ -1,6 +1,6 @@
 import React from "react";
-import { Appbar, Menu } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
+import { Appbar, Menu } from "react-native-paper";
 
 export function CustomNavigationBar({ navigation, back }: any) {
   const [visible, setVisible] = React.useState(false);
@@ -9,40 +9,41 @@ export function CustomNavigationBar({ navigation, back }: any) {
 
   return (
     <Appbar.Header style={styles.headern}>
-      <Appbar.Content title="HusHållet" />
-      {!back ? (
+      {<Appbar.BackAction onPress={navigation.goBack} />}
+      <Appbar.Content title="Hushållet" />
+      {
         <Menu
           style={styles.meny}
           visible={visible}
           onDismiss={closeMenu}
-          anchor={<Appbar.Action icon="menu" color="white" onPress={openMenu} />}
+          anchor={<Appbar.Action icon="menu" color="black" onPress={openMenu} />}
         >
           <View style={styles.menyback}>
             <Menu.Item
               leadingIcon="home"
               style={styles.button}
-              onPress={() => navigation.navigate("Hem")}
+              onPress={() => navigation.navigate("Home")}
               title="Hem"
             />
 
             <Menu.Item
               leadingIcon="calendar-month-outline"
               style={styles.button}
-              onPress={() => navigation.navigate("HushållÖversikt")}
-              title="HushållÖversikt"
+              onPress={() => navigation.navigate("HouseholdOverview")}
+              title="Hushålls Översikt"
             />
 
             <Menu.Item
               leadingIcon="calendar-range-outline"
               style={styles.button}
-              onPress={() => navigation.navigate("MinaHushåll")}
+              onPress={() => navigation.navigate("Start")}
               title="Mina hushåll"
             />
 
             <Menu.Item
               leadingIcon="account"
               style={styles.button}
-              onPress={() => navigation.navigate("Profil")}
+              onPress={() => navigation.navigate("Profile")}
               title="Profil"
             />
 
@@ -61,7 +62,7 @@ export function CustomNavigationBar({ navigation, back }: any) {
             />
           </View>
         </Menu>
-      ) : null}
+      }
     </Appbar.Header>
   );
 }
