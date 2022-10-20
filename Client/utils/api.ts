@@ -47,22 +47,24 @@ const registerRequest = async (username: string, email: string, password: string
 };
 
 const fetchMyHouseholdsRequest = async () => {
-  const response = await fetch(`${url}/household/MyHouseholds`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${await get("auth.token")}`,
-    },
-  });
+  try {
+    const response = await fetch(`${url}/household/MyHouseholds`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${await get("auth.token")}`,
+      },
+    });
 
-  if (response.ok) {
-    const data = await response.json();
-    console.log(data);
-    return data;
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    throw new Error("Could not fetch households");
   }
 
   // const data = await response.json();
-  throw response;
 };
 
 const applicationRequest = async (code: string) => {
@@ -82,8 +84,7 @@ const applicationRequest = async (code: string) => {
     return data;
   }
 
-  const data = await response.json();
-  throw data as ErrorResponse;
+  throw response;
 };
 
 const createHouseholdRequest = async (name: string) => {
@@ -103,8 +104,7 @@ const createHouseholdRequest = async (name: string) => {
     return data;
   }
 
-  const data = await response.json();
-  throw data as ErrorResponse;
+  throw response;
 };
 
 export {

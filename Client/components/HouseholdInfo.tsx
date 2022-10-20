@@ -1,7 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useAppSelector } from "../store/store";
 import theme from "../utils/theme";
 import { Household } from "../utils/type";
 
@@ -12,10 +11,6 @@ interface Props {
 
 const HouseholdInfo = ({ household, onPress }: Props) => {
   const [collapsed, setCollapsed] = useState(true);
-
-  const me = useAppSelector((state) => state.auth.user);
-  const userIcon = household.profiles.find((profile) => profile.user.email === me?.email)?.avatar
-    .icon;
 
   function emoji(animal = "") {
     switch (animal) {
@@ -39,8 +34,6 @@ const HouseholdInfo = ({ household, onPress }: Props) => {
         return "";
     }
   }
-
-  console.log(household.profiles);
 
   return (
     <Pressable style={styles.wrapper} onPress={onPress}>

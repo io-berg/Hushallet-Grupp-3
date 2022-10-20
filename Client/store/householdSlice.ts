@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { applicationRequest, createHouseholdRequest, fetchMyHouseholdsRequest } from "../utils/api";
 import { Household } from "../utils/type";
 
-// export interface HouseholdState = Household;
 export interface HouseholdState {
   loading: boolean;
   households: Household[];
@@ -72,10 +71,8 @@ export const fetchMyHouseholds = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetchMyHouseholdsRequest();
-      console.log(response);
       return response;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error);
     }
   }

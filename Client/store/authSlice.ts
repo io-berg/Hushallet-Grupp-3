@@ -13,25 +13,25 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-  // user: {
-  //   username: "Mock User",
-  //   email: "mock@mock.com",
-  // },
-  // token: "1234567890",
-  // expirationDate: new Date(9999, 12, 31).toISOString(),
-  // loginErrors: null,
-  // registerErrors: null,
-  // registerSuccess: false,
-  // loading: false,
-
-  // FÖR ATT SE LOGIN, ÄNDRA TILL NULL
-  user: null,
-  token: "",
-  expirationDate: "",
+  user: {
+    username: "Mock User",
+    email: "mock@mock.com",
+  },
+  token: "1234567890",
+  expirationDate: new Date(9999, 12, 31).toISOString(),
   loginErrors: null,
   registerErrors: null,
-  loading: false,
   registerSuccess: false,
+  loading: false,
+
+  // FÖR ATT SE LOGIN, ÄNDRA TILL NULL
+  // user: null,
+  // token: "",
+  // expirationDate: "",
+  // loginErrors: null,
+  // registerErrors: null,
+  // loading: false,
+  // registerSuccess: false,
 };
 
 export const login = createAsyncThunk<
@@ -109,7 +109,6 @@ const authSlice = createSlice({
     });
     builder.addCase(register.rejected, (state, error) => {
       state.loading = false;
-      console.log(error);
       state.registerErrors = error.payload as ErrorResponse;
     });
   },

@@ -93,7 +93,7 @@
 - [ ] Användare ska kunna se de tilldelade sysslorna i sitt
       gränssnitt.
 - [ ] En ägare ska kunna skapa grupper av sysslor som automatiskt tilldelas användarna i
-      hushållet och roteras baserat på ett intervall i dagar.
+      hushållet och roteras baserat på ett intervall i dagar
 
 - [ ] En användare ska kunna lägga till en ljudinspelning och en bild för att beskriva sysslan ytterligare.
 
