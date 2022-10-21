@@ -8,7 +8,7 @@ export function CustomNavigationBar({ navigation, back }: any) {
   const closeMenu = () => setVisible(false);
 
   return (
-    <Appbar.Header style={styles.headern}>
+    <Appbar.Header>
       <Appbar.BackAction onPress={navigation.goBack} />
       <Appbar.Content titleStyle={{ textAlign: "center" }} title="Hushållet" />
       {
@@ -71,9 +71,6 @@ const styles = StyleSheet.create({
   menyback: {},
   meny: {
     // marginTop: 120,
-  },
-  headern: {
-    color: "black",
   },
   button: {
     backgroundColor: "white",
