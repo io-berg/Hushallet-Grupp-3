@@ -19,7 +19,15 @@ const Tab = createMaterialTopTabNavigator<TabsParamList>();
 
 export function TabNavigator() {
   return (
-    <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarContentContainerStyle: {
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      }}
+      tabBar={(props) => <MyTabBar {...props} />}
+    >
       <Tab.Screen name="Overview" component={HomeScreen} />
       <Tab.Screen name="Statistics1" component={Statistics1Screen} />
       <Tab.Screen name="Statistics2" component={Statistics2Screen} />

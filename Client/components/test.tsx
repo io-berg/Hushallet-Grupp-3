@@ -21,6 +21,7 @@ export default function MyTabBar({ state, navigation }: MaterialTopTabBarProps) 
           onPress={() => navigation.navigate(state.routes[state.index - 1].name)}
           style={{
             alignSelf: "flex-start",
+            marginLeft: 20,
           }}
         />
       ) : (
@@ -43,6 +44,7 @@ export default function MyTabBar({ state, navigation }: MaterialTopTabBarProps) 
           onPress={() => navigation.navigate(state.routes[state.index + 1].name)}
           style={{
             alignSelf: "flex-end",
+            marginRight: 20,
           }}
         />
       ) : (

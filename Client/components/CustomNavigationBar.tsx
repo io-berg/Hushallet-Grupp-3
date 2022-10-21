@@ -69,9 +69,7 @@ export function CustomNavigationBar({ navigation, back }: any) {
 
 const styles = StyleSheet.create({
   menyback: {},
-  meny: {
-    // marginTop: 120,
-  },
+  meny: {},
   button: {
     backgroundColor: "white",
     borderRadius: 10,

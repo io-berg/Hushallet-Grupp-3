@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
+import DetailScreen from "../screens/DetailScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -23,6 +24,7 @@ export type RootStackParamList = {
   HouseholdOverview: undefined;
   Start: undefined;
   SkapaProfil: undefined;
+  Detalj: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -99,6 +101,7 @@ export const RootNavigator = () => {
                 component={ProfileScreen}
                 options={{ title: "Profil" }}
               />
+              <Stack.Screen name="Detalj" component={DetailScreen} options={{ title: "Detalj" }} />
               <Stack.Screen
                 name="SkapaProfil"
                 component={CreateProfileScreen}
