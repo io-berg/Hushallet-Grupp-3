@@ -13,6 +13,7 @@ import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
 import { Profile } from "../utils/type";
+import DetailScreen from "../screens/DetailScreen";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -24,6 +25,8 @@ export type RootStackParamList = {
   HouseholdOverview: undefined;
   Start: undefined;
   EditProfile: undefined;
+  SkapaProfil: undefined;
+  Detalj: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -100,6 +103,7 @@ export const RootNavigator = () => {
                 component={ProfileScreen}
                 options={{ title: "Profil" }}
               />
+              <Stack.Screen name="Detalj" component={DetailScreen} options={{ title: "Detalj" }} />
               <Stack.Screen
                 name="EditProfile"
                 component={EditProfileScreen}

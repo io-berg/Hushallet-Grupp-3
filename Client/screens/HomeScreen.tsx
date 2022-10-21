@@ -1,5 +1,6 @@
-import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import HomeCard from "../components/HomeCard";
 import { logout } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -13,9 +14,27 @@ export default function HomeScreen({ navigation }: any) {
   const current = useAppSelector((state) => state.household.current);
   console.log("current", current);
   console.log("selected", selected);
+  const [test, setTest] = useState([
+    { title: "Laga mat" },
+    { title: "Damma" },
+    { title: "Diska" },
+    { title: "Ta hand om My" },
+    { title: "Torka golvet" },
+    { title: "Vattna blommor" },
+  ]);
 
   return (
     <View style={styles.container}>
+      <FlatList
+        data={test}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigation.navigate("Detalj", item)}>
+            <HomeCard>
+              <Text>{item.title}</Text>
+            </HomeCard>
+          </TouchableOpacity>
+        )}
+      />
       <Text>Home Screen</Text>
       <Button title="Go to login" onPress={() => navigation.navigate("Login")} />
 
@@ -32,9 +51,5 @@ export default function HomeScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  container: {},
 });
