@@ -19,4 +19,14 @@ const darkTheme = {
   },
 };
 
-export { lightTheme, darkTheme };
+const theme = {
+  ...MD3LightTheme,
+  roundness: 10,
+  colors: {
+    ...MD3LightTheme.colors,
+    primary: "#FFFFFF",
+    accent: "#000000",
+  },
+};
+
+export { lightTheme, darkTheme, theme };

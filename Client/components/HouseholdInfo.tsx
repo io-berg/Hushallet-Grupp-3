@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import theme from "../utils/theme";
+import { theme } from "../utils/theme";
 import { Household } from "../utils/type";
 
 interface Props {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    backgroundColor: theme.colors.surface,
+    //backgroundColor: theme.colors.surface,
     flexDirection: "row",
     borderRadius: 10,
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     display: "flex",
-    backgroundColor: theme.colors.surface,
+    //backgroundColor: theme.colors.surface,
     elevation: 5,
     width: "92%",
     borderRadius: 10,
