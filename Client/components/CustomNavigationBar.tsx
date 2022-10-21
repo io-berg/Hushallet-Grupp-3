@@ -9,8 +9,8 @@ export function CustomNavigationBar({ navigation, back }: any) {
 
   return (
     <Appbar.Header style={styles.headern}>
-      {<Appbar.BackAction onPress={navigation.goBack} />}
-      <Appbar.Content title="Hushållet" />
+      <Appbar.BackAction onPress={navigation.goBack} />
+      <Appbar.Content titleStyle={{ textAlign: "center" }} title="Hushållet" />
       {
         <Menu
           style={styles.meny}
@@ -68,14 +68,11 @@ export function CustomNavigationBar({ navigation, back }: any) {
 }
 
 const styles = StyleSheet.create({
-  menyback: {
-    backgroundColor: "#d3d3d3",
-  },
+  menyback: {},
   meny: {
-    marginTop: 120,
+    // marginTop: 120,
   },
   headern: {
-    backgroundColor: "#d3d3d3",
     color: "black",
   },
   button: {
