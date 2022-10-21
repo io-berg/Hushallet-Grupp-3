@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { applicationRequest, createHouseholdRequest, fetchMyHouseholdsRequest } from "../utils/api";
-import { Household } from "../utils/type";
+import { Household, Profile } from "../utils/type";
 
 export interface HouseholdState {
   loading: boolean;
   households: Household[];
-  current: Household | null;
+  current: number | null;
   fetchInfo: { type: "success" | "error"; message: string } | null;
 }
 
@@ -26,8 +26,8 @@ const initialState: HouseholdState = {
           },
           role: "admin",
           avatar: {
-            color: "red",
-            icon: "squid",
+            color: "#ee7e86",
+            icon: "🐙",
             token: true,
           },
           name: "Mock User",
@@ -75,7 +75,7 @@ export const fetchMyHouseholds = createAsyncThunk(
       const response = await fetchMyHouseholdsRequest();
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue("Failed to fetch");
     }
   }
 );
@@ -109,8 +109,21 @@ const householdSlice = createSlice({
   initialState,
   reducers: {
     setCurrentHousehold: (state, action) => {
-      state.current =
-        state.households.find((household) => household.id === action.payload.id) || null;
+      const selected = state.households.find((household) => household.id === action.payload.id);
+      if (selected) {
+        state.current = selected.id;
+      }
+    },
+
+    updateProfileInCurrentHousehold: (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        const index = state.households.indexOf(current);
+
+        state.households[index].profiles[action.payload.id] = {
+          ...action.payload,
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -151,4 +164,4 @@ const householdSlice = createSlice({
 });
 
 export default householdSlice.reducer;
-export const { setCurrentHousehold } = householdSlice.actions;
+export const { setCurrentHousehold, updateProfileInCurrentHousehold } = householdSlice.actions;

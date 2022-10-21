@@ -9,7 +9,8 @@ import EditProfileScreen from "../screens/EditProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
 import ThemeScreen from "../screens/Theme";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import { selectCurrentHousehold } from "../store/selectors";
+import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
 import { Profile } from "../utils/type";
 
@@ -34,7 +35,10 @@ export const RootNavigator = () => {
     ? new Date(auth.expirationDate).getTime() > new Date().getTime() && !!auth.token
     : false;
 
+  const selected = useAppSelector(selectCurrentHousehold);
+
   console.log(auth);
+  console.log(selected);
 
   console.log("isAuthenticated", isAuthenticated);
 
@@ -78,33 +82,45 @@ export const RootNavigator = () => {
         }}
       >
         {isAuthenticated ? (
-          <Stack.Group>
-            <Stack.Screen name="Home" component={TabNavigator} options={{ title: "Hushållet" }} />
-            <Stack.Screen
-              name="HouseholdOverview"
-              component={HouseholdOverviewScreen}
-              options={{ title: "Husålls Översikt" }}
-            />
+          selected ? (
+            <Stack.Group>
+              <Stack.Screen name="Home" component={TabNavigator} options={{ title: "Hushållet" }} />
+              <Stack.Screen
+                name="HouseholdOverview"
+                component={HouseholdOverviewScreen}
+                options={{ title: "Husålls Översikt" }}
+              />
+              <Stack.Screen
+                name="Start"
+                component={StartScreen}
+                options={{ title: "Mina Hushåll" }}
+              />
+              <Stack.Screen
+                name="Profile"
+                component={ProfileScreen}
+                options={{ title: "Profil" }}
+              />
+              <Stack.Screen
+                name="EditProfile"
+                component={EditProfileScreen}
+                options={{ title: "Skapa Profil" }}
+              />
+              <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
+            </Stack.Group>
+          ) : (
             <Stack.Screen
               name="Start"
               component={StartScreen}
               options={{ title: "Mina Hushåll" }}
             />
-            <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: "Profil" }} />
-            <Stack.Screen
-              name="EditProfile"
-              component={EditProfileScreen}
-              options={{ title: "Skapa Profil" }}
-            />
-            <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
-          </Stack.Group>
+          )
         ) : (
           <Stack.Group>
-            <Stack.Screen name="Login" component={LoginScreen} options={{ title: "Login" }} />
+            <Stack.Screen name="Login" component={LoginScreen} options={{ title: "Logga in" }} />
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
-              options={{ title: "Registring" }}
+              options={{ title: "Registrera" }}
             />
           </Stack.Group>
         )}

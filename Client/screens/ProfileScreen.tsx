@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { Button } from "react-native-paper";
 //import AvatarIcon from "../components/AvatarIconComponent";
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import { Profile } from "../utils/type";
 
@@ -11,12 +12,18 @@ type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 export default function ProfileScreen({ navigation }: Props) {
   const [currentProfile, setProfile] = React.useState<Profile>();
-  const profile = useAppSelector((state) => state.profile);
+  const selected = useAppSelector(selectCurrentHousehold);
+  const user = useAppSelector((state) => state.auth.user?.email);
+
+  function getProfile() {
+    const profile = selected?.profiles.find((profile) => profile.user.email == user);
+    return profile;
+  }
 
   React.useEffect(() => {
     (() => {
-      setProfile(profile);
-      console.log(profile.name);
+      setProfile(getProfile());
+      console.log(currentProfile?.name);
     })();
   }, []);
 

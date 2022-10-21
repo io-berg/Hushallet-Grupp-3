@@ -8,7 +8,8 @@ import AvatarButton from "../components/AvatarButtonComponent";
 import TextInputField from "../components/TextInputField";
 import FullWidthButton from "../components/FullWidthButton";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { updateProfile } from "../store/profileSlice";
+import { updateProfileInCurrentHousehold } from "../store/householdSlice";
+import { selectCurrentHousehold } from "../store/selectors";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditProfile">;
 
@@ -16,6 +17,22 @@ export default function EditProfileScreen({ navigation, route }: Props) {
   const [availibleAvatars, setState] = React.useState<avatar[] | null>(null);
   const [profileName, setProfileName] = React.useState("");
   const [profileAvatar, setProfileAvatar] = React.useState<avatar | null>(null);
+  const [currentProfile, setProfile] = React.useState<Profile>();
+
+  const selected = useAppSelector(selectCurrentHousehold);
+  const user = useAppSelector((state) => state.auth.user?.email);
+
+  function getProfile() {
+    const profile = selected?.profiles.find((profile) => profile.user.email == user);
+    return profile;
+  }
+
+  React.useEffect(() => {
+    (() => {
+      setProfile(getProfile());
+      console.log(currentProfile?.name);
+    })();
+  }, []);
 
   const dispatch = useAppDispatch();
 
@@ -26,11 +43,12 @@ export default function EditProfileScreen({ navigation, route }: Props) {
   }, []);
 
   const handleSubmit = () => {
-    const newProfile = {
+    const updateProfile = {
+      id: currentProfile?.id,
       name: profileName,
       avatar: profileAvatar,
     };
-    dispatch(updateProfile(newProfile));
+    dispatch(updateProfileInCurrentHousehold(updateProfile));
     navigation.navigate("Profile");
   };
 
