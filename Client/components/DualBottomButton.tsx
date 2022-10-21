@@ -16,11 +16,11 @@ interface Props {
 
 const DualBottomButton = ({ title1, icon1, onPress1, disabled1 }: Props) => {
   return (
-    <View style={{ flexDirection: "row" }}>
-      <Button icon={icon1} onPress={onPress1} disabled={disabled1}>
+    <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+      <Button mode="contained" icon={icon1} onPress={onPress1} disabled={disabled1}>
         {title1}
       </Button>
-      <Button icon={icon1} onPress={onPress1} disabled={disabled1}>
+      <Button mode="contained" icon={icon1} onPress={onPress1} disabled={disabled1}>
         {title1}Test2
       </Button>
     </View>
