@@ -5,7 +5,7 @@ import { Household } from "../utils/type";
 export interface HouseholdState {
   loading: boolean;
   households: Household[];
-  current: Household | null;
+  current: number | null;
   fetchInfo: { type: "success" | "error"; message: string } | null;
 }
 
@@ -73,7 +73,7 @@ export const fetchMyHouseholds = createAsyncThunk(
       const response = await fetchMyHouseholdsRequest();
       return response;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue("Failed to fetch");
     }
   }
 );
@@ -107,8 +107,10 @@ const householdSlice = createSlice({
   initialState,
   reducers: {
     setCurrentHousehold: (state, action) => {
-      state.current =
-        state.households.find((household) => household.id === action.payload.id) || null;
+      const selected = state.households.find((household) => household.id === action.payload.id);
+      if (selected) {
+        state.current = selected.id;
+      }
     },
   },
   extraReducers: (builder) => {

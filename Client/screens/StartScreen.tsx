@@ -12,6 +12,7 @@ import {
   sendApplication,
   setCurrentHousehold,
 } from "../store/householdSlice";
+import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import theme from "../utils/theme";
 
@@ -25,12 +26,19 @@ export default function StartScreen({ navigation }: Props) {
 
   const households = useAppSelector((state) => state.household.households);
   const fetchInfo = useAppSelector((state) => state.household.fetchInfo);
+  const selected = useAppSelector(selectCurrentHousehold);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchMyHouseholds());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (selected) {
+      navigation.navigate("Home");
+    }
+  }, [selected, navigation]);
 
   return (
     <ScrollView
@@ -120,8 +128,11 @@ export default function StartScreen({ navigation }: Props) {
               key={household.id}
               household={household}
               onPress={() => {
-                dispatch(setCurrentHousehold({ id: household.id }));
-                navigation.navigate("Home");
+                if (selected?.id !== household.id) {
+                  dispatch(setCurrentHousehold({ id: household.id }));
+                } else {
+                  navigation.navigate("Home");
+                }
               }}
             />
           ))}
