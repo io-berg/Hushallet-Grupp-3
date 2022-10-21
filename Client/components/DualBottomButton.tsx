@@ -1,74 +1,29 @@
 import React from "react";
+import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 interface Props {
   onPress1: () => void;
-  text1: string;
+  title1: string;
   icon1?: string;
   disabled1?: boolean;
 
   onPress2: () => void;
-  text2: string;
+  title2: string;
   icon2?: string;
   disabled2?: boolean;
 }
 
-const DualBottomButton = ({
-  onPress1,
-  text1,
-  icon1,
-  disabled1,
-  onPress2,
-  text2,
-  icon2,
-  disabled2,
-}: Props) => {
+const DualBottomButton = ({ title1, icon1, onPress1, disabled1 }: Props) => {
   return (
-    <view>
-      <Button
-        onPress={onPress1}
-        icon={icon1}
-        disabled={disabled1}
-        mode="elevated"
-        style={{
-          width: "50%",
-          shadowColor: "black",
-          backgroundColor: "#ffff",
-          elevation: 5,
-        }}
-      >
-        <Text
-          style={{
-            color: "black",
-            fontSize: 18,
-          }}
-        >
-          {text1}
-        </Text>
+    <View style={{ flexDirection: "row" }}>
+      <Button icon={icon1} onPress={onPress1} disabled={disabled1}>
+        {title1}
       </Button>
-      <Button
-        onPress={onPress2}
-        icon={icon2}
-        disabled={disabled2}
-        mode="elevated"
-        style={{
-          width: "50%",
-          shadowColor: "black",
-          backgroundColor: "#ffff",
-          elevation: 5,
-        }}
-      >
-        <Text
-          style={{
-            color: "black",
-            fontSize: 18,
-          }}
-        >
-          {text2}
-        </Text>
+      <Button icon={icon1} onPress={onPress1} disabled={disabled1}>
+        {title1}Test2
       </Button>
-      ;
-    </view>
+    </View>
   );
 };
 
