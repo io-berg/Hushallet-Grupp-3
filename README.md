@@ -5,7 +5,7 @@
 #### Kravlista
 
 - [ ] En logga, splashscreen och appikon ska designas och användas.
-- [ ] Applikationen ska byggas med RN, Expo & TS.
+- [x] Applikationen ska byggas med RN, Expo & TS.
 - [ ] Designen av appen ska utgå ifrån befintliga skisser, undantag kan ges men ska diskuteras
       med produktägare, godkännas och dokumenteras.
 
@@ -16,8 +16,8 @@
 
 #### Konto
 
-- [ ] En användare ska kunna registrera och logga in sig.
-- [ ] En användare ska kunna skapa ett nytt hushåll.
+- [x] En användare ska kunna registrera och logga in sig.
+- [x] En användare ska kunna skapa ett nytt hushåll.
 - [ ] En användare ska kunna gå med i ett hushåll genom att ange hushållets kod.
 
 #### Profil
@@ -51,11 +51,11 @@
 
 #### Kravlista
 
-- [ ] Information ska kommuniceras till och från en server.
+- [x] Information ska kommuniceras till och från en server.
 
 #### Hushåll
 
-- [ ] Alla användare i ett hushåll ska kunna se vilka som tillhör ett hushåll.
+- [x] Alla användare i ett hushåll ska kunna se vilka som tillhör ett hushåll.
 - [ ] En ägare av ett hushåll ska kunna se förfrågningar om att gå med i hushållet.
 - [ ] En ägare ska kunna acceptera eller neka förfrågningar.
 - [ ] En ägare ska kunna göra andra till ägare.
@@ -103,3 +103,8 @@
 
 - Screens och modeller godkännda
 - Designa en meny för navigering och få godkänt på den nästa handledningstillfälle
+
+#### v2:
+
+- Meny godkänd
+- Fortsätt att implementera funktionalitet

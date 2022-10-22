@@ -1,6 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { textToEmoji } from "../utils/avatar";
 import theme from "../utils/theme";
 import { Household } from "../utils/type";
 
@@ -11,29 +12,6 @@ interface Props {
 
 const HouseholdInfo = ({ household, onPress }: Props) => {
   const [collapsed, setCollapsed] = useState(true);
-
-  function emoji(animal = "") {
-    switch (animal) {
-      case "chicken":
-        return "🐥";
-      case "squid":
-        return "🐙";
-      case "whale":
-        return "🐋";
-      case "owl":
-        return "🦉";
-      case "fox":
-        return "🦊";
-      case "unicorn":
-        return "🦄";
-      case "pig":
-        return "🐷";
-      case "frog":
-        return "🐸";
-      default:
-        return "";
-    }
-  }
 
   return (
     <Pressable style={styles.wrapper} onPress={onPress}>
@@ -53,7 +31,7 @@ const HouseholdInfo = ({ household, onPress }: Props) => {
         household.profiles.map((p) => (
           <View key={p.id} style={styles.container}>
             <Text style={styles.smallText}>{p.name}</Text>
-            <Text style={styles.text}>{emoji(p.avatar.icon?.toLocaleLowerCase())}</Text>
+            <Text style={styles.text}>{textToEmoji(p.avatar.icon?.toLocaleLowerCase())}</Text>
           </View>
         ))}
     </Pressable>
@@ -76,7 +54,7 @@ const styles = StyleSheet.create({
   wrapper: {
     display: "flex",
     backgroundColor: theme.colors.surface,
-    elevation: 5,
+    elevation: 1,
     width: "92%",
     borderRadius: 10,
     flexDirection: "column",

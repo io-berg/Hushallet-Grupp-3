@@ -8,7 +8,7 @@ export function CustomNavigationBar({ navigation, back }: any) {
   const closeMenu = () => setVisible(false);
 
   return (
-    <Appbar.Header>
+    <Appbar.Header mode="small">
       <Appbar.BackAction onPress={navigation.goBack} />
       <Appbar.Content titleStyle={{ textAlign: "center" }} title="Hushållet" />
       {

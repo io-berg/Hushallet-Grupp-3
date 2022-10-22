@@ -36,11 +36,6 @@ export const RootNavigator = () => {
 
   const selected = useAppSelector(selectCurrentHousehold);
 
-  console.log(auth);
-  console.log(selected);
-
-  console.log("isAuthenticated", isAuthenticated);
-
   // const dispatch = useAppDispatch();
 
   /*useEffect(() => {
@@ -87,7 +82,7 @@ export const RootNavigator = () => {
               <Stack.Screen
                 name="HouseholdOverview"
                 component={HouseholdOverviewScreen}
-                options={{ title: "Husålls Översikt" }}
+                options={{ title: selected.name }}
               />
               <Stack.Screen
                 name="Start"
