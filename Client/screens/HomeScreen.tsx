@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HomeCard from "../components/HomeCard";
+import TaskHeader from "../components/TaskHeader";
 import { logout } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -25,6 +26,7 @@ export default function HomeScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
+      <TaskHeader title="Idag" />
       <FlatList
         data={test}
         renderItem={({ item }) => (
