@@ -1,3 +1,87 @@
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Innehållsförteckning</summary>
+  <ol>
+    <li>
+      <a href="#project-info">Projekt Info</a>
+      <ul>
+        <li><a href="#byggt-med">Byggt med</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#installation">Installation</a>
+    </li>
+    <li><a href="#kravlista">Kravlista</a></li>
+  </ol>
+</details>
+<br />
+
+<!-- ABOUT THE PROJECT -->
+
+## Project Info
+
+Apputveckling Inlämning Hushållet - Grupp 3
+
+En app för att samla och visa statistik över sysslorna i ett hushåll.
+
+<br/>
+
+### Byggt Med
+
+- [Expo](https://docs.expo.dev/)
+- [React Native](https://reactnative.dev/)
+- [Typescript](https://www.typescriptlang.org/)
+  <br/>
+
+<!-- GETTING STARTED -->
+
+### Nödvändig Förutsättning
+
+- node.js: https://nodejs.org/en/download/
+- npm: https://www.npmjs.com/get-npm
+- dotnet SDK: https://dotnet.microsoft.com/download
+
+### Installation
+
+- Klona repot
+  ```sh
+  git clone https://github.com/io-berg/Hushallet-Grupp-3.git
+  ```
+
+### Backend
+
+1. Navigera till Server mappen
+   ```sh
+   cd Server
+   ```
+2. Installera paket
+   ```sh
+   dotnet restore
+   ```
+3. Starta servern
+   ```sh
+   dotnet run
+   ```
+
+### Frontend
+
+1. Navigera till Client mappen
+   ```sh
+   cd Client
+   ```
+2. Installera paket
+   ```sh
+   npm install
+   ```
+3. Starta appen
+   ```sh
+   npm start
+   ```
+4. Öppna appen genom en Android emulator
+   ```sh
+   npm run android
+   ```
+
 # KRAVLISTA
 
 ## Krav för godkänt
