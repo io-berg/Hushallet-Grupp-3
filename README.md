@@ -18,7 +18,7 @@
 
 - [x] En användare ska kunna registrera och logga in sig.
 - [x] En användare ska kunna skapa ett nytt hushåll.
-- [ ] En användare ska kunna gå med i ett hushåll genom att ange hushållets kod.
+- [x] En användare ska kunna gå med i ett hushåll genom att ange hushållets kod.
 
 #### Profil
 
@@ -56,8 +56,8 @@
 #### Hushåll
 
 - [x] Alla användare i ett hushåll ska kunna se vilka som tillhör ett hushåll.
-- [ ] En ägare av ett hushåll ska kunna se förfrågningar om att gå med i hushållet.
-- [ ] En ägare ska kunna acceptera eller neka förfrågningar.
+- [x] En ägare av ett hushåll ska kunna se förfrågningar om att gå med i hushållet.
+- [x] En ägare ska kunna acceptera eller neka förfrågningar.
 - [ ] En ägare ska kunna göra andra till ägare.
 
 #### Konto

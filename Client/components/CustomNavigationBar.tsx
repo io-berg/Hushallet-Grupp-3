@@ -1,11 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Menu } from "react-native-paper";
+import { logout } from "../store/authSlice";
+import { useAppDispatch } from "../store/store";
 
 export function CustomNavigationBar({ navigation, back }: any) {
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
+  const dispatch = useAppDispatch();
 
   return (
     <Appbar.Header mode="small">
@@ -57,7 +60,7 @@ export function CustomNavigationBar({ navigation, back }: any) {
             <Menu.Item
               leadingIcon="location-exit"
               style={styles.logButton}
-              onPress={() => navigation.navigate("LoggaUt")}
+              onPress={() => dispatch(logout())}
               title="Logga ut"
             />
           </View>

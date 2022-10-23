@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, Household, LoginResponse, RegisterResponse } from "./type";
+import { ErrorResponse, LoginResponse, RegisterResponse } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
@@ -63,8 +63,6 @@ const fetchMyHouseholdsRequest = async () => {
   } catch (error) {
     throw new Error("Could not fetch households");
   }
-
-  // const data = await response.json();
 };
 
 const applicationRequest = async (code: string) => {
@@ -80,8 +78,27 @@ const applicationRequest = async (code: string) => {
   });
 
   if (response.ok) {
-    const data: Household[] = await response.json();
-    return data;
+    return true;
+  }
+
+  throw response;
+};
+
+const applicationResponseRequest = async (applicationId: number, accept: boolean) => {
+  const response = await fetch(`${url}/household/ApplicationResponse`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      applicationId: applicationId,
+      accepted: accept,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
   }
 
   throw response;
@@ -107,10 +124,32 @@ const createHouseholdRequest = async (name: string) => {
   throw response;
 };
 
+const transferOwnershipRequest = async (householdId: number, email: string) => {
+  const response = await fetch(`${url}/household/TransferAdmin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      email,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  throw response;
+};
+
 export {
   loginRequest,
   registerRequest,
   fetchMyHouseholdsRequest,
   applicationRequest,
   createHouseholdRequest,
+  applicationResponseRequest,
+  transferOwnershipRequest,
 };

@@ -41,8 +41,8 @@ public class HouseholdController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var userId = _userManager.GetUserId(User);
-        var result = await _householdService.CreateApplication(model.Code, userId);
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var result = await _householdService.CreateApplication(user.Id, model.Code);
 
         if (result)
         {
@@ -81,6 +81,46 @@ public class HouseholdController : ControllerBase
         if (household != null)
         {
             return Ok(household);
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPost]
+    [Route("ApplicationResponse")]
+    public async Task<IActionResult> ApplicationResponse([FromBody] ApplicationResponseModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var result = await _householdService.ApplicationResponse(model.ApplicationId, model.Accepted, user);
+
+        if (result)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPost]
+    [Route("TransferAdmin")]
+    public async Task<IActionResult> TransferAdmin([FromBody] TransferAdminModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var result = await _householdService.TransferAdmin(model.HouseholdId, model.Email, user);
+
+        if (result)
+        {
+            return Ok();
         }
 
         return BadRequest();

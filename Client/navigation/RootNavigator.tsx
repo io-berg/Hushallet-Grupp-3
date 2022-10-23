@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect } from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
@@ -9,8 +9,10 @@ import ProfileScreen from "../screens/ProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
 import ThemeScreen from "../screens/Theme";
+import { AuthState, hydrateAuth } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { get } from "../utils/localStorage";
 import { TabNavigator } from "./TabsNavigator";
 
 export type RootStackParamList = {
@@ -36,9 +38,9 @@ export const RootNavigator = () => {
 
   const selected = useAppSelector(selectCurrentHousehold);
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  /*useEffect(() => {
+  useEffect(() => {
     (async () => {
       let values: AuthState = {
         token: "",
@@ -65,7 +67,7 @@ export const RootNavigator = () => {
       }
       dispatch(hydrateAuth(values));
     })();
-  }, [dispatch]);*/
+  }, [dispatch]);
 
   return (
     <NavigationContainer>

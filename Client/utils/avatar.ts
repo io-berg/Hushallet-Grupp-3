@@ -1,5 +1,5 @@
 export function textToEmoji(icon = "") {
-  switch (icon) {
+  switch (icon.toLocaleLowerCase()) {
     case "chicken":
       return "🐥";
     case "squid":
