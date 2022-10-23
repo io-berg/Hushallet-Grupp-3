@@ -1,33 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Profile } from "../utils/type";
 
-const initialState: Profile = {
-  id: 1,
-  user: {
-    username: "Mock User",
-    email: "mock@mock.com",
-  },
-  role: "admin",
-  avatar: {
-    color: "#ED5949",
-    icon: "🐙",
-    token: true,
-  },
-  name: "Mock User",
+interface ProfileState {
+  profile: Profile | null;
+}
+const initialState: ProfileState = {
+  profile: null,
 };
 
 const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
+    setProfile: (state, action) => {
+      state.profile = { ...action.payload.profile };
+      console.log(state.profile?.name);
+    },
     updateProfile: (state, action) => {
-      state.avatar.color = action.payload.avatar.color;
-      state.avatar.icon = action.payload.avatar.icon;
-      state.name = action.payload.name;
-      console.log(state.name);
+      if (state.profile) {
+        state.profile.avatar.color = action.payload.avatar.color;
+        state.profile.avatar.icon = action.payload.avatar.icon;
+        state.profile.name = action.payload.name;
+        console.log(state.profile.name);
+      }
     },
   },
 });
 
 export default profileSlice.reducer;
-export const { updateProfile } = profileSlice.actions;
+export const { setProfile, updateProfile } = profileSlice.actions;

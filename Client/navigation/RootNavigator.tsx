@@ -12,7 +12,6 @@ import ThemeScreen from "../screens/Theme";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
-import { Profile } from "../utils/type";
 import DetailScreen from "../screens/DetailScreen";
 
 export type RootStackParamList = {
@@ -25,7 +24,6 @@ export type RootStackParamList = {
   HouseholdOverview: undefined;
   Start: undefined;
   EditProfile: undefined;
-  SkapaProfil: undefined;
   Detalj: undefined;
 };
 
