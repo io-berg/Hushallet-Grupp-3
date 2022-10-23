@@ -47,9 +47,82 @@ const initialState: HouseholdState = {
       ],
       tasks: [
         {
-          id: 0,
-          title: "Mock Task",
-          description: "Mock Description",
+          id: 1,
+          title: "Laga mat",
+          description:
+            "Kolla på kylskåpet vilken mat det är som ska lagas idag. Följ recept i receptboken som ligger på hyllan i köket",
+          effort: 1,
+          frequency: 1,
+          taskHistory: [
+            {
+              id: 0,
+              profileId: 0,
+              date: new Date().toISOString(),
+            },
+          ],
+        },
+        {
+          id: 2,
+          title: "Damma",
+          description:
+            "Damma av alla ytor i alla rum. (ta bort dukar, blommor osv) Använd trasa, hink och rengöringsmedel som står i städskåpet i hallen.",
+          effort: 1,
+          frequency: 1,
+          taskHistory: [
+            {
+              id: 0,
+              profileId: 0,
+              date: new Date().toISOString(),
+            },
+          ],
+        },
+        {
+          id: 3,
+          title: "Diska",
+          description:
+            "Lägg in disk i diskmaskin. Övrig disk, diskas för hand så som stekpannor tex",
+          effort: 1,
+          frequency: 1,
+          taskHistory: [
+            {
+              id: 0,
+              profileId: 0,
+              date: new Date().toISOString(),
+            },
+          ],
+        },
+        {
+          id: 4,
+          title: "Ta hand om My",
+          description: "Ut och gå med My 4 gånger om dagen, ge mat morgon och kväll.",
+          effort: 1,
+          frequency: 1,
+          taskHistory: [
+            {
+              id: 0,
+              profileId: 0,
+              date: new Date().toISOString(),
+            },
+          ],
+        },
+        {
+          id: 5,
+          title: "Torka golvet",
+          description: "Torka av golvet med mopp och rengöring som står i städskåpet",
+          effort: 1,
+          frequency: 1,
+          taskHistory: [
+            {
+              id: 0,
+              profileId: 0,
+              date: new Date().toISOString(),
+            },
+          ],
+        },
+        {
+          id: 6,
+          title: "Vattna blommor",
+          description: "Vattna alla blommor, ej plastblommorna ;)",
           effort: 1,
           frequency: 1,
           taskHistory: [
