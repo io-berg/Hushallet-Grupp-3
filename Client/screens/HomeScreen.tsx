@@ -1,11 +1,15 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HomeCard from "../components/HomeCard";
+import { RootStackParamList } from "../navigation/RootNavigator";
 import { logout } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 
-export default function HomeScreen({ navigation }: any) {
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+
+export default function HomeScreen({ navigation, route }: Props) {
   const dispatch = useAppDispatch();
   const household = useAppSelector(selectCurrentHousehold);
   const username = useAppSelector((state) => state.auth.user?.username);
@@ -14,21 +18,13 @@ export default function HomeScreen({ navigation }: any) {
   const current = useAppSelector((state) => state.household.current);
   console.log("current", current);
   console.log("selected", selected);
-  const [test, setTest] = useState([
-    { title: "Laga mat" },
-    { title: "Damma" },
-    { title: "Diska" },
-    { title: "Ta hand om My" },
-    { title: "Torka golvet" },
-    { title: "Vattna blommor" },
-  ]);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={test}
+        data={household?.tasks}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate("Detalj", item)}>
+          <TouchableOpacity onPress={() => navigation.navigate("Detalj")}>
             <HomeCard>
               <Text>{item.title}</Text>
             </HomeCard>
