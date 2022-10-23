@@ -11,7 +11,7 @@
 
 #### Hushåll
 
-- [ ] Ett hushåll ska ha ett namn och en genererad (enkel) kod så andra kan gå med i hushållet,
+- [x] Ett hushåll ska ha ett namn och en genererad (enkel) kod så andra kan gå med i hushållet,
       namnet ska gå att ändra.
 
 #### Konto
@@ -58,17 +58,17 @@
 - [x] Alla användare i ett hushåll ska kunna se vilka som tillhör ett hushåll.
 - [x] En ägare av ett hushåll ska kunna se förfrågningar om att gå med i hushållet.
 - [x] En ägare ska kunna acceptera eller neka förfrågningar.
-- [ ] En ägare ska kunna göra andra till ägare.
+- [x] En ägare ska kunna göra andra till ägare.
 
 #### Konto
 
-- [ ] När en användare har valt att gå med i ett hushåll behöver en ägare av hushållet först godkänna användaren.
-- [ ] En användare ska kunna lämna ett hushåll.
+- [x] När en användare har valt att gå med i ett hushåll behöver en ägare av hushållet först godkänna användaren.
+- [x] En användare ska kunna lämna ett hushåll.
 
 #### Profil
 
 - [ ] En användare ska kunna ställa in appens utseende (mörkt, ljust, auto)
-- [ ] Om en användare tillhör två eller fler hushåll ska denne kunna välja att byta mellan de olika hushållen.
+- [x] Om en användare tillhör två eller fler hushåll ska denne kunna välja att byta mellan de olika hushållen.
 
 #### Sysslor
 

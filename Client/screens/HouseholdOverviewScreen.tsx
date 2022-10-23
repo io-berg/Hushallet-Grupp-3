@@ -1,8 +1,14 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 import { Button, Modal, Portal, Text, TouchableRipple } from "react-native-paper";
 import OverViewUserButton from "../components/OverviewUserButton";
-import { sendApplicationResponse, transferOwnership } from "../store/householdSlice";
+import TextInputField from "../components/TextInputField";
+import {
+  changeHouseholdName,
+  leaveHousehold,
+  sendApplicationResponse,
+  transferOwnership,
+} from "../store/householdSlice";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { textToEmoji } from "../utils/avatar";
@@ -11,11 +17,18 @@ import { Application, Profile } from "../utils/type";
 export default function HouseholdOverviewScreen() {
   const [selectedProfile, setSelectedProfile] = useState<Profile>();
   const [selectedApplication, setSelectedApplication] = useState<Application>();
+  const [showNamechangeModal, setShowNamechangeModal] = useState(false);
+  const [householdName, setHouseholdName] = useState("");
+
   const household = useAppSelector(selectCurrentHousehold);
   const userIsOwner = useAppSelector(selectCurrentUserProfile)?.role === "admin";
   const dispatch = useAppDispatch();
-  console.log(household);
-  // const applications = household?.applications;
+
+  useEffect(() => {
+    if (household) {
+      setHouseholdName(household.name);
+    }
+  }, [household]);
 
   if (household) {
     return (
@@ -87,8 +100,8 @@ export default function HouseholdOverviewScreen() {
           </View>
         )}
 
-        {selectedProfile && (
-          <Portal>
+        <Portal>
+          {selectedProfile && (
             <Modal
               visible={selectedProfile !== undefined}
               onDismiss={() => setSelectedProfile(undefined)}
@@ -123,10 +136,8 @@ export default function HouseholdOverviewScreen() {
                 </Button>
               )}
             </Modal>
-          </Portal>
-        )}
-        {userIsOwner && selectedApplication && (
-          <Portal>
+          )}
+          {userIsOwner && selectedApplication && (
             <Modal
               visible={selectedApplication !== undefined}
               onDismiss={() => setSelectedApplication(undefined)}
@@ -169,7 +180,53 @@ export default function HouseholdOverviewScreen() {
                 </Button>
               </View>
             </Modal>
-          </Portal>
+          )}
+          <Modal
+            visible={showNamechangeModal}
+            onDismiss={() => setShowNamechangeModal(false)}
+            style={styles.modal}
+            contentContainerStyle={styles.modalContent}
+          >
+            <TextInputField
+              value={householdName}
+              onChange={setHouseholdName}
+              placeholder="Hushållsnamn"
+            />
+            <Text>{selectedApplication?.email}</Text>
+
+            <Button
+              onPress={() => {
+                dispatch(changeHouseholdName({ householdId: household.id, name: householdName }));
+                setShowNamechangeModal(false);
+              }}
+            >
+              Acceptera
+            </Button>
+          </Modal>
+        </Portal>
+        {userIsOwner ? (
+          <Button onPress={() => setShowNamechangeModal(true)}>Byt hushållets namn</Button>
+        ) : (
+          <Button
+            onPress={() => {
+              Alert.alert(
+                "Är du säker?",
+                "Om du lämnar hushållet kommer du inte kunna komma åt det igen.",
+                [
+                  {
+                    text: "Avbryt",
+                    style: "cancel",
+                  },
+                  {
+                    text: "Lämna hushållet",
+                    onPress: () => dispatch(leaveHousehold(household.id)),
+                  },
+                ]
+              );
+            }}
+          >
+            Lämna hushållet
+          </Button>
         )}
       </View>
     );

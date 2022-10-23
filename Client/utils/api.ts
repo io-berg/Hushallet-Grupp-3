@@ -144,6 +144,45 @@ const transferOwnershipRequest = async (householdId: number, email: string) => {
   throw response;
 };
 
+const changeHouseholdNameRequest = async (householdId: number, name: string) => {
+  const response = await fetch(`${url}/household/ChangeHouseholdName`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      name,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  throw response;
+};
+
+const leaveHouseholdRequest = async (householdId: number) => {
+  const response = await fetch(`${url}/household/LeaveHousehold`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  throw response;
+};
+
 export {
   loginRequest,
   registerRequest,
@@ -152,4 +191,6 @@ export {
   createHouseholdRequest,
   applicationResponseRequest,
   transferOwnershipRequest,
+  changeHouseholdNameRequest,
+  leaveHouseholdRequest,
 };

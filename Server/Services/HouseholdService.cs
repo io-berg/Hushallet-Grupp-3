@@ -177,7 +177,7 @@ public class HouseholdService
             .Where(p => p.UserId == responder.Id)
             .FirstOrDefault();
 
-        if (responderProfile.Role != "admin" || responderProfile.Role != "Admin")
+        if (responderProfile.Role.ToLower() != "admin")
         {
             return false;
         }
@@ -239,6 +239,59 @@ public class HouseholdService
 
         newAdmin.Role = "admin";
         senderProfile.Role = "member";
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<Boolean> ChangeHouseholdName(int householdId, string name, IdentityUser sender)
+    {
+        var household = await _context.Households
+            .Where(h => h.Id == householdId)
+            .Include(h => h.Profiles)
+                .ThenInclude(p => p.User)
+            .FirstOrDefaultAsync();
+
+        var senderProfile = household.Profiles
+            .Where(p => p.UserId == sender.Id)
+            .FirstOrDefault();
+
+        if (senderProfile.Role.ToLower() != "admin")
+        {
+            return false;
+        }
+
+        household.Name = name;
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<Boolean> LeaveHousehold(int householdId, IdentityUser sender)
+    {
+        var household = await _context.Households
+            .Where(h => h.Id == householdId)
+            .Include(h => h.Profiles)
+                .ThenInclude(p => p.User)
+            .Include(h => h.Tasks)
+                .ThenInclude(t => t.History)
+                .ThenInclude(h => h.Profile)
+            .FirstOrDefaultAsync();
+
+        var senderProfile = household.Profiles
+            .Where(p => p.UserId == sender.Id)
+            .FirstOrDefault();
+
+        if (senderProfile.Role.ToLower() == "admin")
+        {
+            return false;
+        }
+
+        household.Profiles.Remove(senderProfile);
+
+        foreach (var task in household.Tasks)
+        {
+            task.History.RemoveAll(h => h.ProfileId == senderProfile.Id);
+        }
 
         await _context.SaveChangesAsync();
         return true;

@@ -2,8 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   applicationRequest,
   applicationResponseRequest,
+  changeHouseholdNameRequest,
   createHouseholdRequest,
   fetchMyHouseholdsRequest,
+  leaveHouseholdRequest,
   transferOwnershipRequest,
 } from "../utils/api";
 import { Household } from "../utils/type";
@@ -134,6 +136,32 @@ export const transferOwnership = createAsyncThunk<string, { householdId: number;
   }
 );
 
+export const changeHouseholdName = createAsyncThunk<string, { householdId: number; name: string }>(
+  "household/changeHouseholdName",
+  async (data, { rejectWithValue }) => {
+    try {
+      await changeHouseholdNameRequest(data.householdId, data.name);
+      return data.name;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const leaveHousehold = createAsyncThunk(
+  "household/leaveHousehold",
+  async (householdId: number, { rejectWithValue }) => {
+    try {
+      const response = await leaveHouseholdRequest(householdId);
+      if (response) {
+        return householdId;
+      }
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const householdSlice = createSlice({
   name: "households",
   initialState,
@@ -192,6 +220,16 @@ const householdSlice = createSlice({
           return p;
         });
       }
+    });
+    builder.addCase(changeHouseholdName.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.name = action.payload;
+      }
+    });
+    builder.addCase(leaveHousehold.fulfilled, (state, action) => {
+      state.households = state.households.filter((h) => h.id !== action.payload);
+      state.current = null;
     });
   },
 });
