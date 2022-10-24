@@ -167,7 +167,7 @@ export const sendApplication = createAsyncThunk<boolean, { code: string }>(
       await applicationRequest(data.code);
       return true;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue("Failed to send application");
     }
   }
 );

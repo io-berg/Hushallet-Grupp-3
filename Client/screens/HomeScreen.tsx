@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
-  const selected = useAppSelector(selectCurrentHousehold);
+  const household = useAppSelector(selectCurrentHousehold);
   const user = useAppSelector((state) => state.auth.user);
 
   return (
@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }: Props) {
       <FlatList
         data={household?.tasks}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate("Detalj")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Details")}>
             <HomeCard>
               <Text>{item.title}</Text>
             </HomeCard>
@@ -35,7 +35,7 @@ export default function HomeScreen({ navigation }: Props) {
       <Text>{user?.email}</Text>
 
       <Button title="Logout" onPress={() => dispatch(logout())} />
-      <Text>Household: {selected?.name}</Text>
+      <Text>Household: {household?.name}</Text>
 
       <Button title="Profile" onPress={() => navigation.navigate("Profile")}></Button>
       <Button title="ProfileCreate" onPress={() => navigation.navigate("SkapaProfil")}></Button>

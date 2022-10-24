@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps) {
   const [visible, setVisible] = React.useState(false);
   const theme = useAppSelector((state) => state.settings.theme);
+  const selectedHousehold = useAppSelector((state) => state.household.current);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
   const dispatch = useAppDispatch();
@@ -38,6 +39,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
               style={styles.button}
               onPress={() => navigation.navigate("Home")}
               title="Hem"
+              disabled={!selectedHousehold}
             />
 
             <Menu.Item
@@ -45,6 +47,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
               style={styles.button}
               onPress={() => navigation.navigate("HouseholdOverview")}
               title="Hushålls Översikt"
+              disabled={!selectedHousehold}
             />
 
             <Menu.Item
@@ -52,6 +55,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
               style={styles.button}
               onPress={() => navigation.navigate("Start")}
               title="Mina hushåll"
+              disabled={!selectedHousehold}
             />
 
             <Menu.Item
@@ -59,6 +63,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
               style={styles.button}
               onPress={() => navigation.navigate("Profile")}
               title="Profil"
+              disabled={!selectedHousehold}
             />
 
             <Menu.Item

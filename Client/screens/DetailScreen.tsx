@@ -1,14 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import HomeCard from "../components/HomeCard";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+type Props = NativeStackScreenProps<RootStackParamList, "Details">;
 
-export default function DetailScreen({ navigation, route }: Props) {
+export default function DetailScreen({ navigation }: Props) {
   const household = useAppSelector(selectCurrentHousehold);
   return (
     <View style={styles.container}>

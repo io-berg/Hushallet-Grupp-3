@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { Button, Image, ScrollView, StyleSheet, View } from "react-native";
-import { Modal, Portal, Text } from "react-native-paper";
+import { Modal, Portal, Text, useTheme } from "react-native-paper";
 import FullWidthButton from "../components/FullWidthButton";
 import HouseholdInfo from "../components/HouseholdInfo";
 import TextInputField from "../components/TextInputField";
@@ -14,7 +14,6 @@ import {
 } from "../store/householdSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import theme from "../utils/theme";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Start">;
 
@@ -28,6 +27,7 @@ export default function StartScreen({ navigation }: Props) {
   const fetchInfo = useAppSelector((state) => state.household.fetchInfo);
   const selected = useAppSelector(selectCurrentHousehold);
 
+  const theme = useTheme();
   const dispatch = useAppDispatch();
 
   useEffect(() => {

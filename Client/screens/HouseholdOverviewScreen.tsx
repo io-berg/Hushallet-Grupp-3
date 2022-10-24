@@ -21,7 +21,8 @@ export default function HouseholdOverviewScreen() {
   const [householdName, setHouseholdName] = useState("");
 
   const household = useAppSelector(selectCurrentHousehold);
-  const userIsOwner = useAppSelector(selectCurrentUserProfile)?.role === "admin";
+  const currentUserProfile = useAppSelector(selectCurrentUserProfile);
+  const userIsOwner = currentUserProfile?.role === "admin";
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -117,7 +118,7 @@ export default function HouseholdOverviewScreen() {
                 {selectedProfile?.name + " " + textToEmoji(selectedProfile?.avatar.icon)}
               </Text>
               <Text>{selectedProfile?.user.email}</Text>
-              {userIsOwner && (
+              {userIsOwner && selectedProfile != currentUserProfile && (
                 <Button
                   style={{
                     marginTop: 10,
