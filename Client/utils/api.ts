@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, Household, LoginResponse, Profile, RegisterResponse } from "./type";
+import { ErrorResponse, Household, LoginResponse, RegisterResponse } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
@@ -63,8 +63,6 @@ const fetchMyHouseholdsRequest = async () => {
   } catch (error) {
     throw new Error("Could not fetch households");
   }
-
-  // const data = await response.json();
 };
 
 const applicationRequest = async (code: string) => {
@@ -80,8 +78,27 @@ const applicationRequest = async (code: string) => {
   });
 
   if (response.ok) {
-    const data: Household[] = await response.json();
-    return data;
+    return true;
+  }
+
+  throw response;
+};
+
+const applicationResponseRequest = async (applicationId: number, accept: boolean) => {
+  const response = await fetch(`${url}/household/ApplicationResponse`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      applicationId: applicationId,
+      accepted: accept,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
   }
 
   throw response;
@@ -107,28 +124,64 @@ const createHouseholdRequest = async (name: string) => {
   throw response;
 };
 
-const updateProfileRequest = async (id: number, profile: Profile) => {
-  const response = await fetch(`${url}/household/UpdateProfileInHousehold`, {
+const transferOwnershipRequest = async (householdId: number, email: string) => {
+  const response = await fetch(`${url}/household/TransferAdmin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${await get("auth.token")}`,
     },
     body: JSON.stringify({
-      id,
-      profile,
+      householdId,
+      email,
     }),
   });
 
   if (response.ok) {
-    const data = await response.json();
-    return data;
+    return true;
   }
 
   throw response;
 };
 
-//"UpdateProfileInHousehold"
+const changeHouseholdNameRequest = async (householdId: number, name: string) => {
+  const response = await fetch(`${url}/household/ChangeHouseholdName`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      name,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  throw response;
+};
+
+const leaveHouseholdRequest = async (householdId: number) => {
+  const response = await fetch(`${url}/household/LeaveHousehold`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  throw response;
+};
 
 export {
   loginRequest,
@@ -136,5 +189,8 @@ export {
   fetchMyHouseholdsRequest,
   applicationRequest,
   createHouseholdRequest,
-  updateProfileRequest,
+  applicationResponseRequest,
+  transferOwnershipRequest,
+  changeHouseholdNameRequest,
+  leaveHouseholdRequest,
 };

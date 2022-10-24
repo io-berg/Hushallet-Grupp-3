@@ -24,7 +24,7 @@ export type RootStackParamList = {
   HouseholdOverview: undefined;
   Start: undefined;
   EditProfile: undefined;
-  Detalj: undefined;
+  Details: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -55,7 +55,7 @@ export const RootNavigator = () => {
               <Stack.Screen
                 name="HouseholdOverview"
                 component={HouseholdOverviewScreen}
-                options={{ title: "Husålls Översikt" }}
+                options={{ title: selected.name }}
               />
               <Stack.Screen
                 name="Start"
@@ -67,7 +67,11 @@ export const RootNavigator = () => {
                 component={ProfileScreen}
                 options={{ title: "Profil" }}
               />
-              <Stack.Screen name="Detalj" component={DetailScreen} options={{ title: "Detalj" }} />
+              <Stack.Screen
+                name="Details"
+                component={DetailScreen}
+                options={{ title: "Details" }}
+              />
               <Stack.Screen
                 name="EditProfile"
                 component={EditProfileScreen}

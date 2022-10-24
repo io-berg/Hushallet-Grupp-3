@@ -230,7 +230,7 @@ namespace Server.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Applications");
+                    b.ToTable("Application");
                 });
 
             modelBuilder.Entity("Server.Data.Models.Avatar", b =>
@@ -404,15 +404,13 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Data.Models.Application", b =>
                 {
-                    b.HasOne("Server.Data.Models.Household", "Household")
-                        .WithMany()
+                    b.HasOne("Server.Data.Models.Household", null)
+                        .WithMany("Applications")
                         .HasForeignKey("HouseholdId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Household");
 
                     b.Navigation("User");
                 });
@@ -460,6 +458,8 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Data.Models.Household", b =>
                 {
+                    b.Navigation("Applications");
+
                     b.Navigation("Profiles");
 
                     b.Navigation("Tasks");
