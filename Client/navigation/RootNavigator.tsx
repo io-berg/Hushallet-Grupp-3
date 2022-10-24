@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
+import CreateTaskScreen from "../screens/CreateTaskScreen";
 import DetailScreen from "../screens/DetailScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
-import ThemeScreen from "../screens/Theme";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
@@ -25,6 +25,7 @@ export type RootStackParamList = {
   Start: undefined;
   SkapaProfil: undefined;
   Detalj: undefined;
+  CreateTask: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -73,7 +74,11 @@ export const RootNavigator = () => {
                 component={CreateProfileScreen}
                 options={{ title: "Skapa Profil" }}
               />
-              <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
+              <Stack.Screen
+                name="CreateTask"
+                component={CreateTaskScreen}
+                options={{ title: "Skapa en ny syssla" }}
+              />
             </Stack.Group>
           ) : (
             <Stack.Screen

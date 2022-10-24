@@ -14,7 +14,6 @@ import {
 } from "../store/householdSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import theme from "../utils/theme";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Start">;
 

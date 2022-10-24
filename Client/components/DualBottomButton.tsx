@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Button, Divider, Text } from "react-native-paper";
+import { Button, Divider } from "react-native-paper";
 
 interface Props {
   onPress1: () => void;

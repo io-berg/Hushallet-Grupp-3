@@ -8,6 +8,7 @@ const lightTheme = {
     primary: "#000",
     accent: "#ffff",
     surface: "white",
+    disabled: "#f2f2f2",
   },
 };
 

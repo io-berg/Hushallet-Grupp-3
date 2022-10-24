@@ -134,6 +134,7 @@ const initialState: HouseholdState = {
           ],
         },
       ],
+      applications: [],
     },
   ],
   current: null,
