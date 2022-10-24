@@ -37,7 +37,10 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
             <Menu.Item
               leadingIcon="home"
               style={styles.button}
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => {
+                navigation.navigate("Home");
+                setVisible(false);
+              }}
               title="Hem"
               disabled={!selectedHousehold}
             />
@@ -45,7 +48,10 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
             <Menu.Item
               leadingIcon="calendar-month-outline"
               style={styles.button}
-              onPress={() => navigation.navigate("HouseholdOverview")}
+              onPress={() => {
+                navigation.navigate("HouseholdOverview");
+                setVisible(false);
+              }}
               title="Hushålls Översikt"
               disabled={!selectedHousehold}
             />
@@ -61,7 +67,10 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
             <Menu.Item
               leadingIcon="account"
               style={styles.button}
-              onPress={() => navigation.navigate("Profile")}
+              onPress={() => {
+                navigation.navigate("Profile");
+                setVisible(false);
+              }}
               title="Profil"
               disabled={!selectedHousehold}
             />
@@ -92,7 +101,7 @@ const styles = StyleSheet.create({
   },
   meny: {
     backgroundColor: "#F5F5F5",
-    marginTop: 38,
+    marginTop: 70,
   },
   button: {
     backgroundColor: "white",
