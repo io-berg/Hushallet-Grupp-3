@@ -5,6 +5,7 @@ import authSlice from "./authSlice";
 import counterReducer from "./counterSlice";
 import householdReducer from "./householdSlice";
 import profileSlice from "./profileSlice";
+import settingsSlice from "./settingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     household: householdReducer,
     auth: authSlice,
     profile: profileSlice,
+    settings: settingsSlice,
   },
 });
 
@@ -24,6 +26,9 @@ store.subscribe(() => {
 
   const user = store.getState().auth.user;
   user ? save("auth.user", JSON.stringify(user)) : remove("auth.user");
+
+  const theme = store.getState().settings.theme;
+  theme ? save("settings.theme", theme) : remove("settings.theme");
 });
 
 export type AppState = ReturnType<typeof store.getState>;

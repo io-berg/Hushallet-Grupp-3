@@ -38,41 +38,7 @@ export const RootNavigator = () => {
 
   const selected = useAppSelector(selectCurrentHousehold);
 
-  console.log(auth);
-  console.log(selected);
-
-  console.log("isAuthenticated", isAuthenticated);
-
-  // const dispatch = useAppDispatch();
-
-  /*useEffect(() => {
-    (async () => {
-      let values: AuthState = {
-        token: "",
-        user: null,
-        expirationDate: "",
-        loginErrors: null,
-        registerErrors: null,
-        loading: false,
-        registerSuccess: false,
-      };
-      const token = await get("auth.token");
-      const expirationDate = await get("auth.expirationDate");
-      const user = await get("auth.user");
-      if (token && expirationDate && user) {
-        values = {
-          token,
-          expirationDate,
-          user: JSON.parse(user),
-          loginErrors: null,
-          registerErrors: null,
-          loading: false,
-          registerSuccess: false,
-        };
-      }
-      dispatch(hydrateAuth(values));
-    })();
-  }, [dispatch]);*/
+  // const theme = useTheme();
 
   return (
     <NavigationContainer>
