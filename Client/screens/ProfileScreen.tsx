@@ -1,26 +1,15 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as React from "react";
-import { View, Text, StyleSheet, ViewStyle } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
-//import AvatarIcon from "../components/AvatarIconComponent";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { setCurrentProfile } from "../store/householdSlice";
-import { selectCurrentHousehold } from "../store/selectors";
-import { useAppDispatch, useAppSelector } from "../store/store";
-import { Profile } from "../utils/type";
+import { selectCurrentUserProfile } from "../store/selectors";
+import { useAppSelector } from "../store/store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 export default function ProfileScreen({ navigation }: Props) {
-  const [currentProfile, setProfile] = React.useState<Profile>();
-  const selected = useAppSelector(selectCurrentHousehold);
-  const user = useAppSelector((state) => state.auth.user?.email);
-  const dispatch = useAppDispatch();
-
-  const profile = selected?.profiles.find((profile) => profile.user.email == user);
-  if (profile) {
-    dispatch(setCurrentProfile(profile));
-  }
+  const currentUserProfile = useAppSelector(selectCurrentUserProfile);
 
   return (
     <View style={styles.container}>
@@ -30,7 +19,7 @@ export default function ProfileScreen({ navigation }: Props) {
           height: 320,
           width: 320,
           borderRadius: 170,
-          backgroundColor: profile?.avatar.color,
+          backgroundColor: currentUserProfile?.avatar.color,
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -42,10 +31,10 @@ export default function ProfileScreen({ navigation }: Props) {
             fontWeight: "bold",
           }}
         >
-          {profile?.avatar.icon}
+          {currentUserProfile?.avatar.icon}
         </Text>
       </View>
-      <Text style={styles.title}>{profile?.name}</Text>
+      <Text style={styles.title}>{currentUserProfile?.name}</Text>
 
       <Button onPress={() => navigation.navigate("EditProfile")}>Redigera Profil</Button>
     </View>

@@ -4,7 +4,6 @@ import { remove, save } from "../utils/localStorage";
 import authSlice from "./authSlice";
 import counterReducer from "./counterSlice";
 import householdReducer from "./householdSlice";
-import profileSlice from "./profileSlice";
 import settingsSlice from "./settingsSlice";
 
 export const store = configureStore({
@@ -12,7 +11,6 @@ export const store = configureStore({
     counter: counterReducer,
     household: householdReducer,
     auth: authSlice,
-    profile: profileSlice,
     settings: settingsSlice,
   },
 });

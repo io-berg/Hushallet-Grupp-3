@@ -16,7 +16,6 @@ export interface HouseholdState {
   households: Household[];
   current: number | null;
   fetchInfo: { type: "success" | "error"; message: string } | null;
-  profile: Profile;
 }
 
 const initialState: HouseholdState = {
@@ -150,20 +149,6 @@ const initialState: HouseholdState = {
     },
   ],
   current: null,
-  profile: {
-    id: 0,
-    user: {
-      username: "Mock User",
-      email: "mock@mock.com",
-    },
-    role: "admin",
-    avatar: {
-      color: "#ee7e86",
-      icon: "🐙",
-      token: true,
-    },
-    name: "Mock User",
-  },
 };
 
 export const fetchMyHouseholds = createAsyncThunk(
@@ -274,21 +259,6 @@ const householdSlice = createSlice({
         state.current = selected.id;
       }
     },
-
-    setCurrentProfile: (state, action) => {
-      state.profile = action.payload;
-    },
-
-    updateProfileInCurrentHousehold: (state, action) => {
-      const current = state.households.find((household) => household.id === state.current);
-      if (current) {
-        const index = state.households.indexOf(current);
-
-        state.households[index].profiles[action.payload.id] = {
-          ...action.payload,
-        };
-      }
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMyHouseholds.pending, (state) => {
@@ -335,7 +305,6 @@ const householdSlice = createSlice({
     builder.addCase(updateProfile.fulfilled, (state, action) => {
       state.loading = false;
       state.fetchInfo = { type: "success", message: "Profil uppdaterad!" };
-      state.profile = action.payload;
     });
 
     builder.addCase(transferOwnership.fulfilled, (state, action) => {
@@ -366,5 +335,4 @@ const householdSlice = createSlice({
 });
 
 export default householdSlice.reducer;
-export const { setCurrentHousehold, updateProfileInCurrentHousehold, setCurrentProfile } =
-  householdSlice.actions;
+export const { setCurrentHousehold } = householdSlice.actions;
