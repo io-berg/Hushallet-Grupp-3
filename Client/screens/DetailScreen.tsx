@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Button } from "react-native-paper";
 import HomeCard from "../components/HomeCard";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { selectCurrentHousehold } from "../store/selectors";
@@ -25,6 +26,9 @@ export default function DetailScreen({ navigation }: Props) {
               <Text style={styles.button1}>fake button ett....................... </Text>
               <Text style={styles.button2}>......................fake button två</Text>
             </Text>
+            <Button onPress={() => navigation.navigate("EditTask", { taskId: item.id })}>
+              Redigera
+            </Button>
           </HomeCard>
         )}
       />

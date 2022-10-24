@@ -16,10 +16,13 @@ interface Props {
 
 const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required().min(1).label("Title"),
-    description: Yup.string().required().min(1).label("Description"),
+    title: Yup.string().required("En syssla kräver en titel").min(1).label("Title"),
+    description: Yup.string()
+      .required("En syssla kräver en beskrivning")
+      .min(1)
+      .label("Description"),
     effort: Yup.number().required().min(1).label("Effort"),
-    deadline: Yup.date().required().min(1).label("Deadline"),
+    frequency: Yup.number().required().min(1).label("Deadline"),
   });
 
   const values: Task = editTask
@@ -47,14 +50,23 @@ const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
         placeholder="Titel"
         onChange={formik.handleChange("title")}
         value={formik.values.title}
+        error={formik.errors.title}
+      />
+      <View
+        style={{
+          paddingVertical: 10,
+        }}
       />
       <TextInputField
         placeholder="Beskrivning"
         onChange={formik.handleChange("description")}
         value={formik.values.description}
         type="multiline"
+        error={formik.errors.description}
+      />
+      <View
         style={{
-          marginVertical: 20,
+          paddingVertical: 10,
         }}
       />
       <FrequencyPicker

@@ -4,11 +4,13 @@ import {
   applicationResponseRequest,
   changeHouseholdNameRequest,
   createHouseholdRequest,
+  createTaskRequest,
+  editTaskRequest,
   fetchMyHouseholdsRequest,
   leaveHouseholdRequest,
   transferOwnershipRequest,
 } from "../utils/api";
-import { Household } from "../utils/type";
+import { Household, Task } from "../utils/type";
 
 export interface HouseholdState {
   loading: boolean;
@@ -234,6 +236,30 @@ export const leaveHousehold = createAsyncThunk(
   }
 );
 
+export const createTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
+  "household/createTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      await createTaskRequest(data.task, data.householdId);
+      return data.task;
+    } catch (error) {
+      return rejectWithValue("Failed to create task");
+    }
+  }
+);
+
+export const editTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
+  "household/editTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      await editTaskRequest(data.task, data.householdId);
+      return data.task;
+    } catch (error) {
+      return rejectWithValue("Failed to edit task");
+    }
+  }
+);
+
 const householdSlice = createSlice({
   name: "households",
   initialState,
@@ -302,6 +328,23 @@ const householdSlice = createSlice({
     builder.addCase(leaveHousehold.fulfilled, (state, action) => {
       state.households = state.households.filter((h) => h.id !== action.payload);
       state.current = null;
+    });
+    builder.addCase(createTask.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = [...current.tasks, action.payload];
+      }
+    });
+    builder.addCase(editTask.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = current.tasks.map((t) => {
+          if (t.id === action.payload.id) {
+            return action.payload;
+          }
+          return t;
+        });
+      }
     });
   },
 });

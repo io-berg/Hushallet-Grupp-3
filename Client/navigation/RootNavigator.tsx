@@ -5,6 +5,7 @@ import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
 import CreateTaskScreen from "../screens/CreateTaskScreen";
 import DetailScreen from "../screens/DetailScreen";
+import EditTaskScreen from "../screens/EditTaskScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -26,6 +27,7 @@ export type RootStackParamList = {
   SkapaProfil: undefined;
   Details: undefined;
   CreateTask: undefined;
+  EditTask: { taskId: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -78,6 +80,11 @@ export const RootNavigator = () => {
                 name="CreateTask"
                 component={CreateTaskScreen}
                 options={{ title: "Skapa en ny syssla" }}
+              />
+              <Stack.Screen
+                name="EditTask"
+                component={EditTaskScreen}
+                options={{ title: "Redigera syssla" }}
               />
             </Stack.Group>
           ) : (
