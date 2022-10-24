@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, Divider, Text } from "react-native-paper";
 
 interface Props {
   onPress1: () => void;
@@ -14,14 +14,50 @@ interface Props {
   disabled2?: boolean;
 }
 
-const DualBottomButton = ({ title1, icon1, onPress1, disabled1 }: Props) => {
+const DualBottomButton = ({
+  title1,
+  icon1,
+  onPress1,
+  disabled1,
+  title2,
+  onPress2,
+  icon2,
+  disabled2,
+}: Props) => {
   return (
-    <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-      <Button mode="contained" icon={icon1} onPress={onPress1} disabled={disabled1}>
+    <View
+      style={{
+        height: "auto",
+        backgroundColor: "#FFFFFF",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        bottom: 0,
+        paddingStart: "2%",
+        paddingEnd: "2%",
+      }}
+    >
+      <Button
+        mode="contained"
+        icon={icon1}
+        onPress={onPress1}
+        disabled={disabled1}
+        buttonColor="white"
+        textColor="black"
+        style={{ width: "50%", borderStartColor: "#FFFFFF" }}
+      >
         {title1}
       </Button>
-      <Button mode="contained" icon={icon1} onPress={onPress1} disabled={disabled1}>
-        {title1}Test2
+      <Divider style={{ width: 1, height: "100%" }}></Divider>
+      <Button
+        mode="contained"
+        icon={icon2}
+        onPress={onPress2}
+        disabled={disabled2}
+        buttonColor="white"
+        textColor="black"
+        style={{ width: "50%" }}
+      >
+        {title2}
       </Button>
     </View>
   );
