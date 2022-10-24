@@ -12,6 +12,7 @@ export interface HouseholdState {
   households: Household[];
   current: number | null;
   fetchInfo: { type: "success" | "error"; message: string } | null;
+  profile: Profile;
 }
 
 const initialState: HouseholdState = {
@@ -144,6 +145,20 @@ const initialState: HouseholdState = {
     },
   ],
   current: null,
+  profile: {
+    id: 0,
+    user: {
+      username: "Mock User",
+      email: "mock@mock.com",
+    },
+    role: "admin",
+    avatar: {
+      color: "#ee7e86",
+      icon: "🐙",
+      token: true,
+    },
+    name: "Mock User",
+  },
 };
 
 export const fetchMyHouseholds = createAsyncThunk(
@@ -158,11 +173,11 @@ export const fetchMyHouseholds = createAsyncThunk(
   }
 );
 
-export const updateProfile = createAsyncThunk<Profile>( //ingen aning hur ja ska göra detta hej o hå
-  "household/fetchMyHouseholds",
+export const updateProfile = createAsyncThunk<Profile, { id: number; profile: Profile }>(
+  "/household/UpdateProfileInHousehold",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await updateProfileRequest(data);
+      const response = await updateProfileRequest(data.id, data.profile);
       return response;
     } catch (error) {
       return rejectWithValue("Failed to fetch");
@@ -203,6 +218,10 @@ const householdSlice = createSlice({
       if (selected) {
         state.current = selected.id;
       }
+    },
+
+    setCurrentProfile: (state, action) => {
+      state.profile = action.payload;
     },
 
     updateProfileInCurrentHousehold: (state, action) => {
@@ -250,8 +269,22 @@ const householdSlice = createSlice({
       state.fetchInfo = { type: "success", message: "Hushållet skapat!" };
       state.households = [...state.households, action.payload];
     });
+
+    builder.addCase(updateProfile.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProfile.rejected, (state) => {
+      state.loading = false;
+      state.fetchInfo = { type: "error", message: "Uppdatering av profil misslyckades" };
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.fetchInfo = { type: "success", message: "Profil uppdaterad!" };
+      state.profile = action.payload;
+    });
   },
 });
 
 export default householdSlice.reducer;
-export const { setCurrentHousehold, updateProfileInCurrentHousehold } = householdSlice.actions;
+export const { setCurrentHousehold, updateProfileInCurrentHousehold, setCurrentProfile } =
+  householdSlice.actions;

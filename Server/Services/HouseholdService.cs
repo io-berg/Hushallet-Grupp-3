@@ -169,7 +169,7 @@ public class HouseholdService
         _context.Households.Update(household);
         await _context.SaveChangesAsync();
         
-        return profile;
+        return household.Profiles[profileIndex];
         
     }
 }

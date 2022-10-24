@@ -2,14 +2,15 @@ import * as React from "react";
 import { Image, View, Text, StyleSheet, FlatList } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { Avatar as avatar, Profile } from "../utils/type";
+import { Avatar as avatar, Household, Profile } from "../utils/type";
 import avatars from "../utils/mockdata";
 import AvatarButton from "../components/AvatarButtonComponent";
 import TextInputField from "../components/TextInputField";
 import FullWidthButton from "../components/FullWidthButton";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { updateProfileInCurrentHousehold } from "../store/householdSlice";
+import { updateProfile } from "../store/householdSlice";
 import { selectCurrentHousehold } from "../store/selectors";
+import { current } from "@reduxjs/toolkit";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditProfile">;
 
@@ -17,39 +18,31 @@ export default function EditProfileScreen({ navigation, route }: Props) {
   const [availibleAvatars, setState] = React.useState<avatar[] | null>(null);
   const [profileName, setProfileName] = React.useState("");
   const [profileAvatar, setProfileAvatar] = React.useState<avatar | null>(null);
-  const [currentProfile, setProfile] = React.useState<Profile>();
+  const [id, setId] = React.useState<number | undefined>();
 
   const selected = useAppSelector(selectCurrentHousehold);
-  const user = useAppSelector((state) => state.auth.user?.email);
-
-  function getProfile() {
-    const profile = selected?.profiles.find((profile) => profile.user.email == user);
-    return profile;
-  }
-
-  React.useEffect(() => {
-    (() => {
-      setProfile(getProfile());
-      console.log(currentProfile?.name);
-    })();
-  }, []);
+  setId(selected?.id);
+  const curretnProfile = useAppSelector((state) => state.household.profile);
 
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    (() => {
-      setState(avatars);
-    })();
+    setState(avatars);
   }, []);
 
   const handleSubmit = () => {
-    const updateProfile = {
-      id: currentProfile?.id,
-      name: profileName,
-      avatar: profileAvatar,
-    };
-    dispatch(updateProfileInCurrentHousehold(updateProfile));
-    navigation.navigate("Profile");
+    if (profileAvatar && profileName && id) {
+      const profile: Profile = {
+        id: curretnProfile.id,
+        user: curretnProfile.user,
+        role: curretnProfile.role,
+        name: profileName,
+        avatar: profileAvatar,
+      };
+
+      dispatch(updateProfile({ profile, id }));
+      navigation.navigate("Profile");
+    }
   };
 
   return (

@@ -72,7 +72,7 @@ public class HouseholdController : ControllerBase
         return BadRequest();
     }
 
-   /* [HttpPost]
+   [HttpPost]
     [Route("UpdateProfileInHousehold")]
     public async Task<IActionResult> UpdateProfile(Profile profile, int householdId)
     {
@@ -91,7 +91,7 @@ public class HouseholdController : ControllerBase
 
         return BadRequest();
     }
-*/
+
     [HttpGet]
     [Route("HouseholdData")]
     public async Task<IActionResult> HouseholdData([FromQuery] string id)
