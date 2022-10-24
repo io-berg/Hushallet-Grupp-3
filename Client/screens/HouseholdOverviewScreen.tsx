@@ -82,7 +82,7 @@ export default function HouseholdOverviewScreen() {
                 marginTop: 20,
               }}
             >
-              Applications
+              Ansökningar
             </Text>
             {household.applications.map((application) => (
               <TouchableRipple
@@ -93,9 +93,16 @@ export default function HouseholdOverviewScreen() {
                   borderRadius: 10,
                   backgroundColor: "#fff",
                   marginVertical: 5,
+                  padding: 10,
                 }}
               >
-                <Text>{application.username}</Text>
+                <Text
+                  style={{
+                    fontSize: 17,
+                  }}
+                >
+                  {application.username + " (" + application.email + ")"}
+                </Text>
               </TouchableRipple>
             ))}
           </View>

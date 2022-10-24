@@ -42,7 +42,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
                 setVisible(false);
               }}
               title="Hem"
-              disabled={!selectedHousehold}
+              disabled={selectedHousehold == null}
             />
 
             <Menu.Item
@@ -53,7 +53,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
                 setVisible(false);
               }}
               title="Hushålls Översikt"
-              disabled={!selectedHousehold}
+              disabled={selectedHousehold == null}
             />
 
             <Menu.Item
@@ -61,7 +61,6 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
               style={styles.button}
               onPress={() => navigation.navigate("Start")}
               title="Mina hushåll"
-              disabled={!selectedHousehold}
             />
 
             <Menu.Item
@@ -72,7 +71,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
                 setVisible(false);
               }}
               title="Profil"
-              disabled={!selectedHousehold}
+              disabled={selectedHousehold == null}
             />
 
             <Menu.Item
