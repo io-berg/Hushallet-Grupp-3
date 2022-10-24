@@ -17,20 +17,10 @@ export default function ProfileScreen({ navigation }: Props) {
   const user = useAppSelector((state) => state.auth.user?.email);
   const dispatch = useAppDispatch();
 
-  function getProfile() {
-    const profile = selected?.profiles.find((profile) => profile.user.email == user);
-    return profile;
+  const profile = selected?.profiles.find((profile) => profile.user.email == user);
+  if (profile) {
+    dispatch(setCurrentProfile(profile));
   }
-
-  React.useEffect(() => {
-    const p = getProfile();
-    if (p) {
-      setProfile(p);
-      dispatch(setCurrentProfile);
-    }
-
-    console.log(currentProfile?.name);
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -40,7 +30,7 @@ export default function ProfileScreen({ navigation }: Props) {
           height: 320,
           width: 320,
           borderRadius: 170,
-          backgroundColor: currentProfile?.avatar.color,
+          backgroundColor: profile?.avatar.color,
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -52,10 +42,10 @@ export default function ProfileScreen({ navigation }: Props) {
             fontWeight: "bold",
           }}
         >
-          {currentProfile?.avatar.icon}
+          {profile?.avatar.icon}
         </Text>
       </View>
-      <Text style={styles.title}>{currentProfile?.name}</Text>
+      <Text style={styles.title}>{profile?.name}</Text>
 
       <Button onPress={() => navigation.navigate("EditProfile")}>Redigera Profil</Button>
     </View>

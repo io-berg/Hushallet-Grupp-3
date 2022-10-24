@@ -23,12 +23,9 @@ export default function EditProfileScreen({ navigation, route }: Props) {
   const selected = useAppSelector(selectCurrentHousehold);
   setId(selected?.id);
   const curretnProfile = useAppSelector((state) => state.household.profile);
+  setState(avatars);
 
   const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    setState(avatars);
-  }, []);
 
   const handleSubmit = () => {
     if (profileAvatar && profileName && id) {
