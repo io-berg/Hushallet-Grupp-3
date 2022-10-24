@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import theme from "../utils/theme";
+import { useTheme } from "react-native-paper";
 import { Household } from "../utils/type";
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const HouseholdInfo = ({ household, onPress }: Props) => {
+  const theme = useTheme();
   const [collapsed, setCollapsed] = useState(true);
 
   function emoji(animal = "") {
@@ -36,8 +37,11 @@ const HouseholdInfo = ({ household, onPress }: Props) => {
   }
 
   return (
-    <Pressable style={styles.wrapper} onPress={onPress}>
-      <View style={styles.container}>
+    <Pressable
+      style={{ ...styles.wrapper, backgroundColor: theme.colors.surface }}
+      onPress={onPress}
+    >
+      <View style={{ ...styles.container, backgroundColor: theme.colors.surface }}>
         <Text style={styles.text}>{household.name}</Text>
         <Pressable
           onPress={() => setCollapsed(!collapsed)}
@@ -64,9 +68,8 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    backgroundColor: theme.colors.surface,
     flexDirection: "row",
-    borderRadius: 10,
+    borderRadius: 30,
   },
   text: {
     fontSize: 20,
@@ -75,7 +78,6 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     display: "flex",
-    backgroundColor: theme.colors.surface,
     elevation: 5,
     width: "92%",
     borderRadius: 10,

@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React from "react";
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HomeCard from "../components/HomeCard";
+import TaskHeader from "../components/TaskHeader";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { logout } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
@@ -9,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
-export default function HomeScreen({ navigation, route }: Props) {
+export default function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
   const household = useAppSelector(selectCurrentHousehold);
   const username = useAppSelector((state) => state.auth.user?.username);
@@ -21,6 +22,7 @@ export default function HomeScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.container}>
+      <TaskHeader title="Idag" />
       <FlatList
         data={household?.tasks}
         renderItem={({ item }) => (
