@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
-import MyTabBar from "../components/test";
+import MyTabBar from "../components/SwipeNavigatorHeader";
 import HomeScreen from "../screens/HomeScreen";
 import Statistics1Screen from "../screens/Statistics1";
 import Statistics2Screen from "../screens/Statistics2";
@@ -19,7 +19,7 @@ const Tab = createMaterialTopTabNavigator<TabsParamList>();
 
 export function TabNavigator() {
   return (
-    <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
+    <Tab.Navigator screenOptions={{}} tabBar={(props) => <MyTabBar {...props} />}>
       <Tab.Screen name="Overview" component={HomeScreen} />
       <Tab.Screen name="Statistics1" component={Statistics1Screen} />
       <Tab.Screen name="Statistics2" component={Statistics2Screen} />

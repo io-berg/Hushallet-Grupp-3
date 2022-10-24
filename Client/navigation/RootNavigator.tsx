@@ -1,18 +1,17 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
+import DetailScreen from "../screens/DetailScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
 import ThemeScreen from "../screens/Theme";
-import { AuthState, hydrateAuth } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
-import { useAppDispatch, useAppSelector } from "../store/store";
-import { get } from "../utils/localStorage";
+import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
 
 export type RootStackParamList = {
@@ -25,6 +24,7 @@ export type RootStackParamList = {
   HouseholdOverview: undefined;
   Start: undefined;
   SkapaProfil: undefined;
+  Details: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -38,36 +38,7 @@ export const RootNavigator = () => {
 
   const selected = useAppSelector(selectCurrentHousehold);
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    (async () => {
-      let values: AuthState = {
-        token: "",
-        user: null,
-        expirationDate: "",
-        loginErrors: null,
-        registerErrors: null,
-        loading: false,
-        registerSuccess: false,
-      };
-      const token = await get("auth.token");
-      const expirationDate = await get("auth.expirationDate");
-      const user = await get("auth.user");
-      if (token && expirationDate && user) {
-        values = {
-          token,
-          expirationDate,
-          user: JSON.parse(user),
-          loginErrors: null,
-          registerErrors: null,
-          loading: false,
-          registerSuccess: false,
-        };
-      }
-      dispatch(hydrateAuth(values));
-    })();
-  }, [dispatch]);
+  // const theme = useTheme();
 
   return (
     <NavigationContainer>
@@ -96,6 +67,7 @@ export const RootNavigator = () => {
                 component={ProfileScreen}
                 options={{ title: "Profil" }}
               />
+              <Stack.Screen name="Details" component={DetailScreen} options={{ title: "Detalj" }} />
               <Stack.Screen
                 name="SkapaProfil"
                 component={CreateProfileScreen}

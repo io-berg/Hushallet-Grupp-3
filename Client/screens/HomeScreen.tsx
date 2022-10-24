@@ -1,16 +1,33 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import HomeCard from "../components/HomeCard";
+import TaskHeader from "../components/TaskHeader";
+import { RootStackParamList } from "../navigation/RootNavigator";
 import { logout } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 
-export default function HomeScreen({ navigation }: any) {
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+
+export default function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
   const selected = useAppSelector(selectCurrentHousehold);
   const user = useAppSelector((state) => state.auth.user);
 
   return (
     <View style={styles.container}>
+      <TaskHeader title="Idag" />
+      <FlatList
+        data={household?.tasks}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigation.navigate("Detalj")}>
+            <HomeCard>
+              <Text>{item.title}</Text>
+            </HomeCard>
+          </TouchableOpacity>
+        )}
+      />
       <Text>Home Screen</Text>
       <Button title="Go to login" onPress={() => navigation.navigate("Login")} />
 
@@ -27,9 +44,5 @@ export default function HomeScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  container: {},
 });

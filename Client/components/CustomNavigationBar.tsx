@@ -1,25 +1,36 @@
+import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Menu } from "react-native-paper";
 import { logout } from "../store/authSlice";
-import { useAppDispatch } from "../store/store";
+import { toggleTheme } from "../store/settingsSlice";
+import { useAppDispatch, useAppSelector } from "../store/store";
 
-export function CustomNavigationBar({ navigation, back }: any) {
+export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps) {
   const [visible, setVisible] = React.useState(false);
+  const theme = useAppSelector((state) => state.settings.theme);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
   const dispatch = useAppDispatch();
 
+  const themeButtonTitle = theme === "auto" ? "Auto" : theme === "light" ? "Ljust" : "Mörkt";
+
   return (
-    <Appbar.Header mode="small">
-      <Appbar.BackAction onPress={navigation.goBack} />
-      <Appbar.Content titleStyle={{ textAlign: "center" }} title="Hushållet" />
+    <Appbar.Header mode="center-aligned" statusBarHeight={0}>
+      {back && <Appbar.BackAction onPress={navigation.goBack} />}
+      <Appbar.Content
+        titleStyle={{
+          fontSize: 24,
+          fontWeight: "bold",
+        }}
+        title="Hushållet"
+      />
       {
         <Menu
-          style={styles.meny}
           visible={visible}
           onDismiss={closeMenu}
           anchor={<Appbar.Action icon="menu" color="black" onPress={openMenu} />}
+          contentStyle={styles.meny}
         >
           <View style={styles.menyback}>
             <Menu.Item
@@ -53,8 +64,8 @@ export function CustomNavigationBar({ navigation, back }: any) {
             <Menu.Item
               leadingIcon="brightness-6"
               style={styles.button}
-              onPress={() => navigation.navigate("Tema")}
-              title="Ljust/Mörkt teama"
+              onPress={() => dispatch(toggleTheme())}
+              title={"Växla tema | " + themeButtonTitle}
             />
 
             <Menu.Item
@@ -71,16 +82,18 @@ export function CustomNavigationBar({ navigation, back }: any) {
 }
 
 const styles = StyleSheet.create({
-  menyback: {},
+  menyback: {
+    backgroundColor: "#F5F5F5",
+  },
   meny: {
-    // marginTop: 120,
+    backgroundColor: "#F5F5F5",
+    marginTop: 38,
   },
   button: {
     backgroundColor: "white",
     borderRadius: 10,
     borderColor: "#778899",
     margin: 10,
-
     paddingRight: 80,
   },
   logButton: {
