@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, Household, LoginResponse, RegisterResponse } from "./type";
+import { ErrorResponse, Household, LoginResponse, Profile, RegisterResponse } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
@@ -107,10 +107,34 @@ const createHouseholdRequest = async (name: string) => {
   throw response;
 };
 
+const updateProfileRequest = async (id: number, profile: Profile) => {
+  const response = await fetch(`${url}/household/UpdateProfileInHousehold`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      id,
+      profile,
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+
+  throw response;
+};
+
+//"UpdateProfileInHousehold"
+
 export {
   loginRequest,
   registerRequest,
   fetchMyHouseholdsRequest,
   applicationRequest,
   createHouseholdRequest,
+  updateProfileRequest,
 };

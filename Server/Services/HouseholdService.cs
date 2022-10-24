@@ -149,4 +149,27 @@ public class HouseholdService
 
         return household;
     }
+
+    public async Task<Profile> UpdateProfileInHousehold(int householdId, Profile profile)
+    {
+        var household = await _context.Households
+            .Where(h => h.Id == householdId)
+            .FirstOrDefaultAsync();
+        
+        var profileIndex = household.Profiles.FindIndex(p => p.Id == profile.Id);
+        household.Profiles[profileIndex] = (
+             new Profile
+        {
+            Name = profile.Name,
+            User = profile.User,
+            Role = profile.Role,
+            Avatar = profile.Avatar,
+        });
+
+        _context.Households.Update(household);
+        await _context.SaveChangesAsync();
+        
+        return profile;
+        
+    }
 }

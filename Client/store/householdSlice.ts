@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
-import { applicationRequest, createHouseholdRequest, fetchMyHouseholdsRequest } from "../utils/api";
+import {
+  applicationRequest,
+  createHouseholdRequest,
+  fetchMyHouseholdsRequest,
+  updateProfileRequest,
+} from "../utils/api";
 import { Household, Profile } from "../utils/type";
 
 export interface HouseholdState {
@@ -146,6 +151,18 @@ export const fetchMyHouseholds = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetchMyHouseholdsRequest();
+      return response;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch");
+    }
+  }
+);
+
+export const updateProfile = createAsyncThunk<Profile>( //ingen aning hur ja ska göra detta hej o hå
+  "household/fetchMyHouseholds",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await updateProfileRequest(data);
       return response;
     } catch (error) {
       return rejectWithValue("Failed to fetch");
