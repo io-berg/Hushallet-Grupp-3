@@ -7,4 +7,5 @@ public class HouseholdDTO
     public string Code { get; set; }
     public List<ProfileDTO> Profiles { get; set; }
     public List<HouseholdTaskDTO> Tasks { get; set; }
+    public List<ApplicationDTO> Applications { get; set; }
 }

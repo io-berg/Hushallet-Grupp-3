@@ -12,5 +12,4 @@ public class DatabaseContext : IdentityDbContext<IdentityUser>
     }
 
     public DbSet<Household> Households { get; set; }
-    public DbSet<Application> Applications { get; set; }
 }

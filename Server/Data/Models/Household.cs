@@ -7,4 +7,5 @@ public class Household
     public string Code { get; set; }
     public List<Profile> Profiles { get; set; }
     public List<HouseholdTask> Tasks { get; set; }
+    public List<Application> Applications { get; set; }
 }

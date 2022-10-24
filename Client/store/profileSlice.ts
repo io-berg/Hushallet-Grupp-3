@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Avatar } from "../utils/type";
 
 export interface ProfileState {
   user: {

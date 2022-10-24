@@ -2,6 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
+import { textToEmoji } from "../utils/avatar";
 import { Household } from "../utils/type";
 
 interface Props {
@@ -12,29 +13,6 @@ interface Props {
 const HouseholdInfo = ({ household, onPress }: Props) => {
   const theme = useTheme();
   const [collapsed, setCollapsed] = useState(true);
-
-  function emoji(animal = "") {
-    switch (animal) {
-      case "chicken":
-        return "🐥";
-      case "squid":
-        return "🐙";
-      case "whale":
-        return "🐋";
-      case "owl":
-        return "🦉";
-      case "fox":
-        return "🦊";
-      case "unicorn":
-        return "🦄";
-      case "pig":
-        return "🐷";
-      case "frog":
-        return "🐸";
-      default:
-        return "";
-    }
-  }
 
   return (
     <Pressable
@@ -57,7 +35,7 @@ const HouseholdInfo = ({ household, onPress }: Props) => {
         household.profiles.map((p) => (
           <View key={p.id} style={styles.container}>
             <Text style={styles.smallText}>{p.name}</Text>
-            <Text style={styles.text}>{emoji(p.avatar.icon?.toLocaleLowerCase())}</Text>
+            <Text style={styles.text}>{textToEmoji(p.avatar.icon?.toLocaleLowerCase())}</Text>
           </View>
         ))}
     </Pressable>

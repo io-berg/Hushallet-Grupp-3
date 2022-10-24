@@ -2,15 +2,16 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Menu } from "react-native-paper";
+import { logout } from "../store/authSlice";
 import { toggleTheme } from "../store/settingsSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 
 export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps) {
   const [visible, setVisible] = React.useState(false);
   const theme = useAppSelector((state) => state.settings.theme);
+  const selectedHousehold = useAppSelector((state) => state.household.current);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
-
   const dispatch = useAppDispatch();
 
   const themeButtonTitle = theme === "auto" ? "Auto" : theme === "light" ? "Ljust" : "Mörkt";
@@ -41,6 +42,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
                 setVisible(false);
               }}
               title="Hem"
+              disabled={selectedHousehold == null}
             />
 
             <Menu.Item
@@ -51,6 +53,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
                 setVisible(false);
               }}
               title="Hushålls Översikt"
+              disabled={selectedHousehold == null}
             />
 
             <Menu.Item
@@ -68,6 +71,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
                 setVisible(false);
               }}
               title="Profil"
+              disabled={selectedHousehold == null}
             />
 
             <Menu.Item
@@ -80,10 +84,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
             <Menu.Item
               leadingIcon="location-exit"
               style={styles.logButton}
-              onPress={() => {
-                navigation.navigate("LoggaUt");
-                setVisible(false);
-              }}
+              onPress={() => dispatch(logout())}
               title="Logga ut"
             />
           </View>
