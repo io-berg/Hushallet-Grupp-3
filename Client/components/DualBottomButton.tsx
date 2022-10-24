@@ -27,7 +27,6 @@ const DualBottomButton = ({
   return (
     <View
       style={{
-        height: "auto",
         backgroundColor: "#FFFFFF",
         flexDirection: "row",
         justifyContent: "flex-end",
@@ -43,7 +42,7 @@ const DualBottomButton = ({
         disabled={disabled1}
         buttonColor="white"
         textColor="black"
-        style={{ width: "50%", borderStartColor: "#FFFFFF" }}
+        style={{ width: "50%", borderStartColor: "#FFFFFF", padding: 8 }}
       >
         {title1}
       </Button>
@@ -55,7 +54,7 @@ const DualBottomButton = ({
         disabled={disabled2}
         buttonColor="white"
         textColor="black"
-        style={{ width: "50%" }}
+        style={{ width: "50%", padding: 8 }}
       >
         {title2}
       </Button>

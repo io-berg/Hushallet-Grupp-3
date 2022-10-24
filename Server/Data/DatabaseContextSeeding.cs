@@ -71,6 +71,8 @@ public class DatabaseContextSeeding
                 )
             });
 
+            household.Applications = new List<Application>();
+
             context.Households.Add(household);
             await context.SaveChangesAsync();
         }

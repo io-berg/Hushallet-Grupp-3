@@ -11,8 +11,8 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221011155251_initial")]
-    partial class initial
+    [Migration("20221023172544_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -211,6 +211,148 @@ namespace Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Server.Data.Models.Application", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HouseholdId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HouseholdId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Application");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.Avatar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Avatar");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.Household", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Households");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.HouseholdTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Effort")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Frequency")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HouseholdId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HouseholdId");
+
+                    b.ToTable("HouseholdTask");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AvatarId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HouseholdId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvatarId");
+
+                    b.HasIndex("HouseholdId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Profile");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.TaskHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("HouseholdTaskId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HouseholdTaskId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("TaskHistory");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -260,6 +402,74 @@ namespace Server.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Server.Data.Models.Application", b =>
+                {
+                    b.HasOne("Server.Data.Models.Household", null)
+                        .WithMany("Applications")
+                        .HasForeignKey("HouseholdId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.HouseholdTask", b =>
+                {
+                    b.HasOne("Server.Data.Models.Household", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("HouseholdId");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.Profile", b =>
+                {
+                    b.HasOne("Server.Data.Models.Avatar", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId");
+
+                    b.HasOne("Server.Data.Models.Household", null)
+                        .WithMany("Profiles")
+                        .HasForeignKey("HouseholdId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Avatar");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.TaskHistory", b =>
+                {
+                    b.HasOne("Server.Data.Models.HouseholdTask", null)
+                        .WithMany("History")
+                        .HasForeignKey("HouseholdTaskId");
+
+                    b.HasOne("Server.Data.Models.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.Household", b =>
+                {
+                    b.Navigation("Applications");
+
+                    b.Navigation("Profiles");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.HouseholdTask", b =>
+                {
+                    b.Navigation("History");
                 });
 #pragma warning restore 612, 618
         }

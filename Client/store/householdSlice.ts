@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { applicationRequest, createHouseholdRequest, fetchMyHouseholdsRequest } from "../utils/api";
+import {
+  applicationRequest,
+  applicationResponseRequest,
+  changeHouseholdNameRequest,
+  createHouseholdRequest,
+  fetchMyHouseholdsRequest,
+  leaveHouseholdRequest,
+  transferOwnershipRequest,
+} from "../utils/api";
 import { Household } from "../utils/type";
 
 export interface HouseholdState {
@@ -152,12 +160,24 @@ export const fetchMyHouseholds = createAsyncThunk(
   }
 );
 
-export const sendApplication = createAsyncThunk<Household[], { code: string }>(
+export const sendApplication = createAsyncThunk<boolean, { code: string }>(
   "household/sendApplication",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await applicationRequest(data.code);
-      return response;
+      await applicationRequest(data.code);
+      return true;
+    } catch (error) {
+      return rejectWithValue("Failed to send application");
+    }
+  }
+);
+
+export const sendApplicationResponse = createAsyncThunk<boolean, { id: number; accept: boolean }>(
+  "household/sendApplicationResponse",
+  async (data, { rejectWithValue }) => {
+    try {
+      await applicationResponseRequest(data.id, data.accept);
+      return true;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -170,6 +190,44 @@ export const createHousehold = createAsyncThunk<Household, { name: string }>(
     try {
       const response = await createHouseholdRequest(data.name);
       return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const transferOwnership = createAsyncThunk<string, { householdId: number; email: string }>(
+  "household/transferOwnership",
+  async (data, { rejectWithValue }) => {
+    try {
+      await transferOwnershipRequest(data.householdId, data.email);
+      return data.email;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const changeHouseholdName = createAsyncThunk<string, { householdId: number; name: string }>(
+  "household/changeHouseholdName",
+  async (data, { rejectWithValue }) => {
+    try {
+      await changeHouseholdNameRequest(data.householdId, data.name);
+      return data.name;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const leaveHousehold = createAsyncThunk(
+  "household/leaveHousehold",
+  async (householdId: number, { rejectWithValue }) => {
+    try {
+      const response = await leaveHouseholdRequest(householdId);
+      if (response) {
+        return householdId;
+      }
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -220,6 +278,30 @@ const householdSlice = createSlice({
       state.loading = false;
       state.fetchInfo = { type: "success", message: "Hushållet skapat!" };
       state.households = [...state.households, action.payload];
+    });
+    builder.addCase(transferOwnership.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.profiles = current.profiles.map((p) => {
+          if (p.role === "admin") {
+            return { ...p, role: "user" };
+          }
+          if (p.user.email === action.payload) {
+            return { ...p, role: "admin" };
+          }
+          return p;
+        });
+      }
+    });
+    builder.addCase(changeHouseholdName.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.name = action.payload;
+      }
+    });
+    builder.addCase(leaveHousehold.fulfilled, (state, action) => {
+      state.households = state.households.filter((h) => h.id !== action.payload);
+      state.current = null;
     });
   },
 });
