@@ -6,7 +6,7 @@ import { logout } from "../store/authSlice";
 import { toggleTheme } from "../store/settingsSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 
-export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps) {
+export function CustomNavigationBar({ navigation, back, options }: NativeStackHeaderProps) {
   const [visible, setVisible] = React.useState(false);
   const theme = useAppSelector((state) => state.settings.theme);
   const selectedHousehold = useAppSelector((state) => state.household.current);
@@ -24,7 +24,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
           fontSize: 24,
           fontWeight: "bold",
         }}
-        title="Hushållet"
+        title={options.title}
       />
       {
         <Menu
