@@ -1,13 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
-
-const styles = StyleSheet.create({
-  button: {
-    padding: 10,
-    margin: 2,
-  },
-});
 
 interface Props {
   onPress: () => void;

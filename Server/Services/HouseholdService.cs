@@ -82,7 +82,7 @@ public class HouseholdService
     {
         var household = await _context.Households
             .Where(h => h.Id == id)
-            .Include(h => h.Profiles)
+            .Include(h => h.Profiles).ThenInclude(p => p.Avatar)
             .FirstOrDefaultAsync();
 
         return household;
@@ -174,6 +174,7 @@ public class HouseholdService
             profile.Name = name;
             profile.Avatar.Color = color;
             profile.Avatar.Icon = icon;
+            
 
             await _context.SaveChangesAsync();
         

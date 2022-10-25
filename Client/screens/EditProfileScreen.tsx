@@ -2,7 +2,7 @@ import * as React from "react";
 import { Image, View, Text, StyleSheet, FlatList } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { Avatar as avatar, Household, Profile } from "../utils/type";
+import { Avatar as avatar } from "../utils/type";
 import avatars from "../utils/mockdata";
 import AvatarButton from "../components/AvatarButtonComponent";
 import TextInputField from "../components/TextInputField";
@@ -10,12 +10,14 @@ import FullWidthButton from "../components/FullWidthButton";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { updateProfile } from "../store/householdSlice";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
+import { availibleAvatars } from "../utils/avatar";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditProfile">;
 
-export default function EditProfileScreen({ navigation, route }: Props) {
+export default function EditProfileScreen({ navigation }: Props) {
   const [profileName, setProfileName] = React.useState("");
   const [profileAvatar, setProfileAvatar] = React.useState<avatar | null>(null);
+  const [isAvatarToken, setAvatars] = React.useState<string[] | null>(null);
 
   const selected = useAppSelector(selectCurrentHousehold);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
@@ -25,6 +27,7 @@ export default function EditProfileScreen({ navigation, route }: Props) {
     if (currentUserProfile && selected) {
       setProfileName(currentUserProfile.name);
       setProfileAvatar(currentUserProfile.avatar);
+      setAvatars(availibleAvatars(selected));
     }
   }, [currentUserProfile, selected]);
 
@@ -43,6 +46,15 @@ export default function EditProfileScreen({ navigation, route }: Props) {
       console.log("fel");
     }
   };
+
+  function isAvatarAvailible(item: string) {
+    const bool = isAvatarToken?.find((a) => a == item);
+    if (bool) {
+      return true;
+    }
+
+    return false;
+  }
 
   return (
     <View style={styles.container}>
@@ -73,7 +85,7 @@ export default function EditProfileScreen({ navigation, route }: Props) {
               buttonColor={item.color}
               icon={item.icon}
               onPress={() => setProfileAvatar(item)}
-              disabled={item.token}
+              disabled={isAvatarAvailible(item.icon)}
             />
           )}
         />

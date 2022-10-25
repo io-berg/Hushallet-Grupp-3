@@ -38,7 +38,7 @@ const initialState: HouseholdState = {
           role: "admin",
           avatar: {
             color: "#ee7e86",
-            icon: "squid",
+            icon: "🐙",
             token: true,
           },
           name: "Mock User",

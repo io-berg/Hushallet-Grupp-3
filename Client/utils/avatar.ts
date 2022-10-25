@@ -1,3 +1,5 @@
+import { Household } from "./type";
+
 export function textToEmoji(icon = "") {
   switch (icon.toLocaleLowerCase()) {
     case "chicken":
@@ -19,4 +21,14 @@ export function textToEmoji(icon = "") {
     default:
       return "";
   }
+}
+
+export function availibleAvatars(household: Household) {
+  let newArray: string[] = [];
+  const array = household.profiles;
+  array.forEach((profile) => {
+    newArray.push(profile.avatar.icon);
+  });
+
+  return newArray;
 }
