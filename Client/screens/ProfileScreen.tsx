@@ -1,10 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Button } from "react-native-paper";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { selectCurrentUserProfile } from "../store/selectors";
 import { useAppSelector } from "../store/store";
+import DualBottomButton from "../components/DualBottomButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
@@ -35,8 +35,19 @@ export default function ProfileScreen({ navigation }: Props) {
         </Text>
       </View>
       <Text style={styles.title}>{currentUserProfile?.name}</Text>
-
-      <Button onPress={() => navigation.navigate("EditProfile")}>Redigera Profil</Button>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+        }}
+      >
+        <DualBottomButton
+          title1="Mina hushåll"
+          onPress1={() => navigation.navigate("Start")}
+          title2="Redigera"
+          onPress2={() => navigation.navigate("EditProfile")}
+        />
+      </View>
     </View>
   );
 }

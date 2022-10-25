@@ -95,7 +95,7 @@ export default function EditProfileScreen({ navigation }: Props) {
             marginLeft: 35,
           }}
         >
-          <FullWidthButton onPress={() => handleSubmit()} text={"Skapa profil"} />
+          <FullWidthButton onPress={() => handleSubmit()} text={"Spara ändringar"} />
         </View>
       </View>
     </View>

@@ -22,7 +22,7 @@ const avatars: Avatar[] = [
     token: false,
   },
   {
-    color: "",
+    color: "#bc9991",
     icon: "🦉",
     token: false,
   },
@@ -42,6 +42,5 @@ const avatars: Avatar[] = [
     token: false,
   },
 ];
-
 
 export default avatars;

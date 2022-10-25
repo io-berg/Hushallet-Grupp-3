@@ -78,7 +78,7 @@ export const RootNavigator = () => {
               <Stack.Screen
                 name="EditProfile"
                 component={EditProfileScreen}
-                options={{ title: "Skapa Profil" }}
+                options={{ title: "Redigera Profil" }}
               />
               <Stack.Screen
                 name="CreateTask"
