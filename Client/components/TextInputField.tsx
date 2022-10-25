@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput } from "react-native-paper";
+import { TextInput, useTheme } from "react-native-paper";
 
 interface TextInputFieldProps {
   value: string;
@@ -18,6 +18,7 @@ const TextInputField = ({
   type = "regular",
   style,
 }: TextInputFieldProps) => {
+  const theme = useTheme();
   return (
     <TextInput
       value={value}
@@ -30,7 +31,7 @@ const TextInputField = ({
       numberOfLines={type === "multiline" ? 4 : 1}
       style={{
         ...style,
-        backgroundColor: "white",
+        backgroundColor: theme.colors.surface,
         width: "92%",
         elevation: 5,
         shadowColor: "black",

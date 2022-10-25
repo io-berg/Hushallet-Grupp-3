@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 
 interface Props {
   onPress: () => void;
@@ -9,6 +9,7 @@ interface Props {
 }
 
 const FullWidthButton = ({ text, icon, onPress, disabled }: Props) => {
+  const theme = useTheme();
   return (
     <Button
       icon={icon}
@@ -18,13 +19,13 @@ const FullWidthButton = ({ text, icon, onPress, disabled }: Props) => {
       style={{
         width: "92%",
         shadowColor: "black",
-        backgroundColor: "#ffff",
+        backgroundColor: theme.colors.surface,
         elevation: 5,
       }}
     >
       <Text
         style={{
-          color: "black",
+          color: theme.colors.text,
           fontSize: 18,
         }}
       >

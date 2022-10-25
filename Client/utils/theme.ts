@@ -9,6 +9,8 @@ const lightTheme = {
     accent: "#ffff",
     surface: "white",
     disabled: "#f2f2f2",
+    text: "#000",
+    background: "#f2f2f2",
   },
 };
 
@@ -17,9 +19,11 @@ const darkTheme = {
   roundness: 10,
   colors: {
     ...MD3DarkTheme.colors,
-    primary: "#ffff",
-    accent: "#000",
+    primary: "#fff",
+    accent: "#ffff",
     surface: "#181818",
+    text: "#ffff",
+    background: "#282828",
   },
 };
 

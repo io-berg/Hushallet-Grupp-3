@@ -33,7 +33,7 @@ export default function MyTabBar({ state, navigation }: MaterialTopTabBarProps) 
           <AntDesign
             name="left"
             size={24}
-            color="black"
+            color={theme.colors.text}
             onPress={() => navigation.navigate(state.routes[state.index - 1].name)}
             style={{
               position: "absolute",
@@ -66,7 +66,7 @@ export default function MyTabBar({ state, navigation }: MaterialTopTabBarProps) 
           <AntDesign
             name="right"
             size={24}
-            color="black"
+            color={theme.colors.text}
             onPress={() => navigation.navigate(state.routes[state.index + 1].name)}
             style={{
               position: "absolute",

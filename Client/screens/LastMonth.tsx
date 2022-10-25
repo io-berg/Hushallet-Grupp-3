@@ -1,12 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
+import { useTheme } from "react-native-paper";
 import TaskHeader from "../components/TaskHeader";
 import { statisticsData } from "../utils/statisics";
 
 export default function LastMonthScreen({ data }: { data: statisticsData }) {
+  const theme = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
       <TaskHeader title="Förra månaden" />
       <View
         style={{
@@ -72,6 +74,7 @@ export default function LastMonthScreen({ data }: { data: statisticsData }) {
                     flexWrap: "wrap",
                     overflow: "hidden",
                     textAlign: "center",
+                    color: theme.colors.text,
                   }}
                 >
                   {task.name}
@@ -87,11 +90,9 @@ export default function LastMonthScreen({ data }: { data: statisticsData }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fcfcfc",
     flex: 1,
   },
   title: {
     fontSize: 20,
-    // fontWeight: "bold",
   },
 });
