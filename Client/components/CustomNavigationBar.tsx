@@ -17,7 +17,7 @@ export function CustomNavigationBar({ navigation, back }: NativeStackHeaderProps
   const themeButtonTitle = theme === "auto" ? "Auto" : theme === "light" ? "Ljust" : "Mörkt";
 
   return (
-    <Appbar.Header mode="center-aligned" statusBarHeight={0}>
+    <Appbar.Header mode="center-aligned" statusBarHeight={50}>
       {back && <Appbar.BackAction onPress={navigation.goBack} />}
       <Appbar.Content
         titleStyle={{

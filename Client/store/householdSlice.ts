@@ -237,17 +237,23 @@ export const leaveHousehold = createAsyncThunk(
   }
 );
 
-export const updateProfile = createAsyncThunk<Profile, { id: number; profile: Profile }>(
-  "/household/UpdateProfileInHousehold",
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await updateProfileRequest(data.id, data.profile);
-      return response;
-    } catch (error) {
-      return rejectWithValue("Failed to fetch");
-    }
+export const updateProfile = createAsyncThunk<
+  Boolean,
+  { householdId: number; profileId: number; name: string; color: string; icon: string }
+>("/household/UpdateProfileInHousehold", async (data, { rejectWithValue }) => {
+  try {
+    const response = await updateProfileRequest(
+      data.householdId,
+      data.profileId,
+      data.name,
+      data.color,
+      data.icon
+    );
+    return response;
+  } catch (error) {
+    return rejectWithValue("Failed to fetch");
   }
-);
+});
 
 const householdSlice = createSlice({
   name: "households",

@@ -49,23 +49,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 
 {
     
-    "id": 1,
-
-    "Profile": 
-         {
-          "id": 1,
-          "user": {
-            "username": "Mock User",
-            "email": "mock@mock.com"
-          },
-          "role": "admin",
-          "avatar": {
-            "color": "#ee7e86",
-            "icon": "🐙",
-            "token": true
-          },
-          "name": "Mock User"
-        }       
+    "HouseholdId": 1,
+    "ProfileId": 1,
+    "Color": "blue",
+    "Icon": "whale"
     
 }
 

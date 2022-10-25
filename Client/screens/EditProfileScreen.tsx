@@ -29,75 +29,67 @@ export default function EditProfileScreen({ navigation, route }: Props) {
   }, [currentUserProfile, selected]);
 
   const handleSubmit = () => {
-    if (
-      currentUserProfile != null &&
-      currentUserProfile != undefined &&
-      selected != null &&
-      selected != undefined &&
-      profileAvatar != null &&
-      profileAvatar != undefined
-    ) {
-      const profile: Profile = {
-        id: currentUserProfile?.id,
-        user: currentUserProfile?.user,
-        role: currentUserProfile?.role,
-        name: profileName,
-        avatar: profileAvatar,
-      };
-      const id = selected?.id;
+    if (currentUserProfile != null && selected != null && profileAvatar != null) {
+      const profileId = currentUserProfile?.id;
+      const name = profileName;
+      const icon = profileAvatar.icon;
+      const color = profileAvatar.color;
+      const householdId = selected?.id;
 
-      dispatch(updateProfile({ profile, id }));
+      dispatch(updateProfile({ profileId, name, icon, color, householdId }));
+
       navigation.navigate("Profile");
+    } else {
+      console.log("fel");
     }
   };
 
-  if (currentUserProfile && selected) {
-    return (
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/logo.png")}
-          style={{
-            marginTop: 15,
-            width: 200,
-            height: 200,
-          }}
-        />
-        <Text style={styles.title}>Ange ditt namn: </Text>
-        <TextInputField value={profileName} onChange={setProfileName} placeholder={"Name"} />
-        <Text style={styles.title}>Välj din avatar: </Text>
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require("../assets/logo.png")}
+        style={{
+          marginTop: 15,
+          width: 200,
+          height: 200,
+        }}
+      />
+      <Text style={styles.title}>Ange ditt namn: </Text>
+      <TextInputField value={profileName} onChange={setProfileName} placeholder={"Name"} />
+      <Text style={styles.title}>Välj din avatar: </Text>
 
+      <View
+        style={{
+          alignContent: "center",
+          alignItems: "stretch",
+        }}
+      >
+        <FlatList
+          data={avatars}
+          numColumns={4}
+          style={styles.flatList}
+          renderItem={({ item }) => (
+            <AvatarButton
+              buttonColor={item.color}
+              icon={item.icon}
+              onPress={() => setProfileAvatar(item)}
+              disabled={item.token}
+            />
+          )}
+        />
         <View
           style={{
             alignContent: "center",
-            alignItems: "stretch",
+            marginLeft: 35,
           }}
         >
-          <FlatList
-            data={avatars}
-            numColumns={4}
-            style={styles.flatList}
-            renderItem={({ item }) => (
-              <AvatarButton
-                buttonColor={item.color}
-                icon={item.icon}
-                onPress={() => setProfileAvatar(item)}
-                disabled={item.token}
-              />
-            )}
-          />
-          <View
-            style={{
-              alignContent: "center",
-              marginLeft: 35,
-            }}
-          >
-            <FullWidthButton onPress={() => handleSubmit()} text={"Skapa profil"} />
-          </View>
+          <FullWidthButton onPress={() => handleSubmit()} text={"Skapa profil"} />
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

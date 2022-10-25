@@ -183,7 +183,13 @@ const leaveHouseholdRequest = async (householdId: number) => {
   throw response;
 };
 
-const updateProfileRequest = async (id: number, profile: Profile) => {
+const updateProfileRequest = async (
+  householdId: number,
+  profileId: number,
+  name: string,
+  color: string,
+  icon: string
+) => {
   const response = await fetch(`${url}/household/UpdateProfileInHousehold`, {
     method: "POST",
     headers: {
@@ -191,8 +197,11 @@ const updateProfileRequest = async (id: number, profile: Profile) => {
       Authorization: `Bearer ${await get("auth.token")}`,
     },
     body: JSON.stringify({
-      id,
-      profile,
+      householdId,
+      profileId,
+      name,
+      color,
+      icon,
     }),
   });
 

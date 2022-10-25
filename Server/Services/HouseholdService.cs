@@ -163,26 +163,23 @@ public class HouseholdService
         return household;
     }
 
-    public async Task<Profile> UpdateProfileInHousehold(int householdId, Profile profile)
+    public async Task<Boolean> UpdateProfileInHousehold(Household household, int profileId, string name, string color, string icon)
     {
-        var household = await _context.Households
-            .Where(h => h.Id == householdId)
-            .FirstOrDefaultAsync();
+     
+        var profile = household.Profiles.Find(p => p.Id == profileId);
         
-        var profileIndex = household.Profiles.FindIndex(p => p.Id == profile.Id);
-        household.Profiles[profileIndex] = (
-             new Profile
-        {
-            Name = profile.Name,
-            User = profile.User,
-            Role = profile.Role,
-            Avatar = profile.Avatar,
-        });
 
-        _context.Households.Update(household);
-        await _context.SaveChangesAsync();
+         if(profile != null)
+         {
+            profile.Name = name;
+            profile.Avatar.Color = color;
+            profile.Avatar.Icon = icon;
+
+            await _context.SaveChangesAsync();
         
-        return household.Profiles[profileIndex];
+            return true;
+        }
+        else { return false;}
     }
         
     public async Task<Boolean> ApplicationResponse(int applicationId, bool accepted, IdentityUser responder)
