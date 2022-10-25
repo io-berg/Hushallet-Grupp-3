@@ -25,7 +25,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: './Client/package-lock.json'
-    - run: cd ./Client
     - run: npm ci
     - run: npm run check
 
