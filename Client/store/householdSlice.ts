@@ -4,12 +4,14 @@ import {
   applicationResponseRequest,
   changeHouseholdNameRequest,
   createHouseholdRequest,
+  createTaskRequest,
+  editTaskRequest,
   fetchMyHouseholdsRequest,
   leaveHouseholdRequest,
   transferOwnershipRequest,
   updateProfileRequest,
 } from "../utils/api";
-import { Household, Profile } from "../utils/type";
+import { Household, Task } from "../utils/type";
 
 export interface HouseholdState {
   loading: boolean;
@@ -36,7 +38,7 @@ const initialState: HouseholdState = {
           role: "admin",
           avatar: {
             color: "#ee7e86",
-            icon: "🐙",
+            icon: "squid",
             token: true,
           },
           name: "Mock User",
@@ -49,11 +51,25 @@ const initialState: HouseholdState = {
           },
           role: "user",
           avatar: {
-            color: "blue",
+            color: "#fcd933",
             icon: "chicken",
             token: true,
           },
           name: "User",
+        },
+        {
+          id: 2,
+          user: {
+            username: "user2",
+            email: "wowee@email.com",
+          },
+          role: "user",
+          avatar: {
+            color: "#ff7e46",
+            icon: "fox",
+            token: true,
+          },
+          name: "User2",
         },
       ],
       tasks: [
@@ -68,6 +84,16 @@ const initialState: HouseholdState = {
             {
               id: 0,
               profileId: 0,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 2,
+              profileId: 2,
               date: new Date().toISOString(),
             },
           ],
@@ -83,6 +109,16 @@ const initialState: HouseholdState = {
             {
               id: 0,
               profileId: 0,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 2,
+              profileId: 2,
               date: new Date().toISOString(),
             },
           ],
@@ -97,8 +133,33 @@ const initialState: HouseholdState = {
           taskHistory: [
             {
               id: 0,
+              profileId: 2,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 2,
               profileId: 0,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 3,
+              profileId: 2,
               date: new Date().toISOString(),
+            },
+            {
+              id: 4,
+              profileId: 2,
+              date: new Date().toISOString(),
+            },
+            {
+              id: 5,
+              profileId: 2,
+              date: new Date(new Date().setDate(new Date().getDate() - 32)).toISOString(),
             },
           ],
         },
@@ -112,6 +173,11 @@ const initialState: HouseholdState = {
             {
               id: 0,
               profileId: 0,
+              date: new Date().toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
               date: new Date().toISOString(),
             },
           ],
@@ -254,6 +320,29 @@ export const updateProfile = createAsyncThunk<
     return rejectWithValue("Failed to fetch");
   }
 });
+export const createTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
+  "household/createTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      await createTaskRequest(data.task, data.householdId);
+      return data.task;
+    } catch (error) {
+      return rejectWithValue("Failed to create task");
+    }
+  }
+);
+
+export const editTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
+  "household/editTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      await editTaskRequest(data.task, data.householdId);
+      return data.task;
+    } catch (error) {
+      return rejectWithValue("Failed to edit task");
+    }
+  }
+);
 
 const householdSlice = createSlice({
   name: "households",
@@ -336,6 +425,23 @@ const householdSlice = createSlice({
     builder.addCase(leaveHousehold.fulfilled, (state, action) => {
       state.households = state.households.filter((h) => h.id !== action.payload);
       state.current = null;
+    });
+    builder.addCase(createTask.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = [...current.tasks, action.payload];
+      }
+    });
+    builder.addCase(editTask.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = current.tasks.map((t) => {
+          if (t.id === action.payload.id) {
+            return action.payload;
+          }
+          return t;
+        });
+      }
     });
   },
 });

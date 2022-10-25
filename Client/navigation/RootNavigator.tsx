@@ -2,13 +2,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
+import CreateTaskScreen from "../screens/CreateTaskScreen";
+import EditTaskScreen from "../screens/EditTaskScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
-import ThemeScreen from "../screens/Theme";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
@@ -25,6 +26,8 @@ export type RootStackParamList = {
   Start: undefined;
   EditProfile: undefined;
   Details: undefined;
+  CreateTask: undefined;
+  EditTask: { taskId: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -77,7 +80,16 @@ export const RootNavigator = () => {
                 component={EditProfileScreen}
                 options={{ title: "Skapa Profil" }}
               />
-              <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
+              <Stack.Screen
+                name="CreateTask"
+                component={CreateTaskScreen}
+                options={{ title: "Skapa en ny syssla" }}
+              />
+              <Stack.Screen
+                name="EditTask"
+                component={EditTaskScreen}
+                options={{ title: "Redigera syssla" }}
+              />
             </Stack.Group>
           ) : (
             <Stack.Screen

@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, Household, LoginResponse, Profile, RegisterResponse } from "./type";
+import { ErrorResponse, Household, LoginResponse, Profile, RegisterResponse, Task } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
@@ -209,6 +209,46 @@ const updateProfileRequest = async (
     const data = await response.json();
     return data;
   }
+  throw response;
+};
+
+const createTaskRequest = async (task: Task, householdId: number) => {
+  console.log(task);
+  const response = await fetch(`${url}/task/CreateTask`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      task,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  throw response;
+};
+
+const editTaskRequest = async (task: Task, householdId: number) => {
+  const response = await fetch(`${url}/task/EditTask`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      task,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
 
   throw response;
 };
@@ -224,4 +264,6 @@ export {
   changeHouseholdNameRequest,
   leaveHouseholdRequest,
   updateProfileRequest,
+  createTaskRequest,
+  editTaskRequest,
 };

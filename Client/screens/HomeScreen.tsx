@@ -36,6 +36,8 @@ export default function HomeScreen({ navigation }: Props) {
 
       <Button title="Logout" onPress={() => dispatch(logout())} />
       <Text>Household: {household?.name}</Text>
+      <Button title="New task" onPress={() => navigation.navigate("CreateTask")} />
+      <Button title="Profile" onPress={() => navigation.navigate("Profile")}></Button>
     </View>
   );
 }

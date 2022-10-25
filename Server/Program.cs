@@ -88,6 +88,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddScoped<HouseholdService>();
+builder.Services.AddScoped<TaskService>();
 
 builder.Services.AddCors(options =>
 {
