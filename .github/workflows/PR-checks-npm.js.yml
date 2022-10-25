@@ -11,10 +11,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'client'
-
 
     strategy:
       matrix:
@@ -28,6 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: cd ./client
     - run: npm ci
     - run: npm run check
 
