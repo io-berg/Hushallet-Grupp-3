@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }: Props) {
       <FlatList
         data={household?.tasks}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate("Details")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Details", { taskId: item.id })}>
             <HomeCard>
               <Text>{item.title}</Text>
             </HomeCard>
