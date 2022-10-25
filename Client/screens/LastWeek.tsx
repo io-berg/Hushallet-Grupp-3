@@ -32,6 +32,15 @@ export default function LastWeekScreen({ data }: { data: statisticsData }) {
             paddingLeft={"10"}
           />
         )}
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            color: theme.colors.text,
+          }}
+        >
+          Totalt
+        </Text>
       </View>
       <View
         style={{
