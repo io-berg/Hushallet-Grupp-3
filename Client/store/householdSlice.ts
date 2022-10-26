@@ -9,8 +9,9 @@ import {
   fetchMyHouseholdsRequest,
   leaveHouseholdRequest,
   transferOwnershipRequest,
+  updateProfileRequest,
 } from "../utils/api";
-import { Household, Task } from "../utils/type";
+import { Household, Profile, Task } from "../utils/type";
 
 export interface HouseholdState {
   loading: boolean;
@@ -36,8 +37,9 @@ const initialState: HouseholdState = {
           },
           role: "admin",
           avatar: {
-            color: "#cd5d6f",
-            icon: "squid",
+            color: "#ee7e86",
+            icon: "🐙",
+            token: true,
           },
           name: "Mock User",
         },
@@ -51,6 +53,7 @@ const initialState: HouseholdState = {
           avatar: {
             color: "#fcd933",
             icon: "chicken",
+            token: true,
           },
           name: "User",
         },
@@ -64,6 +67,7 @@ const initialState: HouseholdState = {
           avatar: {
             color: "#ff7e46",
             icon: "fox",
+            token: true,
           },
           name: "User2",
         },
@@ -299,6 +303,23 @@ export const leaveHousehold = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk<
+  Profile,
+  { householdId: number; profileId: number; name: string; color: string; icon: string }
+>("/household/UpdateProfileInHousehold", async (data, { rejectWithValue }) => {
+  try {
+    const respons = await updateProfileRequest(
+      data.householdId,
+      data.profileId,
+      data.name,
+      data.color,
+      data.icon
+    );
+    return respons;
+  } catch (error) {
+    return rejectWithValue("Failed to fetch");
+  }
+});
 export const createTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
   "household/createTask",
   async (data, { rejectWithValue }) => {
@@ -368,6 +389,26 @@ const householdSlice = createSlice({
       state.fetchInfo = { type: "success", message: "Hushållet skapat!" };
       state.households = [...state.households, action.payload];
     });
+
+    builder.addCase(updateProfile.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProfile.rejected, (state) => {
+      state.loading = false;
+      state.fetchInfo = { type: "error", message: "Uppdatering av profil misslyckades" };
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        const profile = current.profiles.find((p) => p.id == action.payload.id);
+        if (profile) {
+          const index = current.profiles.indexOf(profile);
+          current.profiles[index] = action.payload;
+        }
+      }
+    });
+
     builder.addCase(transferOwnership.fulfilled, (state, action) => {
       const current = state.households.find((household) => household.id === state.current);
       if (current) {

@@ -45,11 +45,11 @@ public class DatabaseContextSeeding
             {
                 Name = "Test Profile",
                 User = await context.Users.FirstOrDefaultAsync(),
-                Role = "Admin",
+                Role = "admin",
                 Avatar = new Avatar
                 {
-                    Icon = "Squid",
-                    Color = "Pink"
+                    Icon = "🐙",
+                    Color = "#ee7e86"
                 }
             });
 
@@ -65,7 +65,7 @@ public class DatabaseContextSeeding
                         new TaskHistory
                         {
                             Profile = household.Profiles.FirstOrDefault(),
-                            Date = DateTime.Now
+                            Date = DateTime.Now,
                         }
                     }
                 )

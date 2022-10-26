@@ -183,6 +183,35 @@ const leaveHouseholdRequest = async (householdId: number) => {
   throw response;
 };
 
+const updateProfileRequest = async (
+  householdId: number,
+  profileId: number,
+  name: string,
+  color: string,
+  icon: string
+) => {
+  const response = await fetch(`${url}/household/UpdateProfileInHousehold`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      profileId,
+      name,
+      color,
+      icon,
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+  throw response;
+};
+
 const createTaskRequest = async (task: Task, householdId: number) => {
   const response = await fetch(`${url}/task/CreateTask`, {
     method: "POST",
@@ -233,6 +262,7 @@ export {
   transferOwnershipRequest,
   changeHouseholdNameRequest,
   leaveHouseholdRequest,
+  updateProfileRequest,
   createTaskRequest,
   editTaskRequest,
 };
