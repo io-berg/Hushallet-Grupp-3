@@ -38,9 +38,11 @@ public class TaskController : ControllerBase
     [HttpPost]
     [Route("CreateTaskHistory")]
     public async Task<IActionResult> CreatTaskHistory(CreateTaskHistoryModel model)
-    {
 
-        var result = await _taskService.CreateTaskHistory(model.Task, model.TaskId, model.HouseholdId);
+    {
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+        var result = await _taskService.CreateTaskHistory(model.Task, model.TaskId, model.HouseholdId, user);
 
         if (result)
         {

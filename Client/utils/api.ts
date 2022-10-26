@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, LoginResponse, RegisterResponse, Task } from "./type";
+import { ErrorResponse, LoginResponse, RegisterResponse, Task, TaskHistory } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
@@ -223,6 +223,32 @@ const editTaskRequest = async (task: Task, householdId: number) => {
   throw response;
 };
 
+const createTaskHistoryItemRequest = async (
+  householdId: number,
+  taskId: number,
+  taskHistory: TaskHistory
+) => {
+  const response = await fetch(`${url}/task/CreateTaskHistory`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      Task: taskHistory,
+      TaskId: taskId,
+      HouseholdId: householdId,
+    }),
+  });
+  console.log(response);
+
+  if (response.ok) {
+    return taskHistory;
+  }
+
+  throw response;
+};
+
 export {
   loginRequest,
   registerRequest,
@@ -235,4 +261,5 @@ export {
   leaveHouseholdRequest,
   createTaskRequest,
   editTaskRequest,
+  createTaskHistoryItemRequest,
 };

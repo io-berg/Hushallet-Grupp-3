@@ -95,10 +95,11 @@ public class TaskService
         return true;
     }
 
-    public async Task<Boolean> CreateTaskHistory(TaskHistoryDTO task, int householdId, int taskId)
+    public async Task<Boolean> CreateTaskHistory(TaskHistoryDTO task, int householdId, int taskId, IdentityUser sender)
     {
         var household = await _context.Households
            .Include(h => h.Tasks)
+               .ThenInclude(h => h.History)
            .Include(h => h.Profiles)
                .ThenInclude(p => p.User)
            .Where(h => h.Id == householdId)
@@ -108,6 +109,15 @@ public class TaskService
         {
             return false;
         }
+        var senderProfile = household.Profiles
+            .Where(p => p.UserId == sender.Id)
+            .FirstOrDefault();
+
+        if (senderProfile.Role.ToLower() != "admin")
+        {
+            return false;
+        }
+
         var tasks = household.Tasks.Find(t => t.Id == taskId);
         var profiles = household.Profiles.Find(p => p.Id == task.ProfileId);
 

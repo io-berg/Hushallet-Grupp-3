@@ -4,10 +4,11 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import FrequencyPicker from "../components/FrequencyPicker";
 import EffortPicker from "../components/EffortPicker";
 import DualBottomButton from "../components/DualBottomButton";
+import { createTaskHistoryItem } from "../store/householdSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Details">;
 
@@ -16,8 +17,17 @@ export default function DetailScreen({ navigation, route }: Props) {
   const taskId = route.params.taskId;
   const task = useAppSelector(selectCurrentHousehold)?.tasks.find((t) => t.id === taskId);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
-
-  function onSubmit() {}
+  const dispatch = useAppDispatch();
+  console.log(task?.taskHistory);
+  const dispatchItem = {
+    householdId: household?.id,
+    taskId: taskId,
+    taskHistory: {
+      id: 0,
+      profileId: currentUserProfile?.id,
+      date: new Date().toISOString(),
+    },
+  };
 
   if (task) {
     return (
@@ -42,7 +52,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             marginLeft: 20,
           }}
         >
-          <FrequencyPicker value={task?.frequency} bool={true} />
+          <FrequencyPicker value={task?.frequency} />
         </View>
         <View
           style={{
@@ -50,7 +60,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             marginLeft: 20,
           }}
         >
-          <EffortPicker value={task?.effort} bool={true} />
+          <EffortPicker value={task?.effort} />
         </View>
 
         <Button onPress={() => navigation.navigate("EditTask", { taskId: taskId })}>
@@ -70,7 +80,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             title2="Klar"
             icon2="close-circle-outline"
             onPress1={() => navigation.navigate("EditTask", { taskId })}
-            onPress2={() => onCancel()}
+            onPress2={() => dispatch(createTaskHistoryItem(dispatchItem))}
           />
         </View>
       </View>
