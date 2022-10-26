@@ -41,8 +41,7 @@ public class TaskController : ControllerBase
 
     {
         var user = await _userManager.FindByNameAsync(User.Identity.Name);
-
-        var result = await _taskService.CreateTaskHistory(model.Task, model.TaskId, model.HouseholdId, user);
+        var result = await _taskService.CreateTaskHistory(model.Task, model.HouseholdId, model.TaskId, user);
 
         if (result)
         {

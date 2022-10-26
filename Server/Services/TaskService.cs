@@ -105,18 +105,11 @@ public class TaskService
            .Where(h => h.Id == householdId)
            .FirstOrDefaultAsync();
 
-        if (household == null)
-        {
-            return false;
-        }
         var senderProfile = household.Profiles
             .Where(p => p.UserId == sender.Id)
             .FirstOrDefault();
 
-        if (senderProfile.Role.ToLower() != "admin")
-        {
-            return false;
-        }
+        if (household == null || senderProfile == null) return false;
 
         var tasks = household.Tasks.Find(t => t.Id == taskId);
         var profiles = household.Profiles.Find(p => p.Id == task.ProfileId);
@@ -125,9 +118,8 @@ public class TaskService
         {
             Id = task.Id,
             Profile = profiles,
-            Date = new DateTime { },
+            Date = DateTime.Parse(task.Date),
             ProfileId = task.ProfileId
-
         };
 
         tasks.History.Add(taskHistory);

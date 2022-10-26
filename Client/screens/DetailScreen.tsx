@@ -1,14 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Button, Text, useTheme } from "react-native-paper";
+import DualBottomButton from "../components/DualBottomButton";
+import EffortPicker from "../components/EffortPicker";
+import FrequencyPicker from "../components/FrequencyPicker";
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { createTaskHistoryItem } from "../store/householdSlice";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import FrequencyPicker from "../components/FrequencyPicker";
-import EffortPicker from "../components/EffortPicker";
-import DualBottomButton from "../components/DualBottomButton";
-import { createTaskHistoryItem } from "../store/householdSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Details">;
 
@@ -18,20 +18,12 @@ export default function DetailScreen({ navigation, route }: Props) {
   const task = useAppSelector(selectCurrentHousehold)?.tasks.find((t) => t.id === taskId);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
   const dispatch = useAppDispatch();
-  console.log(task?.taskHistory);
-  const dispatchItem = {
-    householdId: household?.id,
-    taskId: taskId,
-    taskHistory: {
-      id: 0,
-      profileId: currentUserProfile?.id,
-      date: new Date().toISOString(),
-    },
-  };
+
+  const theme = useTheme();
 
   if (task) {
     return (
-      <View style={styles.container}>
+      <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
         <Text style={styles.title}>{task?.title}</Text>
         <View
           style={{
@@ -80,7 +72,22 @@ export default function DetailScreen({ navigation, route }: Props) {
             title2="Klar"
             icon2="close-circle-outline"
             onPress1={() => navigation.navigate("EditTask", { taskId })}
-            onPress2={() => dispatch(createTaskHistoryItem(dispatchItem))}
+            onPress2={() => {
+              if (household && currentUserProfile) {
+                dispatch(
+                  createTaskHistoryItem({
+                    householdId: household.id,
+                    taskId: taskId,
+                    taskHistory: {
+                      id: 0,
+                      profileId: currentUserProfile.id,
+                      date: new Date().toISOString(),
+                    },
+                  })
+                );
+                navigation.navigate("Home");
+              }
+            }}
           />
         </View>
       </View>

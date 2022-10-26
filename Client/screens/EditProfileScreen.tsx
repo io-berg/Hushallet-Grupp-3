@@ -42,8 +42,6 @@ export default function EditProfileScreen({ navigation }: Props) {
       dispatch(updateProfile({ profileId, name, icon, color, householdId }));
 
       navigation.navigate("Profile");
-    } else {
-      console.log("fel");
     }
   };
 

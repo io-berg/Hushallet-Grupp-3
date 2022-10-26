@@ -269,7 +269,6 @@ const createTaskHistoryItemRequest = async (
       HouseholdId: householdId,
     }),
   });
-  console.log(response);
 
   if (response.ok) {
     return taskHistory;
