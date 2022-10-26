@@ -99,8 +99,8 @@ const initialState: HouseholdState = {
           title: "Damma",
           description:
             "Damma av alla ytor i alla rum. (ta bort dukar, blommor osv) Använd trasa, hink och rengöringsmedel som står i städskåpet i hallen.",
-          effort: 1,
-          frequency: 1,
+          effort: 2,
+          frequency: 2,
           taskHistory: [
             {
               id: 0,
