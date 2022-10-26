@@ -25,7 +25,7 @@ export type RootStackParamList = {
   HouseholdOverview: undefined;
   Start: undefined;
   EditProfile: undefined;
-  Details: undefined;
+  Details: { taskId: number };
   CreateTask: undefined;
   EditTask: { taskId: number };
 };

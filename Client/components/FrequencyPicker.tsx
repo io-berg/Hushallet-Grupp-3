@@ -5,16 +5,26 @@ import { Badge, Text, TouchableRipple, useTheme } from "react-native-paper";
 interface Props {
   value: number;
   onChange?: (value: number) => void;
+  bool: boolean;
 }
 
-const FrequencyPicker = ({ value, onChange }: Props) => {
+const FrequencyPicker = ({ value, onChange, bool }: Props) => {
   const [showPicker, setShowPicker] = useState(false);
 
   const theme = useTheme();
 
+  function isDisabled(state: boolean | undefined) {
+    if (state) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   if (!showPicker) {
     return (
       <TouchableRipple
+        disabled={isDisabled(bool)}
         onPress={() => {
           if (onChange) setShowPicker(true);
         }}
