@@ -44,6 +44,7 @@ interface Profile {
 interface Avatar {
   color: string;
   icon: string;
+  token: boolean;
 }
 
 export interface LoginResponse {

@@ -2,18 +2,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
-import CreateProfileScreen from "../screens/CreateProfileScreen";
 import CreateTaskScreen from "../screens/CreateTaskScreen";
-import DetailScreen from "../screens/DetailScreen";
 import EditTaskScreen from "../screens/EditTaskScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
+import DetailScreen from "../screens/DetailScreen";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -24,7 +24,7 @@ export type RootStackParamList = {
   Household: undefined;
   HouseholdOverview: undefined;
   Start: undefined;
-  SkapaProfil: undefined;
+  EditProfile: undefined;
   Details: { taskId: number };
   CreateTask: undefined;
   EditTask: { taskId: number };
@@ -68,11 +68,15 @@ export const RootNavigator = () => {
                 component={ProfileScreen}
                 options={{ title: "Profil" }}
               />
-              <Stack.Screen name="Details" component={DetailScreen} options={{ title: "Detalj" }} />
               <Stack.Screen
-                name="SkapaProfil"
-                component={CreateProfileScreen}
-                options={{ title: "Skapa Profil" }}
+                name="Details"
+                component={DetailScreen}
+                options={{ title: "Details" }}
+              />
+              <Stack.Screen
+                name="EditProfile"
+                component={EditProfileScreen}
+                options={{ title: "Redigera Profil" }}
               />
               <Stack.Screen
                 name="CreateTask"

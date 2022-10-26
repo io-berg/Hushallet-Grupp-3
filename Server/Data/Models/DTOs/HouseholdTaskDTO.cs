@@ -7,5 +7,5 @@ public class HouseholdTaskDTO
     public string Description { get; set; }
     public int Effort { get; set; }
     public int Frequency { get; set; }
-    public List<TaskHistoryDTO> History { get; set; }
+    public List<TaskHistoryDTO> TaskHistory { get; set; }
 }

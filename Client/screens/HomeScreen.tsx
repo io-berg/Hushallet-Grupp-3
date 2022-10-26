@@ -38,7 +38,6 @@ export default function HomeScreen({ navigation }: Props) {
       <Text>Household: {household?.name}</Text>
       <Button title="New task" onPress={() => navigation.navigate("CreateTask")} />
       <Button title="Profile" onPress={() => navigation.navigate("Profile")}></Button>
-      <Button title="ProfileCreate" onPress={() => navigation.navigate("SkapaProfil")}></Button>
     </View>
   );
 }
