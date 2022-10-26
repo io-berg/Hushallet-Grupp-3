@@ -1,14 +1,20 @@
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
+import { CompositeScreenProps } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HomeCard from "../components/HomeCard";
 import TaskHeader from "../components/TaskHeader";
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { TabsParamList } from "../navigation/TabsNavigator";
 import { logout } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+type Props = CompositeScreenProps<
+  MaterialTopTabScreenProps<TabsParamList, "Overview">,
+  NativeStackScreenProps<RootStackParamList, "Home">
+>;
 
 export default function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();

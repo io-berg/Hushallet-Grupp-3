@@ -2,12 +2,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
+import DualBottomButton from "../components/DualBottomButton";
+import EffortPicker from "../components/EffortPicker";
+import FrequencyPicker from "../components/FrequencyPicker";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
 import { useAppSelector } from "../store/store";
-import FrequencyPicker from "../components/FrequencyPicker";
-import EffortPicker from "../components/EffortPicker";
-import DualBottomButton from "../components/DualBottomButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Details">;
 
@@ -74,6 +74,12 @@ export default function DetailScreen({ navigation, route }: Props) {
       </View>
     );
   }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Ingen uppgift hittades</Text>
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   container: {

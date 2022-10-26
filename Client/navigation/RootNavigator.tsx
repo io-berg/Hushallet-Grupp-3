@@ -1,23 +1,23 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import CreateTaskScreen from "../screens/CreateTaskScreen";
+import DetailScreen from "../screens/DetailScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 import EditTaskScreen from "../screens/EditTaskScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import EditProfileScreen from "../screens/EditProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
-import { TabNavigator } from "./TabsNavigator";
-import DetailScreen from "../screens/DetailScreen";
+import { TabNavigator, TabsParamList } from "./TabsNavigator";
 
 export type RootStackParamList = {
   Login: undefined;
-  Home: undefined;
+  Home: NavigatorScreenParams<TabsParamList>;
   Register: undefined;
   Tema: undefined;
   Profile: undefined;
