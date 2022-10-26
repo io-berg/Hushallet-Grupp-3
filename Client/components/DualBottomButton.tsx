@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Button, Divider } from "react-native-paper";
+import { Button, Divider, useTheme } from "react-native-paper";
 
 interface Props {
   onPress1: () => void;
@@ -24,10 +24,11 @@ const DualBottomButton = ({
   icon2,
   disabled2,
 }: Props) => {
+  const theme = useTheme();
   return (
     <View
       style={{
-        backgroundColor: "#FFFFFF",
+        backgroundColor: theme.colors.surface,
         flexDirection: "row",
         justifyContent: "flex-end",
         bottom: 0,
@@ -40,8 +41,8 @@ const DualBottomButton = ({
         icon={icon1}
         onPress={onPress1}
         disabled={disabled1}
-        buttonColor="white"
-        textColor="black"
+        buttonColor={theme.colors.surface}
+        textColor={theme.colors.text}
         style={{ width: "50%", borderStartColor: "#FFFFFF", padding: 8 }}
       >
         {title1}
@@ -52,8 +53,8 @@ const DualBottomButton = ({
         icon={icon2}
         onPress={onPress2}
         disabled={disabled2}
-        buttonColor="white"
-        textColor="black"
+        buttonColor={theme.colors.surface}
+        textColor={theme.colors.text}
         style={{ width: "50%", padding: 8 }}
       >
         {title2}

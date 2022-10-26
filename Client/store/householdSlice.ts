@@ -217,7 +217,7 @@ const initialState: HouseholdState = {
   current: null,
 };
 
-export const fetchMyHouseholds = createAsyncThunk(
+export const fetchMyHouseholds = createAsyncThunk<Household[], undefined>(
   "household/fetchMyHouseholds",
   async (_, { rejectWithValue }) => {
     try {

@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import FullWidthButton from "../components/FullWidthButton";
 import TextInputField from "../components/TextInputField";
 import { RootStackParamList } from "../navigation/RootNavigator";
@@ -17,7 +17,9 @@ export default function RegisterScreen({ navigation }: Props) {
 
   const errors = useAppSelector((state) => state.auth.registerErrors?.errors);
   const registerSuccess = useAppSelector((state) => state.auth.registerSuccess);
+
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   const handleRegister = async () => {
     dispatch(register({ username, email, password }));
@@ -34,8 +36,12 @@ export default function RegisterScreen({ navigation }: Props) {
   }, [registerSuccess, dispatch, username, password]);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView
+      style={{
+        backgroundColor: theme.colors.background,
+      }}
+    >
+      <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
         <Image
           source={require("../assets/logo.png")}
           style={{
@@ -86,7 +92,7 @@ export default function RegisterScreen({ navigation }: Props) {
             marginTop: 20,
           }}
         >
-          <Text style={{ color: "blue" }}>Tillbaka till Login</Text>
+          <Text style={{ color: theme.colors.text }}>Tillbaka till Login</Text>
         </Button>
       </View>
     </ScrollView>
@@ -95,7 +101,7 @@ export default function RegisterScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    paddingTop: 50,
     flex: 1,
     alignItems: "center",
     gap: 10,

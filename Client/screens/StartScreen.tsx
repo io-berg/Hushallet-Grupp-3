@@ -35,20 +35,14 @@ export default function StartScreen({ navigation }: Props) {
     dispatch(fetchMyHouseholds());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (selected) {
-      navigation.navigate("Home");
-    }
-  }, [selected, navigation]);
-
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
       <ScrollView contentContainerStyle={styles.scrollViewStyles}>
         <Portal>
           <Modal
             visible={joinModalVisible}
             onDismiss={() => setJoinModalVisible(false)}
-            style={styles.modal}
+            style={{ ...styles.modal, backgroundColor: theme.colors.background }}
             contentContainerStyle={styles.modalContent}
           >
             <TextInputField
@@ -70,7 +64,12 @@ export default function StartScreen({ navigation }: Props) {
           <Modal
             visible={createModalVisible}
             onDismiss={() => setCreateModalVisible(false)}
-            style={styles.modal}
+            style={{
+              ...styles.modal,
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
+              borderWidth: 1,
+            }}
             contentContainerStyle={styles.modalContent}
           >
             <TextInputField
@@ -128,6 +127,9 @@ export default function StartScreen({ navigation }: Props) {
               onPress={() => {
                 if (selected?.id !== household.id) {
                   dispatch(setCurrentHousehold({ id: household.id }));
+                  setTimeout(() => {
+                    navigation.navigate("Home");
+                  }, 200);
                 } else {
                   navigation.navigate("Home");
                 }
@@ -166,8 +168,6 @@ const styles = StyleSheet.create({
   scrollViewStyles: {
     alignItems: "center",
     marginTop: 20,
-    // height: "100%",
-    // flex: 1,
   },
   title: {
     fontSize: 20,
@@ -182,8 +182,6 @@ const styles = StyleSheet.create({
     color: "red",
   },
   modal: {
-    backgroundColor: "white",
-    padding: 20,
     margin: 20,
     borderRadius: 10,
     height: 160,

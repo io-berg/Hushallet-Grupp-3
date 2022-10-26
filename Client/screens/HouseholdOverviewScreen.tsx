@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { Button, Modal, Portal, Text, TouchableRipple } from "react-native-paper";
+import { Button, Modal, Portal, Text, TouchableRipple, useTheme } from "react-native-paper";
 import OverViewUserButton from "../components/OverviewUserButton";
 import TextInputField from "../components/TextInputField";
 import {
@@ -24,6 +24,8 @@ export default function HouseholdOverviewScreen() {
   const userIsOwner = currentUserProfile?.role === "admin";
   const dispatch = useAppDispatch();
 
+  const theme = useTheme();
+
   useEffect(() => {
     if (household) {
       setHouseholdName(household.name);
@@ -32,11 +34,11 @@ export default function HouseholdOverviewScreen() {
 
   if (household) {
     return (
-      <View style={styles.container}>
+      <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
         <Text style={styles.title}>{household.name}</Text>
         <View
           style={{
-            backgroundColor: "#fff",
+            backgroundColor: theme.colors.surface,
             padding: 10,
             borderRadius: 10,
             marginTop: 10,
@@ -46,6 +48,7 @@ export default function HouseholdOverviewScreen() {
             style={{
               fontSize: 20,
               fontWeight: "bold",
+              color: theme.colors.text,
             }}
           >
             Hushållskod: {household.code}
@@ -90,7 +93,7 @@ export default function HouseholdOverviewScreen() {
                 rippleColor="lightyellow"
                 style={{
                   borderRadius: 10,
-                  backgroundColor: "#fff",
+                  backgroundColor: theme.colors.surface,
                   marginVertical: 5,
                   padding: 10,
                 }}
@@ -112,18 +115,25 @@ export default function HouseholdOverviewScreen() {
             <Modal
               visible={selectedProfile !== undefined}
               onDismiss={() => setSelectedProfile(undefined)}
-              style={styles.modal}
+              style={{ ...styles.modal, backgroundColor: theme.colors.background }}
               contentContainerStyle={styles.modalContent}
             >
               <Text
                 style={{
                   fontSize: 20,
                   fontWeight: "bold",
+                  color: theme.colors.text,
                 }}
               >
                 {selectedProfile?.name + " " + selectedProfile?.avatar.icon}
               </Text>
-              <Text>{selectedProfile?.user.email}</Text>
+              <Text
+                style={{
+                  color: theme.colors.text,
+                }}
+              >
+                {selectedProfile?.user.email}
+              </Text>
               {userIsOwner && selectedProfile != currentUserProfile && (
                 <Button
                   style={{
@@ -148,8 +158,13 @@ export default function HouseholdOverviewScreen() {
             <Modal
               visible={selectedApplication !== undefined}
               onDismiss={() => setSelectedApplication(undefined)}
-              style={styles.modal}
-              contentContainerStyle={styles.modalContent}
+              style={{
+                backgroundColor: theme.colors.background,
+                ...styles.modal,
+              }}
+              contentContainerStyle={{
+                ...styles.modalContent,
+              }}
             >
               <Text
                 style={{
@@ -191,7 +206,10 @@ export default function HouseholdOverviewScreen() {
           <Modal
             visible={showNamechangeModal}
             onDismiss={() => setShowNamechangeModal(false)}
-            style={styles.modal}
+            style={{
+              backgroundColor: theme.colors.background,
+              ...styles.modal,
+            }}
             contentContainerStyle={styles.modalContent}
           >
             <TextInputField
@@ -262,10 +280,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   modal: {
-    backgroundColor: "white",
-    padding: 20,
     margin: 20,
-    borderRadius: 10,
+    borderRadius: 20,
     height: 160,
     marginTop: "50%",
   },

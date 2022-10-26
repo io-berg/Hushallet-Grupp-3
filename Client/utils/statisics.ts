@@ -20,7 +20,7 @@ export type statisticsData = {
   }[];
 };
 
-export const mapThisWeeksData = (profiles?: Profile[], Tasks?: Task[]) => {
+export const mapThisWeeksData = (profiles?: Profile[], Tasks?: Task[], color?: string) => {
   if (!profiles || !Tasks) return;
   const midnightToday = new Date();
   midnightToday.setUTCHours(24, 0, 0, 0);
@@ -35,13 +35,13 @@ export const mapThisWeeksData = (profiles?: Profile[], Tasks?: Task[]) => {
 
   const filtered = filterTaskhitoryByDate(Tasks, thisMonday, midnightToday);
 
-  const overallData = getOverAllData(profiles, filtered);
+  const overallData = getOverAllData(profiles, filtered, color);
   const perTaskData = getPerTaskData(profiles, filtered);
 
   return { overallData: overallData, taskData: perTaskData } as statisticsData;
 };
 
-export const mapLastWeeksData = (profiles?: Profile[], Tasks?: Task[]) => {
+export const mapLastWeeksData = (profiles?: Profile[], Tasks?: Task[], color?: string) => {
   if (!profiles || !Tasks) return;
 
   const lastWeekMonday = new Date(
@@ -59,7 +59,7 @@ export const mapLastWeeksData = (profiles?: Profile[], Tasks?: Task[]) => {
 
   const filtered = filterTaskhitoryByDate(Tasks, lastWeekMonday, thisMonday);
 
-  const overallData = getOverAllData(profiles, filtered);
+  const overallData = getOverAllData(profiles, filtered, color);
   const perTaskData = getPerTaskData(profiles, filtered);
 
   return {
@@ -68,7 +68,7 @@ export const mapLastWeeksData = (profiles?: Profile[], Tasks?: Task[]) => {
   } as statisticsData;
 };
 
-export const mapLastMonthsData = (profiles?: Profile[], Tasks?: Task[]) => {
+export const mapLastMonthsData = (profiles?: Profile[], Tasks?: Task[], color?: string) => {
   if (!profiles || !Tasks) return;
 
   const lastMonthFirstDay = new Date(today.getFullYear(), today.getMonth() - 1, 1);
@@ -81,7 +81,7 @@ export const mapLastMonthsData = (profiles?: Profile[], Tasks?: Task[]) => {
 
   if (!filtered.some((task) => task.taskHistory?.length > 0)) return;
 
-  const overallData = getOverAllData(profiles, filtered);
+  const overallData = getOverAllData(profiles, filtered, color);
   const perTaskData = getPerTaskData(profiles, filtered);
 
   return {
@@ -130,7 +130,7 @@ function getPerTaskData(profiles: Profile[], tasks: Task[]) {
   return filteredPoints;
 }
 
-function getOverAllData(profiles: Profile[], tasks: Task[]) {
+function getOverAllData(profiles: Profile[], tasks: Task[], color?: string) {
   const points = profiles?.map((profile) => {
     const profileTasks = tasks?.map((task) => {
       const taskHistory = task.taskHistory.filter((history) => history.profileId === profile.id);
@@ -156,7 +156,7 @@ function getOverAllData(profiles: Profile[], tasks: Task[]) {
       name: values.avatar.icon,
       effortPoints: values.effortPoints,
       color: values.avatar.color,
-      legendFontColor: "#7F7F7F",
+      legendFontColor: color,
       legendBackgroundColor: "#C9C9C9",
       legendFontSize: 17,
     };

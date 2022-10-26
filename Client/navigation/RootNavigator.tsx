@@ -41,8 +41,6 @@ export const RootNavigator = () => {
 
   const selected = useAppSelector(selectCurrentHousehold);
 
-  // const theme = useTheme();
-
   return (
     <NavigationContainer>
       <Stack.Navigator

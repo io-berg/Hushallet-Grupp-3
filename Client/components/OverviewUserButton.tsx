@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
-import { TouchableRipple } from "react-native-paper";
+import { TouchableRipple, useTheme } from "react-native-paper";
 import { Profile } from "../utils/type";
 import TextAvatar from "./TextAvatar";
 
@@ -11,13 +11,14 @@ interface Props {
 }
 
 const OverViewUserButton = ({ profile, onClick }: Props) => {
+  const theme = useTheme();
   return (
     <TouchableRipple
       onPress={onClick}
       rippleColor="lightyellow"
       style={{
         borderRadius: 10,
-        backgroundColor: "#fff",
+        backgroundColor: theme.colors.surface,
         marginVertical: 5,
       }}
     >
@@ -39,7 +40,7 @@ const OverViewUserButton = ({ profile, onClick }: Props) => {
           }}
         >
           <TextAvatar icon={profile.avatar.icon} />
-          <Text style={{ paddingLeft: 5 }} key={profile.id}>
+          <Text style={{ paddingLeft: 5, color: theme.colors.text }} key={profile.id}>
             {profile.name + " (" + profile.user.username + ")"}
           </Text>
         </View>
