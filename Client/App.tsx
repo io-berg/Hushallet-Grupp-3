@@ -26,6 +26,7 @@ interface Props {
 
 function PersistanceGate({ children }: Props) {
   const colorScheme = useColorScheme();
+
   const dispatch = useAppDispatch();
   const themeState = useAppSelector((state) => state.settings.theme);
 
