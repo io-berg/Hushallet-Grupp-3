@@ -36,6 +36,21 @@ public class TaskController : ControllerBase
     }
 
     [HttpPost]
+    [Route("CreateTaskHistory")]
+    public async Task<IActionResult> CreatTaskHistory(CreateTaskHistoryModel model)
+    {
+
+        var result = await _taskService.CreateTaskHistory(model.Task, model.TaskId, model.HouseholdId);
+
+        if (result)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPost]
     [Route("EditTask")]
     public async Task<IActionResult> EditTask(EditTaskModel model)
     {

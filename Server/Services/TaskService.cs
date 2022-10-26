@@ -94,4 +94,37 @@ public class TaskService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<Boolean> CreateTaskHistory(TaskHistoryDTO task, int householdId, int taskId)
+    {
+        var household = await _context.Households
+           .Include(h => h.Tasks)
+           .Include(h => h.Profiles)
+               .ThenInclude(p => p.User)
+           .Where(h => h.Id == householdId)
+           .FirstOrDefaultAsync();
+
+        if (household == null)
+        {
+            return false;
+        }
+        var tasks = household.Tasks.Find(t => t.Id == taskId);
+        var profiles = household.Profiles.Find(p => p.Id == task.ProfileId);
+
+        TaskHistory taskHistory = new TaskHistory
+        {
+            Id = task.Id,
+            Profile = profiles,
+            Date = new DateTime { },
+            ProfileId = task.ProfileId
+
+        };
+
+        tasks.History.Add(taskHistory);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+
+    }
 }

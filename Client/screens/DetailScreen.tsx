@@ -17,6 +17,8 @@ export default function DetailScreen({ navigation, route }: Props) {
   const task = useAppSelector(selectCurrentHousehold)?.tasks.find((t) => t.id === taskId);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
 
+  function onSubmit() {}
+
   if (task) {
     return (
       <View style={styles.container}>
@@ -67,7 +69,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             icon1="pen"
             title2="Klar"
             icon2="close-circle-outline"
-            onPress1={() => formik.handleSubmit()}
+            onPress1={() => navigation.navigate("EditTask", { taskId })}
             onPress2={() => onCancel()}
           />
         </View>
