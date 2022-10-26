@@ -5,9 +5,10 @@ import { Badge, Text, TouchableRipple, useTheme } from "react-native-paper";
 interface Props {
   value: number;
   onChange?: (value: number) => void;
+  bool?: boolean;
 }
 
-const EffortPicker = ({ value, onChange }: Props) => {
+const EffortPicker = ({ value, onChange, bool }: Props) => {
   const [showPicker, setShowPicker] = useState(false);
 
   const theme = useTheme();
@@ -20,9 +21,18 @@ const EffortPicker = ({ value, onChange }: Props) => {
     8: "#d9d9d9",
   };
 
+  function isDisabled(state: boolean | undefined) {
+    if (state) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   if (!showPicker) {
     return (
       <TouchableRipple
+        disabled={isDisabled(bool)}
         onPress={() => {
           setShowPicker(true);
         }}

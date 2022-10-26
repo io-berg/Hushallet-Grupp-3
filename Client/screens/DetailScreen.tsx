@@ -40,7 +40,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             marginLeft: 20,
           }}
         >
-          <FrequencyPicker value={task?.frequency} />
+          <FrequencyPicker value={task?.frequency} bool={true} />
         </View>
         <View
           style={{
@@ -48,7 +48,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             marginLeft: 20,
           }}
         >
-          <EffortPicker value={task?.effort} />
+          <EffortPicker value={task?.effort} bool={true} />
         </View>
 
         <Button onPress={() => navigation.navigate("EditTask", { taskId: taskId })}>
