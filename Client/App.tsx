@@ -51,7 +51,6 @@ function StartupGate({ children }: Props) {
 
       interval = setInterval(() => {
         dispatch(fetchMyHouseholds());
-        console.log("Fetching households");
       }, 3000);
     })();
 
