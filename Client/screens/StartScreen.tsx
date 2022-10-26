@@ -35,12 +35,6 @@ export default function StartScreen({ navigation }: Props) {
     dispatch(fetchMyHouseholds());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (selected) {
-      navigation.navigate("Home");
-    }
-  }, [selected, navigation]);
-
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewStyles}>
@@ -128,6 +122,9 @@ export default function StartScreen({ navigation }: Props) {
               onPress={() => {
                 if (selected?.id !== household.id) {
                   dispatch(setCurrentHousehold({ id: household.id }));
+                  setTimeout(() => {
+                    navigation.navigate("Home");
+                  }, 200);
                 } else {
                   navigation.navigate("Home");
                 }
