@@ -164,7 +164,7 @@ public class HouseholdService
         return household;
     }
 
-    public async Task<Boolean> UpdateProfileInHousehold(Household household, int profileId, string name, string color, string icon)
+    public async Task<Profile> UpdateProfileInHousehold(Household household, int profileId, string name, string color, string icon)
     {
 
         var profile = household.Profiles.Find(p => p.Id == profileId);
@@ -179,9 +179,9 @@ public class HouseholdService
 
             await _context.SaveChangesAsync();
 
-            return true;
+           
         }
-        else { return false; }
+         return profile;
     }
 
     public async Task<Boolean> ApplicationResponse(int applicationId, bool accepted, IdentityUser responder)

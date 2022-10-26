@@ -11,7 +11,7 @@ import {
   transferOwnershipRequest,
   updateProfileRequest,
 } from "../utils/api";
-import { Household, Task } from "../utils/type";
+import { Household, Profile, Task } from "../utils/type";
 
 export interface HouseholdState {
   loading: boolean;
@@ -304,18 +304,18 @@ export const leaveHousehold = createAsyncThunk(
 );
 
 export const updateProfile = createAsyncThunk<
-  boolean,
+  Profile,
   { householdId: number; profileId: number; name: string; color: string; icon: string }
 >("/household/UpdateProfileInHousehold", async (data, { rejectWithValue }) => {
   try {
-    const response = await updateProfileRequest(
+    const respons = await updateProfileRequest(
       data.householdId,
       data.profileId,
       data.name,
       data.color,
       data.icon
     );
-    return response;
+    return respons;
   } catch (error) {
     return rejectWithValue("Failed to fetch");
   }
@@ -400,6 +400,14 @@ const householdSlice = createSlice({
     builder.addCase(updateProfile.fulfilled, (state, action) => {
       state.loading = false;
       state.fetchInfo = { type: "success", message: "Profil uppdaterad!" };
+      /*const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        const profile = current.profiles.find((p) => p.id == action.payload.id);
+        if (profile) {
+          const index = current.profiles.indexOf(profile);
+          current.profiles[index] = action.payload;
+        }
+      }*/
     });
 
     builder.addCase(transferOwnership.fulfilled, (state, action) => {

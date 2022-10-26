@@ -25,8 +25,8 @@ export default function EditProfileScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     if (currentUserProfile && selected) {
-      setProfileName(currentUserProfile.name);
-      setProfileAvatar(currentUserProfile.avatar);
+      //setProfileName(currentUserProfile.name);
+      //setProfileAvatar(currentUserProfile.avatar);
       setAvatars(availibleAvatars(selected));
     }
   }, [currentUserProfile, selected]);

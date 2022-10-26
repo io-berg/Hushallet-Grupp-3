@@ -84,9 +84,9 @@ public class HouseholdController : ControllerBase
         if(household != null)
         {
             var response = await _householdService.UpdateProfileInHousehold(household, model.ProfileId, model.Name, model.Color, model.Icon);
-             if (response)
+             if (response != null)
         {
-            return Ok();
+            return Ok(response);
         }
         }
         
