@@ -83,7 +83,10 @@ public class HouseholdService
     {
         var household = await _context.Households
             .Where(h => h.Id == id)
-            .Include(h => h.Profiles).ThenInclude(p => p.Avatar)
+            .Include(h => h.Profiles)
+                .ThenInclude(p => p.Avatar)
+            .Include(h => h.Profiles)
+                .ThenInclude(p => p.User)
             .FirstOrDefaultAsync();
 
         return household;
@@ -112,11 +115,7 @@ public class HouseholdService
             Name = user.UserName,
             User = user,
             Role = "admin",
-            Avatar = new Avatar
-            {
-                Icon = "whale",
-                Color = "blue"
-            }
+            Avatar = new Avatar { Icon = "🐋", Color = "#99adfc" }
         });
 
         _context.Households.Add(household);
@@ -168,7 +167,7 @@ public class HouseholdService
     {
 
         var profile = household.Profiles.Find(p => p.Id == profileId);
-        var profileToReturn = new ProfileDTO{};
+        var profileToReturn = new ProfileDTO { };
 
         if (profile != null)
         {
@@ -180,23 +179,24 @@ public class HouseholdService
             await _context.SaveChangesAsync();
 
             profileToReturn.Id = profile.Id;
-                profileToReturn.User = new UserDTO{
-                    Username = profile.User.UserName,
-                    Email = profile.User.Email
-                };
-                profileToReturn.Avatar = new AvatarDTO{
-                    Icon = profile.Avatar.Icon,
-                    Color = profile.Avatar.Color,
-                };
-                profileToReturn.Name = profile.Name;
-                profileToReturn.Role = profile.Role;
-            
+            profileToReturn.User = new UserDTO
+            {
+                Username = profile.User.UserName,
+                Email = profile.User.Email
             };
-           
-           
-        
-          return profileToReturn;
-         
+            profileToReturn.Avatar = new AvatarDTO
+            {
+                Icon = profile.Avatar.Icon,
+                Color = profile.Avatar.Color,
+            };
+            profileToReturn.Name = profile.Name;
+            profileToReturn.Role = profile.Role;
+        };
+
+
+
+        return profileToReturn;
+
     }
 
     public async Task<Boolean> ApplicationResponse(int applicationId, bool accepted, IdentityUser responder)

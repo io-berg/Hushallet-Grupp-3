@@ -1,16 +1,17 @@
-import * as React from "react";
-import { Image, View, Text, StyleSheet, FlatList } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/RootNavigator";
-import { Avatar as avatar } from "../utils/type";
-import avatars from "../utils/mockdata";
+import * as React from "react";
+import { FlatList, Image, StyleSheet, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 import AvatarButton from "../components/AvatarButtonComponent";
-import TextInputField from "../components/TextInputField";
 import FullWidthButton from "../components/FullWidthButton";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import TextInputField from "../components/TextInputField";
+import { RootStackParamList } from "../navigation/RootNavigator";
 import { updateProfile } from "../store/householdSlice";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { availibleAvatars } from "../utils/avatar";
+import avatars from "../utils/mockdata";
+import { Avatar as avatar } from "../utils/type";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditProfile">;
 
@@ -21,12 +22,11 @@ export default function EditProfileScreen({ navigation }: Props) {
 
   const selected = useAppSelector(selectCurrentHousehold);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
+  const theme = useTheme();
 
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     if (currentUserProfile && selected) {
-      //setProfileName(currentUserProfile.name);
-      //setProfileAvatar(currentUserProfile.avatar);
       setAvatars(availibleAvatars(selected));
     }
   }, [currentUserProfile, selected]);
@@ -48,16 +48,15 @@ export default function EditProfileScreen({ navigation }: Props) {
   };
 
   function isAvatarAvailible(item: string) {
-    const bool = isAvatarToken?.find((a) => a == item);
-    if (bool) {
-      return true;
-    }
-
-    return false;
+    return (
+      isAvatarToken?.find((a) => {
+        return a === item && currentUserProfile?.avatar.icon !== item;
+      }) != null
+    );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
       <Image
         source={require("../assets/logo.png")}
         style={{
@@ -85,6 +84,7 @@ export default function EditProfileScreen({ navigation }: Props) {
               buttonColor={item.color}
               icon={item.icon}
               onPress={() => setProfileAvatar(item)}
+              selected={profileAvatar?.icon == item.icon}
               disabled={isAvatarAvailible(item.icon)}
             />
           )}

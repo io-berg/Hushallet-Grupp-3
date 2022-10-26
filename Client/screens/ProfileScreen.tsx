@@ -1,10 +1,11 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
+import DualBottomButton from "../components/DualBottomButton";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { selectCurrentUserProfile } from "../store/selectors";
 import { useAppSelector } from "../store/store";
-import DualBottomButton from "../components/DualBottomButton";
 import { Profile } from "../utils/type";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
@@ -13,14 +14,16 @@ export default function ProfileScreen({ navigation }: Props) {
   const [profile, setProfile] = React.useState<Profile | null>();
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
 
+  const theme = useTheme();
+
   React.useEffect(() => {
     if (currentUserProfile) {
       setProfile(currentUserProfile);
     }
-  });
+  }, [currentUserProfile]);
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
       <View
         style={{
           marginTop: 15,
