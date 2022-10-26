@@ -1,5 +1,4 @@
 import { Text } from "react-native";
-import { textToEmoji } from "../utils/avatar";
 
 interface Props {
   icon: string;
@@ -7,7 +6,7 @@ interface Props {
 }
 
 const TextAvatar = ({ icon, style }: Props) => {
-  return <Text style={style}>{textToEmoji(icon)}</Text>;
+  return <Text style={style}>{icon}</Text>;
 };
 
 export default TextAvatar;

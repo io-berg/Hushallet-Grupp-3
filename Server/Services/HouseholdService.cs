@@ -21,6 +21,7 @@ public class HouseholdService
             .Include(h => h.Profiles)
             .Include(h => h.Tasks)
                 .ThenInclude(t => t.History)
+                .ThenInclude(h => h.Profile)
             .Include(h => h.Profiles)
                 .ThenInclude(p => p.User)
             .Include(h => h.Profiles)
@@ -59,10 +60,10 @@ public class HouseholdService
                     Description = t.Description,
                     Effort = t.Effort,
                     Frequency = t.Frequency,
-                    History = t.History.Select(h => new TaskHistoryDTO
+                    TaskHistory = t.History.Select(h => new TaskHistoryDTO
                     {
                         Id = h.Id,
-                        Date = h.Date.ToUniversalTime().ToString(),
+                        Date = h.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
                         ProfileId = h.ProfileId,
                     }).ToList()
                 }).ToList(),
@@ -165,24 +166,24 @@ public class HouseholdService
 
     public async Task<Boolean> UpdateProfileInHousehold(Household household, int profileId, string name, string color, string icon)
     {
-     
-        var profile = household.Profiles.Find(p => p.Id == profileId);
-        
 
-         if(profile != null)
-         {
+        var profile = household.Profiles.Find(p => p.Id == profileId);
+
+
+        if (profile != null)
+        {
             profile.Name = name;
             profile.Avatar.Color = color;
             profile.Avatar.Icon = icon;
-            
+
 
             await _context.SaveChangesAsync();
-        
+
             return true;
         }
-        else { return false;}
+        else { return false; }
     }
-        
+
     public async Task<Boolean> ApplicationResponse(int applicationId, bool accepted, IdentityUser responder)
     {
         var household = await _context.Households

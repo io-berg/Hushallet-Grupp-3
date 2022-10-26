@@ -1,4 +1,3 @@
-import { textToEmoji } from "./avatar";
 import { Profile, Task } from "./type";
 
 const today = new Date();
@@ -23,6 +22,8 @@ export type statisticsData = {
 
 export const mapThisWeeksData = (profiles?: Profile[], Tasks?: Task[]) => {
   if (!profiles || !Tasks) return;
+  const midnightToday = new Date();
+  midnightToday.setUTCHours(24, 0, 0, 0);
 
   const thisMonday = new Date(
     today.getFullYear(),
@@ -32,7 +33,7 @@ export const mapThisWeeksData = (profiles?: Profile[], Tasks?: Task[]) => {
 
   if (!Tasks.some((task) => task.taskHistory?.length > 0)) return;
 
-  const filtered = filterTaskhitoryByDate(Tasks, thisMonday, today);
+  const filtered = filterTaskhitoryByDate(Tasks, thisMonday, midnightToday);
 
   const overallData = getOverAllData(profiles, filtered);
   const perTaskData = getPerTaskData(profiles, filtered);
@@ -152,7 +153,7 @@ function getOverAllData(profiles: Profile[], tasks: Task[]) {
 
   const mappedData = points?.map((values) => {
     return {
-      name: textToEmoji(values.avatar.icon),
+      name: values.avatar.icon,
       effortPoints: values.effortPoints,
       color: values.avatar.color,
       legendFontColor: "#7F7F7F",

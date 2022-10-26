@@ -304,7 +304,7 @@ export const leaveHousehold = createAsyncThunk(
 );
 
 export const updateProfile = createAsyncThunk<
-  Boolean,
+  boolean,
   { householdId: number; profileId: number; name: string; color: string; icon: string }
 >("/household/UpdateProfileInHousehold", async (data, { rejectWithValue }) => {
   try {

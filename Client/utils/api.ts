@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, Household, LoginResponse, Profile, RegisterResponse, Task } from "./type";
+import { ErrorResponse, LoginResponse, RegisterResponse, Task } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
