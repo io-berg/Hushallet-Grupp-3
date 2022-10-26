@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Pressable, StyleSheet, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 import { Household } from "../utils/type";
 
 interface Props {
@@ -13,36 +13,13 @@ const HouseholdInfo = ({ household, onPress }: Props) => {
   const theme = useTheme();
   const [collapsed, setCollapsed] = useState(true);
 
-  function emoji(animal = "") {
-    switch (animal) {
-      case "chicken":
-        return "🐥";
-      case "squid":
-        return "🐙";
-      case "whale":
-        return "🐋";
-      case "owl":
-        return "🦉";
-      case "fox":
-        return "🦊";
-      case "unicorn":
-        return "🦄";
-      case "pig":
-        return "🐷";
-      case "frog":
-        return "🐸";
-      default:
-        return "";
-    }
-  }
-
   return (
     <Pressable
       style={{ ...styles.wrapper, backgroundColor: theme.colors.surface }}
       onPress={onPress}
     >
       <View style={{ ...styles.container, backgroundColor: theme.colors.surface }}>
-        <Text style={styles.text}>{household.name}</Text>
+        <Text style={{ ...styles.text, color: theme.colors.text }}>{household.name}</Text>
         <Pressable
           onPress={() => setCollapsed(!collapsed)}
           style={{
@@ -50,14 +27,18 @@ const HouseholdInfo = ({ household, onPress }: Props) => {
             padding: 10,
           }}
         >
-          <MaterialIcons name={collapsed ? "expand-more" : "expand-less"} size={24} color="black" />
+          <MaterialIcons
+            name={collapsed ? "expand-more" : "expand-less"}
+            size={24}
+            color={theme.colors.text}
+          />
         </Pressable>
       </View>
       {collapsed ||
         household.profiles.map((p) => (
           <View key={p.id} style={styles.container}>
             <Text style={styles.smallText}>{p.name}</Text>
-            <Text style={styles.text}>{emoji(p.avatar.icon?.toLocaleLowerCase())}</Text>
+            <Text style={styles.text}>{p.avatar.icon}</Text>
           </View>
         ))}
     </Pressable>

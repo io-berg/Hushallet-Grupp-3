@@ -24,14 +24,13 @@ interface Household {
   code: string;
   profiles: Profile[];
   tasks: Task[];
-  avatars: Avatar[];
+  applications: Application[];
 }
 
 interface Application {
   id: number;
-  user: User;
-  household: Household;
-  accepted: boolean;
+  username: string;
+  email: string;
 }
 
 interface Profile {

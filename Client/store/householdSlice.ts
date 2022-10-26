@@ -1,6 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { applicationRequest, createHouseholdRequest, fetchMyHouseholdsRequest } from "../utils/api";
-import { Household } from "../utils/type";
+import {
+  applicationRequest,
+  applicationResponseRequest,
+  changeHouseholdNameRequest,
+  createHouseholdRequest,
+  createTaskRequest,
+  editTaskRequest,
+  fetchMyHouseholdsRequest,
+  leaveHouseholdRequest,
+  transferOwnershipRequest,
+  updateProfileRequest,
+} from "../utils/api";
+import { Household, Profile, Task } from "../utils/type";
 
 export interface HouseholdState {
   loading: boolean;
@@ -26,8 +37,9 @@ const initialState: HouseholdState = {
           },
           role: "admin",
           avatar: {
-            color: "red",
-            icon: "squid",
+            color: "#ee7e86",
+            icon: "🐙",
+            token: true,
           },
           name: "Mock User",
         },
@@ -39,10 +51,25 @@ const initialState: HouseholdState = {
           },
           role: "user",
           avatar: {
-            color: "blue",
+            color: "#fcd933",
             icon: "chicken",
+            token: true,
           },
           name: "User",
+        },
+        {
+          id: 2,
+          user: {
+            username: "user2",
+            email: "wowee@email.com",
+          },
+          role: "user",
+          avatar: {
+            color: "#ff7e46",
+            icon: "fox",
+            token: true,
+          },
+          name: "User2",
         },
       ],
       tasks: [
@@ -57,6 +84,16 @@ const initialState: HouseholdState = {
             {
               id: 0,
               profileId: 0,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 2,
+              profileId: 2,
               date: new Date().toISOString(),
             },
           ],
@@ -66,12 +103,22 @@ const initialState: HouseholdState = {
           title: "Damma",
           description:
             "Damma av alla ytor i alla rum. (ta bort dukar, blommor osv) Använd trasa, hink och rengöringsmedel som står i städskåpet i hallen.",
-          effort: 1,
-          frequency: 1,
+          effort: 2,
+          frequency: 2,
           taskHistory: [
             {
               id: 0,
               profileId: 0,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 2,
+              profileId: 2,
               date: new Date().toISOString(),
             },
           ],
@@ -86,8 +133,33 @@ const initialState: HouseholdState = {
           taskHistory: [
             {
               id: 0,
+              profileId: 2,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 2,
               profileId: 0,
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+            },
+            {
+              id: 3,
+              profileId: 2,
               date: new Date().toISOString(),
+            },
+            {
+              id: 4,
+              profileId: 2,
+              date: new Date().toISOString(),
+            },
+            {
+              id: 5,
+              profileId: 2,
+              date: new Date(new Date().setDate(new Date().getDate() - 32)).toISOString(),
             },
           ],
         },
@@ -101,6 +173,11 @@ const initialState: HouseholdState = {
             {
               id: 0,
               profileId: 0,
+              date: new Date().toISOString(),
+            },
+            {
+              id: 1,
+              profileId: 1,
               date: new Date().toISOString(),
             },
           ],
@@ -134,12 +211,13 @@ const initialState: HouseholdState = {
           ],
         },
       ],
+      applications: [],
     },
   ],
   current: null,
 };
 
-export const fetchMyHouseholds = createAsyncThunk(
+export const fetchMyHouseholds = createAsyncThunk<Household[], undefined>(
   "household/fetchMyHouseholds",
   async (_, { rejectWithValue }) => {
     try {
@@ -151,12 +229,24 @@ export const fetchMyHouseholds = createAsyncThunk(
   }
 );
 
-export const sendApplication = createAsyncThunk<Household[], { code: string }>(
+export const sendApplication = createAsyncThunk<boolean, { code: string }>(
   "household/sendApplication",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await applicationRequest(data.code);
-      return response;
+      await applicationRequest(data.code);
+      return true;
+    } catch (error) {
+      return rejectWithValue("Failed to send application");
+    }
+  }
+);
+
+export const sendApplicationResponse = createAsyncThunk<boolean, { id: number; accept: boolean }>(
+  "household/sendApplicationResponse",
+  async (data, { rejectWithValue }) => {
+    try {
+      await applicationResponseRequest(data.id, data.accept);
+      return true;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -171,6 +261,85 @@ export const createHousehold = createAsyncThunk<Household, { name: string }>(
       return response;
     } catch (error) {
       return rejectWithValue(error);
+    }
+  }
+);
+
+export const transferOwnership = createAsyncThunk<string, { householdId: number; email: string }>(
+  "household/transferOwnership",
+  async (data, { rejectWithValue }) => {
+    try {
+      await transferOwnershipRequest(data.householdId, data.email);
+      return data.email;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const changeHouseholdName = createAsyncThunk<string, { householdId: number; name: string }>(
+  "household/changeHouseholdName",
+  async (data, { rejectWithValue }) => {
+    try {
+      await changeHouseholdNameRequest(data.householdId, data.name);
+      return data.name;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const leaveHousehold = createAsyncThunk(
+  "household/leaveHousehold",
+  async (householdId: number, { rejectWithValue }) => {
+    try {
+      const response = await leaveHouseholdRequest(householdId);
+      if (response) {
+        return householdId;
+      }
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const updateProfile = createAsyncThunk<
+  Profile,
+  { householdId: number; profileId: number; name: string; color: string; icon: string }
+>("/household/UpdateProfileInHousehold", async (data, { rejectWithValue }) => {
+  try {
+    const respons = await updateProfileRequest(
+      data.householdId,
+      data.profileId,
+      data.name,
+      data.color,
+      data.icon
+    );
+    return respons;
+  } catch (error) {
+    return rejectWithValue("Failed to fetch");
+  }
+});
+export const createTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
+  "household/createTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      await createTaskRequest(data.task, data.householdId);
+      return data.task;
+    } catch (error) {
+      return rejectWithValue("Failed to create task");
+    }
+  }
+);
+
+export const editTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
+  "household/editTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      await editTaskRequest(data.task, data.householdId);
+      return data.task;
+    } catch (error) {
+      return rejectWithValue("Failed to edit task");
     }
   }
 );
@@ -219,6 +388,67 @@ const householdSlice = createSlice({
       state.loading = false;
       state.fetchInfo = { type: "success", message: "Hushållet skapat!" };
       state.households = [...state.households, action.payload];
+    });
+
+    builder.addCase(updateProfile.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProfile.rejected, (state) => {
+      state.loading = false;
+      state.fetchInfo = { type: "error", message: "Uppdatering av profil misslyckades" };
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        const profile = current.profiles.find((p) => p.id == action.payload.id);
+        if (profile) {
+          const index = current.profiles.indexOf(profile);
+          current.profiles[index] = action.payload;
+        }
+      }
+    });
+
+    builder.addCase(transferOwnership.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.profiles = current.profiles.map((p) => {
+          if (p.role === "admin") {
+            return { ...p, role: "user" };
+          }
+          if (p.user.email === action.payload) {
+            return { ...p, role: "admin" };
+          }
+          return p;
+        });
+      }
+    });
+    builder.addCase(changeHouseholdName.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.name = action.payload;
+      }
+    });
+    builder.addCase(leaveHousehold.fulfilled, (state, action) => {
+      state.households = state.households.filter((h) => h.id !== action.payload);
+      state.current = null;
+    });
+    builder.addCase(createTask.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = [...current.tasks, action.payload];
+      }
+    });
+    builder.addCase(editTask.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = current.tasks.map((t) => {
+          if (t.id === action.payload.id) {
+            return action.payload;
+          }
+          return t;
+        });
+      }
     });
   },
 });

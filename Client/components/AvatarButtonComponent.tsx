@@ -1,56 +1,45 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
-
-const styles = StyleSheet.create({
-  button: {
-    padding: 10,
-    margin: 2,
-  },
-});
+import { Pressable } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 
 interface Props {
   onPress: () => void;
   buttonColor: string;
   icon: string;
   disabled?: boolean;
+  selected: boolean;
 }
 
-const AvatarButton = ({ buttonColor, icon, onPress, disabled }: Props) => {
-  function isDisabled(state: boolean | undefined) {
-    if (state) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+const AvatarButton = ({ buttonColor, icon, onPress, disabled, selected }: Props) => {
+  const color = disabled ? "grey" : buttonColor;
+
+  const theme = useTheme();
+
   return (
-    <Button
-      buttonColor={buttonColor}
-      mode="contained"
+    <Pressable
       onPress={onPress}
       style={{
         margin: 5,
         borderRadius: 55,
         height: 75,
         width: 75,
-      }}
-      contentStyle={{
-        alignContent: "center",
+        backgroundColor: color,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 15,
+        borderWidth: selected ? 3 : 0,
+        borderColor: theme.colors.accent,
       }}
-      disabled={isDisabled(disabled)}
+      disabled={disabled}
     >
       <Text
         style={{
-          fontSize: 15,
+          fontSize: 35,
+          color: disabled ? "#22222299" : "",
         }}
       >
         {icon}
       </Text>
-    </Button>
+    </Pressable>
   );
 };
 

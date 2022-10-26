@@ -26,6 +26,7 @@ const TaskHeader = ({ title }: Props) => {
         style={{
           fontSize: 18,
           fontWeight: "bold",
+          color: theme.colors.text,
         }}
       >
         {title}

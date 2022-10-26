@@ -1,9 +1,9 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 import { useAppSelector } from "../store/store";
 
 export default function AvatarIcon() {
-  const profile = useAppSelector((state) => state.household[0].profiles[0]);
+  const profile = useAppSelector((state) => state.household.households[0].profiles[0]);
   const color = profile.avatar.color;
   return (
     <View

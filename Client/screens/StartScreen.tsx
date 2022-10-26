@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import { Button, Image, ScrollView, StyleSheet, View } from "react-native";
-import { Modal, Portal, Text } from "react-native-paper";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Modal, Portal, Text, useTheme } from "react-native-paper";
+import DualBottomButton from "../components/DualBottomButton";
 import FullWidthButton from "../components/FullWidthButton";
 import HouseholdInfo from "../components/HouseholdInfo";
 import TextInputField from "../components/TextInputField";
@@ -14,7 +15,6 @@ import {
 } from "../store/householdSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import theme from "../utils/theme";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Start">;
 
@@ -28,30 +28,21 @@ export default function StartScreen({ navigation }: Props) {
   const fetchInfo = useAppSelector((state) => state.household.fetchInfo);
   const selected = useAppSelector(selectCurrentHousehold);
 
+  const theme = useTheme();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchMyHouseholds());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (selected) {
-      navigation.navigate("Home");
-    }
-  }, [selected, navigation]);
-
   return (
-    <ScrollView
-      style={{
-        height: "100%",
-      }}
-    >
-      <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
+      <ScrollView contentContainerStyle={styles.scrollViewStyles}>
         <Portal>
           <Modal
             visible={joinModalVisible}
             onDismiss={() => setJoinModalVisible(false)}
-            style={styles.modal}
+            style={{ ...styles.modal, backgroundColor: theme.colors.background }}
             contentContainerStyle={styles.modalContent}
           >
             <TextInputField
@@ -73,7 +64,12 @@ export default function StartScreen({ navigation }: Props) {
           <Modal
             visible={createModalVisible}
             onDismiss={() => setCreateModalVisible(false)}
-            style={styles.modal}
+            style={{
+              ...styles.modal,
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
+              borderWidth: 1,
+            }}
             contentContainerStyle={styles.modalContent}
           >
             <TextInputField
@@ -121,6 +117,7 @@ export default function StartScreen({ navigation }: Props) {
           style={{
             width: "100%",
             alignItems: "center",
+            marginBottom: 100,
           }}
         >
           {households?.map((household) => (
@@ -130,6 +127,9 @@ export default function StartScreen({ navigation }: Props) {
               onPress={() => {
                 if (selected?.id !== household.id) {
                   dispatch(setCurrentHousehold({ id: household.id }));
+                  setTimeout(() => {
+                    navigation.navigate("Home");
+                  }, 200);
                 } else {
                   navigation.navigate("Home");
                 }
@@ -137,31 +137,37 @@ export default function StartScreen({ navigation }: Props) {
             />
           ))}
         </View>
-
-        <View
-          style={{
-            marginTop: "auto",
-            flexDirection: "row",
-            alignSelf: "stretch",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <Button title="Gå med" onPress={() => setJoinModalVisible(true)} />
-          <Button title="Skapa" onPress={() => setCreateModalVisible(true)} />
-        </View>
+      </ScrollView>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+        }}
+      >
+        <DualBottomButton
+          title1="Gå med"
+          icon1="account-plus"
+          onPress1={() => setJoinModalVisible(true)}
+          title2="Skapa"
+          icon2="plus"
+          onPress2={() => setCreateModalVisible(true)}
+        />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
     flex: 1,
-    alignItems: "center",
     gap: 10,
     width: "100%",
-    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+  scrollViewStyles: {
+    alignItems: "center",
+    marginTop: 20,
   },
   title: {
     fontSize: 20,
@@ -176,8 +182,6 @@ const styles = StyleSheet.create({
     color: "red",
   },
   modal: {
-    backgroundColor: "white",
-    padding: 20,
     margin: 20,
     borderRadius: 10,
     height: 160,

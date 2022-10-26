@@ -1,16 +1,24 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
+import { useTheme } from "react-native-paper";
 import MyTabBar from "../components/SwipeNavigatorHeader";
 import HomeScreen from "../screens/HomeScreen";
-import Statistics1Screen from "../screens/Statistics1";
-import Statistics2Screen from "../screens/Statistics2";
-import Statistics3Screen from "../screens/Statistics3";
-import Statistics4Screen from "../screens/Statistics4";
+import LastMonthScreen from "../screens/LastMonth";
+import LastWeekScreen from "../screens/LastWeek";
+import ThisWeekScreen from "../screens/ThisWeek";
+import { selectCurrentHousehold } from "../store/selectors";
+import { useAppSelector } from "../store/store";
+import {
+  mapLastMonthsData,
+  mapLastWeeksData,
+  mapThisWeeksData,
+  statisticsData,
+} from "../utils/statisics";
 
-type TabsParamList = {
+export type TabsParamList = {
   Overview: undefined;
-  Statistics1: undefined;
-  Statistics2: undefined;
+  LastWeek: { data: statisticsData };
+  ThisWeek: { data: statisticsData };
   Statistics3: undefined;
   Statistics4: undefined;
 };
@@ -18,13 +26,26 @@ type TabsParamList = {
 const Tab = createMaterialTopTabNavigator<TabsParamList>();
 
 export function TabNavigator() {
+  const theme = useTheme();
+  const profiles = useAppSelector(selectCurrentHousehold)?.profiles;
+  const householdTasks = useAppSelector(selectCurrentHousehold)?.tasks;
+
+  const thisWeekData = mapThisWeeksData(profiles, householdTasks, theme.colors.text);
+  const lastWeekData = mapLastWeeksData(profiles, householdTasks, theme.colors.text);
+  const lastMonthData = mapLastMonthsData(profiles, householdTasks, theme.colors.text);
+
   return (
     <Tab.Navigator screenOptions={{}} tabBar={(props) => <MyTabBar {...props} />}>
       <Tab.Screen name="Overview" component={HomeScreen} />
-      <Tab.Screen name="Statistics1" component={Statistics1Screen} />
-      <Tab.Screen name="Statistics2" component={Statistics2Screen} />
-      <Tab.Screen name="Statistics3" component={Statistics3Screen} />
-      <Tab.Screen name="Statistics4" component={Statistics4Screen} />
+      {thisWeekData && thisWeekData.overallData.length > 0 && (
+        <Tab.Screen name="ThisWeek">{() => <ThisWeekScreen data={thisWeekData} />}</Tab.Screen>
+      )}
+      {lastWeekData && lastWeekData.overallData.length > 0 && (
+        <Tab.Screen name="LastWeek">{() => <LastWeekScreen data={lastWeekData} />}</Tab.Screen>
+      )}
+      {lastMonthData && lastMonthData.overallData.length > 0 && (
+        <Tab.Screen name="Statistics3">{() => <LastMonthScreen data={lastMonthData} />}</Tab.Screen>
+      )}
     </Tab.Navigator>
   );
 }

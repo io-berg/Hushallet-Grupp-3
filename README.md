@@ -89,20 +89,20 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 #### Kravlista
 
 - [ ] En logga, splashscreen och appikon ska designas och användas.
-- [ ] Applikationen ska byggas med RN, Expo & TS.
+- [x] Applikationen ska byggas med RN, Expo & TS.
 - [ ] Designen av appen ska utgå ifrån befintliga skisser, undantag kan ges men ska diskuteras
       med produktägare, godkännas och dokumenteras.
 
 #### Hushåll
 
-- [ ] Ett hushåll ska ha ett namn och en genererad (enkel) kod så andra kan gå med i hushållet,
+- [x] Ett hushåll ska ha ett namn och en genererad (enkel) kod så andra kan gå med i hushållet,
       namnet ska gå att ändra.
 
 #### Konto
 
-- [ ] En användare ska kunna registrera och logga in sig.
-- [ ] En användare ska kunna skapa ett nytt hushåll.
-- [ ] En användare ska kunna gå med i ett hushåll genom att ange hushållets kod.
+- [x] En användare ska kunna registrera och logga in sig.
+- [x] En användare ska kunna skapa ett nytt hushåll.
+- [x] En användare ska kunna gå med i ett hushåll genom att ange hushållets kod.
 
 #### Profil
 
@@ -135,24 +135,24 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 #### Kravlista
 
-- [ ] Information ska kommuniceras till och från en server.
+- [x] Information ska kommuniceras till och från en server.
 
 #### Hushåll
 
-- [ ] Alla användare i ett hushåll ska kunna se vilka som tillhör ett hushåll.
-- [ ] En ägare av ett hushåll ska kunna se förfrågningar om att gå med i hushållet.
-- [ ] En ägare ska kunna acceptera eller neka förfrågningar.
-- [ ] En ägare ska kunna göra andra till ägare.
+- [x] Alla användare i ett hushåll ska kunna se vilka som tillhör ett hushåll.
+- [x] En ägare av ett hushåll ska kunna se förfrågningar om att gå med i hushållet.
+- [x] En ägare ska kunna acceptera eller neka förfrågningar.
+- [x] En ägare ska kunna göra andra till ägare.
 
 #### Konto
 
-- [ ] När en användare har valt att gå med i ett hushåll behöver en ägare av hushållet först godkänna användaren.
-- [ ] En användare ska kunna lämna ett hushåll.
+- [x] När en användare har valt att gå med i ett hushåll behöver en ägare av hushållet först godkänna användaren.
+- [x] En användare ska kunna lämna ett hushåll.
 
 #### Profil
 
 - [ ] En användare ska kunna ställa in appens utseende (mörkt, ljust, auto)
-- [ ] Om en användare tillhör två eller fler hushåll ska denne kunna välja att byta mellan de olika hushållen.
+- [x] Om en användare tillhör två eller fler hushåll ska denne kunna välja att byta mellan de olika hushållen.
 
 #### Sysslor
 
@@ -187,3 +187,8 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 - Screens och modeller godkännda
 - Designa en meny för navigering och få godkänt på den nästa handledningstillfälle
+
+#### v2:
+
+- Meny godkänd
+- Fortsätt att implementera funktionalitet

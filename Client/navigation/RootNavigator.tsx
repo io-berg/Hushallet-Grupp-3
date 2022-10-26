@@ -2,17 +2,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
-import CreateProfileScreen from "../screens/CreateProfileScreen";
-import DetailScreen from "../screens/DetailScreen";
+import CreateTaskScreen from "../screens/CreateTaskScreen";
+import EditTaskScreen from "../screens/EditTaskScreen";
 import HouseholdOverviewScreen from "../screens/HouseholdOverviewScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import StartScreen from "../screens/StartScreen";
-import ThemeScreen from "../screens/Theme";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import { TabNavigator } from "./TabsNavigator";
+import DetailScreen from "../screens/DetailScreen";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -23,8 +24,10 @@ export type RootStackParamList = {
   Household: undefined;
   HouseholdOverview: undefined;
   Start: undefined;
-  SkapaProfil: undefined;
-  Detalj: undefined;
+  EditProfile: undefined;
+  Details: { taskId: number };
+  CreateTask: undefined;
+  EditTask: { taskId: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -37,8 +40,6 @@ export const RootNavigator = () => {
     : false;
 
   const selected = useAppSelector(selectCurrentHousehold);
-
-  // const theme = useTheme();
 
   return (
     <NavigationContainer>
@@ -55,7 +56,7 @@ export const RootNavigator = () => {
               <Stack.Screen
                 name="HouseholdOverview"
                 component={HouseholdOverviewScreen}
-                options={{ title: "Husålls Översikt" }}
+                options={{ title: selected.name }}
               />
               <Stack.Screen
                 name="Start"
@@ -67,13 +68,26 @@ export const RootNavigator = () => {
                 component={ProfileScreen}
                 options={{ title: "Profil" }}
               />
-              <Stack.Screen name="Detalj" component={DetailScreen} options={{ title: "Detalj" }} />
               <Stack.Screen
-                name="SkapaProfil"
-                component={CreateProfileScreen}
-                options={{ title: "Skapa Profil" }}
+                name="Details"
+                component={DetailScreen}
+                options={{ title: "Details" }}
               />
-              <Stack.Screen name="Tema" component={ThemeScreen} options={{ title: "Tema" }} />
+              <Stack.Screen
+                name="EditProfile"
+                component={EditProfileScreen}
+                options={{ title: "Redigera Profil" }}
+              />
+              <Stack.Screen
+                name="CreateTask"
+                component={CreateTaskScreen}
+                options={{ title: "Skapa en ny syssla" }}
+              />
+              <Stack.Screen
+                name="EditTask"
+                component={EditTaskScreen}
+                options={{ title: "Redigera syssla" }}
+              />
             </Stack.Group>
           ) : (
             <Stack.Screen
