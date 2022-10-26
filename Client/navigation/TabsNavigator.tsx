@@ -34,11 +34,6 @@ export function TabNavigator() {
   const lastWeekData = mapLastWeeksData(profiles, householdTasks, theme.colors.text);
   const lastMonthData = mapLastMonthsData(profiles, householdTasks, theme.colors.text);
 
-  console.log("thisWeekData", thisWeekData);
-  console.log("lastWeekData", lastWeekData);
-  console.log("lastMonthData", lastMonthData);
-  console.log(householdTasks[0].taskHistory);
-
   return (
     <Tab.Navigator screenOptions={{}} tabBar={(props) => <MyTabBar {...props} />}>
       <Tab.Screen name="Overview" component={HomeScreen} />

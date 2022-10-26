@@ -164,11 +164,11 @@ public class HouseholdService
         return household;
     }
 
-    public async Task<Profile> UpdateProfileInHousehold(Household household, int profileId, string name, string color, string icon)
+    public async Task<ProfileDTO> UpdateProfileInHousehold(Household household, int profileId, string name, string color, string icon)
     {
 
         var profile = household.Profiles.Find(p => p.Id == profileId);
-
+        var profileToReturn = new ProfileDTO{};
 
         if (profile != null)
         {
@@ -179,9 +179,24 @@ public class HouseholdService
 
             await _context.SaveChangesAsync();
 
+            profileToReturn.Id = profile.Id;
+                profileToReturn.User = new UserDTO{
+                    Username = profile.User.UserName,
+                    Email = profile.User.Email
+                };
+                profileToReturn.Avatar = new AvatarDTO{
+                    Icon = profile.Avatar.Icon,
+                    Color = profile.Avatar.Color,
+                };
+                profileToReturn.Name = profile.Name;
+                profileToReturn.Role = profile.Role;
+            
+            };
            
-        }
-         return profile;
+           
+        
+          return profileToReturn;
+         
     }
 
     public async Task<Boolean> ApplicationResponse(int applicationId, bool accepted, IdentityUser responder)

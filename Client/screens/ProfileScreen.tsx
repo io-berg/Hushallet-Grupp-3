@@ -5,11 +5,19 @@ import { RootStackParamList } from "../navigation/RootNavigator";
 import { selectCurrentUserProfile } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import DualBottomButton from "../components/DualBottomButton";
+import { Profile } from "../utils/type";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 export default function ProfileScreen({ navigation }: Props) {
+  const [profile, setProfile] = React.useState<Profile | null>();
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
+
+  React.useEffect(() => {
+    if (currentUserProfile) {
+      setProfile(currentUserProfile);
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -31,10 +39,10 @@ export default function ProfileScreen({ navigation }: Props) {
             fontWeight: "bold",
           }}
         >
-          {currentUserProfile?.avatar.icon}
+          {profile?.avatar.icon}
         </Text>
       </View>
-      <Text style={styles.title}>{currentUserProfile?.name}</Text>
+      <Text style={styles.title}>{profile?.name}</Text>
       <View
         style={{
           position: "absolute",

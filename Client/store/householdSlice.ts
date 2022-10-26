@@ -399,15 +399,15 @@ const householdSlice = createSlice({
     });
     builder.addCase(updateProfile.fulfilled, (state, action) => {
       state.loading = false;
-      state.fetchInfo = { type: "success", message: "Profil uppdaterad!" };
-      /*const current = state.households.find((household) => household.id === state.current);
+      //state.fetchInfo = { type: "success", message: "Profil uppdaterad!" };
+      const current = state.households.find((household) => household.id === state.current);
       if (current) {
         const profile = current.profiles.find((p) => p.id == action.payload.id);
         if (profile) {
           const index = current.profiles.indexOf(profile);
           current.profiles[index] = action.payload;
         }
-      }*/
+      }
     });
 
     builder.addCase(transferOwnership.fulfilled, (state, action) => {
