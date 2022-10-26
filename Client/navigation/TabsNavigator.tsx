@@ -1,5 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
+import { useTheme } from "react-native-paper";
 import MyTabBar from "../components/SwipeNavigatorHeader";
 import HomeScreen from "../screens/HomeScreen";
 import LastMonthScreen from "../screens/LastMonth";
@@ -25,12 +26,13 @@ export type TabsParamList = {
 const Tab = createMaterialTopTabNavigator<TabsParamList>();
 
 export function TabNavigator() {
+  const theme = useTheme();
   const profiles = useAppSelector(selectCurrentHousehold)?.profiles;
   const householdTasks = useAppSelector(selectCurrentHousehold)?.tasks;
 
-  const thisWeekData = mapThisWeeksData(profiles, householdTasks);
-  const lastWeekData = mapLastWeeksData(profiles, householdTasks);
-  const lastMonthData = mapLastMonthsData(profiles, householdTasks);
+  const thisWeekData = mapThisWeeksData(profiles, householdTasks, theme.colors.text);
+  const lastWeekData = mapLastWeeksData(profiles, householdTasks, theme.colors.text);
+  const lastMonthData = mapLastMonthsData(profiles, householdTasks, theme.colors.text);
 
   return (
     <Tab.Navigator screenOptions={{}} tabBar={(props) => <MyTabBar {...props} />}>

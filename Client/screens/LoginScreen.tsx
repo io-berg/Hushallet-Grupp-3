@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import FullWidthButton from "../components/FullWidthButton";
 import TextInputField from "../components/TextInputField";
 import { RootStackParamList } from "../navigation/RootNavigator";
@@ -16,6 +16,7 @@ export default function LoginScreen({ navigation }: Props) {
   const errors = useAppSelector((state) => state.auth.loginErrors?.errors);
 
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   const handleLogin = async () => {
     dispatch(login({ username, password }));
@@ -25,7 +26,7 @@ export default function LoginScreen({ navigation }: Props) {
   const passwordErrors = errors?.Password;
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
       <Image
         source={require("../assets/logo.png")}
         style={{
@@ -68,7 +69,7 @@ export default function LoginScreen({ navigation }: Props) {
           marginTop: 20,
         }}
       >
-        <Text style={{ color: "blue" }}>Registrera nytt konto</Text>
+        <Text style={{ color: theme.colors.text }}>Registrera nytt konto</Text>
       </Button>
     </View>
   );
@@ -76,7 +77,7 @@ export default function LoginScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    paddingTop: 50,
     flex: 1,
     alignItems: "center",
     gap: 10,

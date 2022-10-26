@@ -184,7 +184,6 @@ const leaveHouseholdRequest = async (householdId: number) => {
 };
 
 const createTaskRequest = async (task: Task, householdId: number) => {
-  console.log(task);
   const response = await fetch(`${url}/task/CreateTask`, {
     method: "POST",
     headers: {
