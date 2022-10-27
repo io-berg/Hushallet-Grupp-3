@@ -1,13 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Button, Text, useTheme } from "react-native-paper";
 import DualBottomButton from "../components/DualBottomButton";
 import EffortPicker from "../components/EffortPicker";
 import FrequencyPicker from "../components/FrequencyPicker";
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { createTaskHistoryItem } from "../store/householdSlice";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Details">;
 
@@ -16,10 +17,13 @@ export default function DetailScreen({ navigation, route }: Props) {
   const taskId = route.params.taskId;
   const task = useAppSelector(selectCurrentHousehold)?.tasks.find((t) => t.id === taskId);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
+  const dispatch = useAppDispatch();
+
+  const theme = useTheme();
 
   if (task) {
     return (
-      <View style={styles.container}>
+      <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
         <Text style={styles.title}>{task?.title}</Text>
         <View
           style={{
@@ -40,7 +44,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             marginLeft: 20,
           }}
         >
-          <FrequencyPicker value={task?.frequency} bool={true} />
+          <FrequencyPicker value={task?.frequency} />
         </View>
         <View
           style={{
@@ -48,7 +52,7 @@ export default function DetailScreen({ navigation, route }: Props) {
             marginLeft: 20,
           }}
         >
-          <EffortPicker value={task?.effort} bool={true} />
+          <EffortPicker value={task?.effort} />
         </View>
 
         <Button onPress={() => navigation.navigate("EditTask", { taskId: taskId })}>
@@ -67,8 +71,23 @@ export default function DetailScreen({ navigation, route }: Props) {
             icon1="pen"
             title2="Klar"
             icon2="close-circle-outline"
-            onPress1={() => formik.handleSubmit()}
-            onPress2={() => onCancel()}
+            onPress1={() => navigation.navigate("EditTask", { taskId })}
+            onPress2={() => {
+              if (household && currentUserProfile) {
+                dispatch(
+                  createTaskHistoryItem({
+                    householdId: household.id,
+                    taskId: taskId,
+                    taskHistory: {
+                      id: 0,
+                      profileId: currentUserProfile.id,
+                      date: new Date().toISOString(),
+                    },
+                  })
+                );
+                navigation.navigate("Home", { screen: "Overview" });
+              }
+            }}
           />
         </View>
       </View>
@@ -103,3 +122,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+//

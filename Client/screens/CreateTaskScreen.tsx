@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { View } from "react-native";
+import { useTheme } from "react-native-paper";
 import TaskForm from "../components/TaskForm";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { createTask } from "../store/householdSlice";
@@ -14,6 +15,8 @@ const CreateTaskScreen = ({ navigation }: Props) => {
   const householdId = useAppSelector(selectCurrentHousehold)?.id;
   const dispatch = useAppDispatch();
 
+  const theme = useTheme();
+
   function onSubmit(task: Task) {
     if (householdId) {
       dispatch(createTask({ task, householdId }));
@@ -22,7 +25,11 @@ const CreateTaskScreen = ({ navigation }: Props) => {
   }
 
   return (
-    <View>
+    <View
+      style={{
+        backgroundColor: theme.colors.background,
+      }}
+    >
       <TaskForm onSubmit={onSubmit} onCancel={() => navigation.goBack()} />
     </View>
   );

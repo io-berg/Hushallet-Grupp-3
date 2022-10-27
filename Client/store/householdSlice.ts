@@ -4,6 +4,7 @@ import {
   applicationResponseRequest,
   changeHouseholdNameRequest,
   createHouseholdRequest,
+  createTaskHistoryItemRequest,
   createTaskRequest,
   editTaskRequest,
   fetchMyHouseholdsRequest,
@@ -11,7 +12,7 @@ import {
   transferOwnershipRequest,
   updateProfileRequest,
 } from "../utils/api";
-import { Household, Profile, Task } from "../utils/type";
+import { Household, Profile, Task, TaskHistory } from "../utils/type";
 
 export interface HouseholdState {
   loading: boolean;
@@ -343,6 +344,18 @@ export const editTask = createAsyncThunk<Task, { householdId: number; task: Task
     }
   }
 );
+
+export const createTaskHistoryItem = createAsyncThunk<
+  TaskHistory,
+  { householdId: number; taskId: number; taskHistory: TaskHistory }
+>("household/createTaskHistoryItem", async (data, { rejectWithValue }) => {
+  try {
+    await createTaskHistoryItemRequest(data.householdId, data.taskId, data.taskHistory);
+    return data.taskHistory;
+  } catch (error) {
+    return rejectWithValue("Failed to create taskHistory");
+  }
+});
 
 const householdSlice = createSlice({
   name: "households",
