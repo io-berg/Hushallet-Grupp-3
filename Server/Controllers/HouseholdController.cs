@@ -72,6 +72,27 @@ public class HouseholdController : ControllerBase
         return BadRequest();
     }
 
+   [HttpPost]
+    [Route("UpdateProfileInHousehold")]
+    public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var household = await _householdService.GetHouseholdById(model.HouseholdId);
+        if(household != null)
+        {
+            var response = await _householdService.UpdateProfileInHousehold(household, model.ProfileId, model.Name, model.Color, model.Icon);
+             if (response != null)
+        {
+            return Ok(response);
+        }
+        }
+        
+        return BadRequest();
+    }
+
     [HttpGet]
     [Route("HouseholdData")]
     public async Task<IActionResult> HouseholdData([FromQuery] string id)

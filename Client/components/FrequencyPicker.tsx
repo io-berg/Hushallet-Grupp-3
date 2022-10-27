@@ -15,6 +15,7 @@ const FrequencyPicker = ({ value, onChange }: Props) => {
   if (!showPicker) {
     return (
       <TouchableRipple
+        disabled={!onChange}
         onPress={() => {
           if (onChange) setShowPicker(true);
         }}

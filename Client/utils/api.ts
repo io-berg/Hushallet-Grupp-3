@@ -1,5 +1,5 @@
 import { get } from "./localStorage";
-import { ErrorResponse, LoginResponse, RegisterResponse, Task } from "./type";
+import { ErrorResponse, LoginResponse, RegisterResponse, Task, TaskHistory } from "./type";
 
 const url = "http://10.0.2.2:5279/api";
 
@@ -183,6 +183,35 @@ const leaveHouseholdRequest = async (householdId: number) => {
   throw response;
 };
 
+const updateProfileRequest = async (
+  householdId: number,
+  profileId: number,
+  name: string,
+  color: string,
+  icon: string
+) => {
+  const response = await fetch(`${url}/household/UpdateProfileInHousehold`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      profileId,
+      name,
+      color,
+      icon,
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+  throw response;
+};
+
 const createTaskRequest = async (task: Task, householdId: number) => {
   const response = await fetch(`${url}/task/CreateTask`, {
     method: "POST",
@@ -223,6 +252,31 @@ const editTaskRequest = async (task: Task, householdId: number) => {
   throw response;
 };
 
+const createTaskHistoryItemRequest = async (
+  householdId: number,
+  taskId: number,
+  taskHistory: TaskHistory
+) => {
+  const response = await fetch(`${url}/task/CreateTaskHistory`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      Task: taskHistory,
+      TaskId: taskId,
+      HouseholdId: householdId,
+    }),
+  });
+
+  if (response.ok) {
+    return taskHistory;
+  }
+
+  throw response;
+};
+
 export {
   loginRequest,
   registerRequest,
@@ -233,6 +287,8 @@ export {
   transferOwnershipRequest,
   changeHouseholdNameRequest,
   leaveHouseholdRequest,
+  updateProfileRequest,
   createTaskRequest,
   editTaskRequest,
+  createTaskHistoryItemRequest,
 };

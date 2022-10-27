@@ -1,14 +1,20 @@
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
+import { CompositeScreenProps } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HomeCard from "../components/HomeCard";
 import TaskHeader from "../components/TaskHeader";
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { TabsParamList } from "../navigation/TabsNavigator";
 import { logout } from "../store/authSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+type Props = CompositeScreenProps<
+  MaterialTopTabScreenProps<TabsParamList, "Overview">,
+  NativeStackScreenProps<RootStackParamList, "Home">
+>;
 
 export default function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
@@ -21,7 +27,7 @@ export default function HomeScreen({ navigation }: Props) {
       <FlatList
         data={household?.tasks}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate("Details")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Details", { taskId: item.id })}>
             <HomeCard>
               <Text>{item.title}</Text>
             </HomeCard>
@@ -38,7 +44,6 @@ export default function HomeScreen({ navigation }: Props) {
       <Text>Household: {household?.name}</Text>
       <Button title="New task" onPress={() => navigation.navigate("CreateTask")} />
       <Button title="Profile" onPress={() => navigation.navigate("Profile")}></Button>
-      <Button title="ProfileCreate" onPress={() => navigation.navigate("SkapaProfil")}></Button>
     </View>
   );
 }

@@ -11,7 +11,6 @@ import {
 } from "../store/householdSlice";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { textToEmoji } from "../utils/avatar";
 import { Application, Profile } from "../utils/type";
 
 export default function HouseholdOverviewScreen() {
@@ -126,7 +125,7 @@ export default function HouseholdOverviewScreen() {
                   color: theme.colors.text,
                 }}
               >
-                {selectedProfile?.name + " " + textToEmoji(selectedProfile?.avatar.icon)}
+                {selectedProfile?.name + " " + selectedProfile?.avatar.icon}
               </Text>
               <Text
                 style={{

@@ -1,4 +1,4 @@
-import { User, Task, TaskHistory, Household, Application, Profile, Avatar } from "./type";
+import { Avatar } from "./type";
 
 const avatars: Avatar[] = [
   {
@@ -22,7 +22,7 @@ const avatars: Avatar[] = [
     token: false,
   },
   {
-    color: "",
+    color: "#bc9991",
     icon: "🦉",
     token: false,
   },

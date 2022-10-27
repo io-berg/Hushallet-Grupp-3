@@ -12,14 +12,14 @@ public static class ProfileHelper
         }
 
         var possibleAvatars = new List<Avatar>();
-        possibleAvatars.Add(new Avatar { Icon = "chicken", Color = "#fcd933" });
-        possibleAvatars.Add(new Avatar { Icon = "fox", Color = "#ff7e46" });
-        possibleAvatars.Add(new Avatar { Icon = "squid", Color = "#cd5d6f" });
-        possibleAvatars.Add(new Avatar { Icon = "whale", Color = "#99adfc" });
-        possibleAvatars.Add(new Avatar { Icon = "unicorn", Color = "#c57bed" });
-        possibleAvatars.Add(new Avatar { Icon = "pig", Color = "#fc99c3" });
-        possibleAvatars.Add(new Avatar { Icon = "owl", Color = "#7c5751" });
-        possibleAvatars.Add(new Avatar { Icon = "frog", Color = "#6cfcb2" });
+        possibleAvatars.Add(new Avatar { Icon = "🐥", Color = "#fcd933" });
+        possibleAvatars.Add(new Avatar { Icon = "🦊", Color = "#ff7e46" });
+        possibleAvatars.Add(new Avatar { Icon = "🐙", Color = "#cd5d6f" });
+        possibleAvatars.Add(new Avatar { Icon = "🐋", Color = "#99adfc" });
+        possibleAvatars.Add(new Avatar { Icon = "🦄", Color = "#c57bed" });
+        possibleAvatars.Add(new Avatar { Icon = "🐷", Color = "#fc99c3" });
+        possibleAvatars.Add(new Avatar { Icon = "🦉", Color = "#7c5751" });
+        possibleAvatars.Add(new Avatar { Icon = "🐸", Color = "#6cfcb2" });
 
         foreach (var p in TakenProfiles)
         {

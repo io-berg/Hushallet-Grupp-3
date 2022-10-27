@@ -2,7 +2,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { textToEmoji } from "../utils/avatar";
 import { Household } from "../utils/type";
 
 interface Props {
@@ -39,7 +38,7 @@ const HouseholdInfo = ({ household, onPress }: Props) => {
         household.profiles.map((p) => (
           <View key={p.id} style={styles.container}>
             <Text style={styles.smallText}>{p.name}</Text>
-            <Text style={styles.text}>{textToEmoji(p.avatar.icon?.toLocaleLowerCase())}</Text>
+            <Text style={styles.text}>{p.avatar.icon}</Text>
           </View>
         ))}
     </Pressable>

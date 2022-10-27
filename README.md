@@ -90,7 +90,7 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 - [ ] En logga, splashscreen och appikon ska designas och användas.
 - [x] Applikationen ska byggas med RN, Expo & TS.
-- [ ] Designen av appen ska utgå ifrån befintliga skisser, undantag kan ges men ska diskuteras
+- [x] Designen av appen ska utgå ifrån befintliga skisser, undantag kan ges men ska diskuteras
       med produktägare, godkännas och dokumenteras.
 
 #### Hushåll
@@ -106,30 +106,30 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 #### Profil
 
-- [ ] En användare ska kunna ange sitt namn.
-- [ ] En användare ska kunna välja en avatar (emoji-djur + färg) från en fördefinierad lista.
-- [ ] Valda avatarer ska inte kunna väljas av andra användare i hushållet.
-- [ ] Avataren ska användas i appen för att visa vad användaren har gjort.
+- [x] En användare ska kunna ange sitt namn.
+- [x] En användare ska kunna välja en avatar (emoji-djur + färg) från en fördefinierad lista.
+- [x] Valda avatarer ska inte kunna väljas av andra användare i hushållet.
+- [x] Avataren ska användas i appen för att visa vad användaren har gjort.
 
 #### Sysslor
 
-- [ ] En ägare ska kunna lägga till sysslor att göra i hemmet.
-- [ ] En syssla ska ha ett namn, en beskrivning (text), hur ofta den ska göras (dagar), och en vikt som beskriver hur energikrävande den är.
-- [ ] En ägare ska kunna redigera en syssla.
+- [x] En ägare ska kunna lägga till sysslor att göra i hemmet.
+- [x] En syssla ska ha ett namn, en beskrivning (text), hur ofta den ska göras (dagar), och en vikt som beskriver hur energikrävande den är.
+- [x] En ägare ska kunna redigera en syssla.
 
 #### Dagsvyn
 
 - [ ] Alla sysslor ska listas i en dagsvy och ge en översikt kring vad som behöver göras.
 - [ ] Utöver sysslans namn ska även vem/vilka som har gjort sysslan visas, hur många dagar
       sedan sysslan gjordes senast samt om den är försenad.
-- [ ] När en användare väljer en syssla ska beskrivningen av sysslan visas och det ska även
+- [x] När en användare väljer en syssla ska beskrivningen av sysslan visas och det ska även
       med ett enkelt tryck gå att markera sysslan som gjord.
 
 #### Statistik
 
-- [ ] En användare ska kunna se fördelningen av gjorda sysslor mellan användarna i sitt hushåll.
-- [ ] Varje statistikvy ska visa den totala fördelningen (inräknat vikterna för sysslorna) samt fördelning av varje enskild syssla.
-- [ ] Det ska finnas en statistikvy över ”nuvarande vecka”.
+- [x] En användare ska kunna se fördelningen av gjorda sysslor mellan användarna i sitt hushåll.
+- [x] Varje statistikvy ska visa den totala fördelningen (inräknat vikterna för sysslorna) samt fördelning av varje enskild syssla.
+- [x] Det ska finnas en statistikvy över ”nuvarande vecka”.
 
 ## Krav för VG
 
@@ -151,7 +151,7 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 #### Profil
 
-- [ ] En användare ska kunna ställa in appens utseende (mörkt, ljust, auto)
+- [x] En användare ska kunna ställa in appens utseende (mörkt, ljust, auto)
 - [x] Om en användare tillhör två eller fler hushåll ska denne kunna välja att byta mellan de olika hushållen.
 
 #### Sysslor
@@ -161,9 +161,9 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 #### Statistik
 
-- [ ] Det ska finnas en statistikvy över ”förra vecka”.
-- [ ] Det ska finnas en statistikvy över ”förra månaden”
-- [ ] Om det inte finns statistik för en av vyerna ska den vyn inte visas.
+- [x] Det ska finnas en statistikvy över ”förra vecka”.
+- [x] Det ska finnas en statistikvy över ”förra månaden”
+- [x] Om det inte finns statistik för en av vyerna ska den vyn inte visas.
 
 # Övriga krav
 

@@ -3,9 +3,7 @@ import React from "react";
 import { useTheme } from "react-native-paper";
 import MyTabBar from "../components/SwipeNavigatorHeader";
 import HomeScreen from "../screens/HomeScreen";
-import LastMonthScreen from "../screens/LastMonth";
-import LastWeekScreen from "../screens/LastWeek";
-import ThisWeekScreen from "../screens/ThisWeek";
+import StatisticsScreen from "../screens/StatisticsScreen";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppSelector } from "../store/store";
 import {
@@ -35,16 +33,22 @@ export function TabNavigator() {
   const lastMonthData = mapLastMonthsData(profiles, householdTasks, theme.colors.text);
 
   return (
-    <Tab.Navigator screenOptions={{}} tabBar={(props) => <MyTabBar {...props} />}>
+    <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
       <Tab.Screen name="Overview" component={HomeScreen} />
       {thisWeekData && thisWeekData.overallData.length > 0 && (
-        <Tab.Screen name="ThisWeek">{() => <ThisWeekScreen data={thisWeekData} />}</Tab.Screen>
+        <Tab.Screen name="ThisWeek">
+          {() => <StatisticsScreen data={thisWeekData} title="Denna veckan" />}
+        </Tab.Screen>
       )}
       {lastWeekData && lastWeekData.overallData.length > 0 && (
-        <Tab.Screen name="LastWeek">{() => <LastWeekScreen data={lastWeekData} />}</Tab.Screen>
+        <Tab.Screen name="LastWeek">
+          {() => <StatisticsScreen data={lastWeekData} title="Förra veckan" />}
+        </Tab.Screen>
       )}
       {lastMonthData && lastMonthData.overallData.length > 0 && (
-        <Tab.Screen name="Statistics3">{() => <LastMonthScreen data={lastMonthData} />}</Tab.Screen>
+        <Tab.Screen name="Statistics3">
+          {() => <StatisticsScreen data={lastMonthData} title="Förra månaden" />}
+        </Tab.Screen>
       )}
     </Tab.Navigator>
   );

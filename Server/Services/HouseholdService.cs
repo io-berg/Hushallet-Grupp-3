@@ -21,6 +21,7 @@ public class HouseholdService
             .Include(h => h.Profiles)
             .Include(h => h.Tasks)
                 .ThenInclude(t => t.History)
+                .ThenInclude(h => h.Profile)
             .Include(h => h.Profiles)
                 .ThenInclude(p => p.User)
             .Include(h => h.Profiles)
@@ -59,10 +60,10 @@ public class HouseholdService
                     Description = t.Description,
                     Effort = t.Effort,
                     Frequency = t.Frequency,
-                    History = t.History.Select(h => new TaskHistoryDTO
+                    TaskHistory = t.History.Select(h => new TaskHistoryDTO
                     {
                         Id = h.Id,
-                        Date = h.Date.ToUniversalTime().ToString(),
+                        Date = h.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
                         ProfileId = h.ProfileId,
                     }).ToList()
                 }).ToList(),
@@ -83,6 +84,9 @@ public class HouseholdService
         var household = await _context.Households
             .Where(h => h.Id == id)
             .Include(h => h.Profiles)
+                .ThenInclude(p => p.Avatar)
+            .Include(h => h.Profiles)
+                .ThenInclude(p => p.User)
             .FirstOrDefaultAsync();
 
         return household;
@@ -111,11 +115,7 @@ public class HouseholdService
             Name = user.UserName,
             User = user,
             Role = "admin",
-            Avatar = new Avatar
-            {
-                Icon = "whale",
-                Color = "blue"
-            }
+            Avatar = new Avatar { Icon = "🐋", Color = "#99adfc" }
         });
 
         _context.Households.Add(household);
@@ -161,6 +161,42 @@ public class HouseholdService
             .FirstOrDefaultAsync();
 
         return household;
+    }
+
+    public async Task<ProfileDTO> UpdateProfileInHousehold(Household household, int profileId, string name, string color, string icon)
+    {
+
+        var profile = household.Profiles.Find(p => p.Id == profileId);
+        var profileToReturn = new ProfileDTO { };
+
+        if (profile != null)
+        {
+            profile.Name = name;
+            profile.Avatar.Color = color;
+            profile.Avatar.Icon = icon;
+
+
+            await _context.SaveChangesAsync();
+
+            profileToReturn.Id = profile.Id;
+            profileToReturn.User = new UserDTO
+            {
+                Username = profile.User.UserName,
+                Email = profile.User.Email
+            };
+            profileToReturn.Avatar = new AvatarDTO
+            {
+                Icon = profile.Avatar.Icon,
+                Color = profile.Avatar.Color,
+            };
+            profileToReturn.Name = profile.Name;
+            profileToReturn.Role = profile.Role;
+        };
+
+
+
+        return profileToReturn;
+
     }
 
     public async Task<Boolean> ApplicationResponse(int applicationId, bool accepted, IdentityUser responder)

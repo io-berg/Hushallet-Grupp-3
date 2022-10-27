@@ -4,7 +4,7 @@ import { Badge, Text, TouchableRipple, useTheme } from "react-native-paper";
 
 interface Props {
   value: number;
-  onChange: (value: number) => void;
+  onChange?: (value: number) => void;
 }
 
 const EffortPicker = ({ value, onChange }: Props) => {
@@ -23,7 +23,10 @@ const EffortPicker = ({ value, onChange }: Props) => {
   if (!showPicker) {
     return (
       <TouchableRipple
-        onPress={() => setShowPicker(true)}
+        disabled={!onChange}
+        onPress={() => {
+          setShowPicker(true);
+        }}
         style={{
           width: "92%",
           padding: 15,
@@ -99,7 +102,7 @@ const EffortPicker = ({ value, onChange }: Props) => {
             fontSize: 18,
           }}
           onPress={() => {
-            onChange(item);
+            onChange?.(item);
             setShowPicker(false);
           }}
         >
