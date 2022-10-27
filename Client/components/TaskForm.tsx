@@ -72,7 +72,6 @@ const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
       <FrequencyPicker
         value={formik.values.frequency}
         onChange={(value) => formik.setFieldValue("frequency", value)}
-        bool={false}
       />
       <View
         style={{

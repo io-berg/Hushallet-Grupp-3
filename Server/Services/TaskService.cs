@@ -94,4 +94,39 @@ public class TaskService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<Boolean> CreateTaskHistory(TaskHistoryDTO task, int householdId, int taskId, IdentityUser sender)
+    {
+        var household = await _context.Households
+           .Include(h => h.Tasks)
+               .ThenInclude(h => h.History)
+           .Include(h => h.Profiles)
+               .ThenInclude(p => p.User)
+           .Where(h => h.Id == householdId)
+           .FirstOrDefaultAsync();
+
+        var senderProfile = household.Profiles
+            .Where(p => p.UserId == sender.Id)
+            .FirstOrDefault();
+
+        if (household == null || senderProfile == null) return false;
+
+        var tasks = household.Tasks.Find(t => t.Id == taskId);
+        var profiles = household.Profiles.Find(p => p.Id == task.ProfileId);
+
+        TaskHistory taskHistory = new TaskHistory
+        {
+            Id = task.Id,
+            Profile = profiles,
+            Date = DateTime.Parse(task.Date),
+            ProfileId = task.ProfileId
+        };
+
+        tasks.History.Add(taskHistory);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+
+    }
 }
