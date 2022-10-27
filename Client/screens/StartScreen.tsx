@@ -128,10 +128,10 @@ export default function StartScreen({ navigation }: Props) {
                 if (selected?.id !== household.id) {
                   dispatch(setCurrentHousehold({ id: household.id }));
                   setTimeout(() => {
-                    navigation.navigate("Home");
+                    navigation.navigate("Home", { screen: "Overview" });
                   }, 200);
                 } else {
-                  navigation.navigate("Home");
+                  navigation.navigate("Home", { screen: "Overview" });
                 }
               }}
             />

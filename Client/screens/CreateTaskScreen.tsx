@@ -20,7 +20,7 @@ const CreateTaskScreen = ({ navigation }: Props) => {
   function onSubmit(task: Task) {
     if (householdId) {
       dispatch(createTask({ task, householdId }));
-      navigation.navigate("Home");
+      navigation.navigate("Home", { screen: "Overview" });
     }
   }
 

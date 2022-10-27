@@ -1,17 +1,7 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-export default function HomeCard(props: {
-  children:
-    | string
-    | number
-    | boolean
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-    | React.ReactFragment
-    | React.ReactPortal
-    | null
-    | undefined;
-}) {
+export default function HomeCard(props: { children: React.ReactNode }) {
   return (
     <View style={styles.card}>
       <View style={styles.cardcontent}>{props.children}</View>
