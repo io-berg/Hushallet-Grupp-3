@@ -10,7 +10,7 @@ interface Task {
   effort: number;
   frequency: number;
   taskHistory: TaskHistory[];
-  date: string;
+  createdDateTask: string;
 }
 
 interface TaskHistory {
