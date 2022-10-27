@@ -5,11 +5,16 @@ import { useTheme } from "react-native-paper";
 import TaskHeader from "../components/TaskHeader";
 import { statisticsData } from "../utils/statisics";
 
-export default function LastMonthScreen({ data }: { data: statisticsData }) {
+interface Props {
+  data: statisticsData;
+  title: string;
+}
+
+export default function StatisticsScreen({ data, title }: Props) {
   const theme = useTheme();
   return (
     <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
-      <TaskHeader title="Förra månaden" />
+      <TaskHeader title={title} />
       <View
         style={{
           justifyContent: "center",
