@@ -7,5 +7,7 @@ public class HouseholdTask
     public string Description { get; set; }
     public int Effort { get; set; }
     public int Frequency { get; set; }
+
+    public DateTime createdDateTask { get; set; }
     public List<TaskHistory> History { get; set; }
 }

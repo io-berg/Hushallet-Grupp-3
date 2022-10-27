@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
@@ -44,7 +45,8 @@ public class TaskService
             Description = task.Description,
             Effort = task.Effort,
             Frequency = task.Frequency,
-            History = new List<TaskHistory>()
+            History = new List<TaskHistory>(),
+            createdDateTask = new DateTime()
         };
 
         household.Tasks.Add(newTask);

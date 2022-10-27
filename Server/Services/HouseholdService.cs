@@ -60,6 +60,7 @@ public class HouseholdService
                     Description = t.Description,
                     Effort = t.Effort,
                     Frequency = t.Frequency,
+                    createdDateTask = t.createdDateTask.ToString("yyyy-MM-ddTHH:mm:ss"),
                     TaskHistory = t.History.Select(h => new TaskHistoryDTO
                     {
                         Id = h.Id,
