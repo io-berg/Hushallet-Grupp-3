@@ -23,7 +23,7 @@ const EditTaskScreen = ({ navigation, route }: Props) => {
   function onSubmit(editedTask: Task) {
     if (householdId && task?.id) {
       dispatch(editTask({ householdId: householdId, task: editedTask }));
-      navigation.navigate("Home");
+      navigation.navigate("Home", { screen: "Overview" });
     }
   }
 

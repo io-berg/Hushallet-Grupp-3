@@ -85,7 +85,7 @@ export default function DetailScreen({ navigation, route }: Props) {
                     },
                   })
                 );
-                navigation.navigate("Home");
+                navigation.navigate("Home", { screen: "Overview" });
               }
             }}
           />
@@ -93,6 +93,12 @@ export default function DetailScreen({ navigation, route }: Props) {
       </View>
     );
   }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Ingen uppgift hittades</Text>
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   container: {
