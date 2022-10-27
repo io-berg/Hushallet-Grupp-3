@@ -71,7 +71,11 @@ export default function DetailScreen({ navigation, route }: Props) {
             icon1="pen"
             title2="Klar"
             icon2="close-circle-outline"
-            onPress1={() => navigation.navigate("EditTask", { taskId })}
+            onPress1={() => {
+              if (currentUserProfile?.role == "admin") {
+                navigation.navigate("EditTask", { taskId });
+              }
+            }}
             onPress2={() => {
               if (household && currentUserProfile) {
                 dispatch(

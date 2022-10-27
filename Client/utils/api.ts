@@ -277,6 +277,26 @@ const createTaskHistoryItemRequest = async (
   throw response;
 };
 
+const deleteTaskRequest = async (task: Task, householdId: number) => {
+  const response = await fetch(`${url}/task/DeleteTask`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await get("auth.token")}`,
+    },
+    body: JSON.stringify({
+      householdId,
+      task,
+    }),
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  throw response;
+};
+
 export {
   loginRequest,
   registerRequest,
@@ -291,4 +311,5 @@ export {
   createTaskRequest,
   editTaskRequest,
   createTaskHistoryItemRequest,
+  deleteTaskRequest,
 };

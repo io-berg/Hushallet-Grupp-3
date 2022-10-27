@@ -1,10 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { View } from "react-native";
+import { Button, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import TaskForm from "../components/TaskForm";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { editTask } from "../store/householdSlice";
+import { deleteTask, editTask } from "../store/householdSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { Task } from "../utils/type";
@@ -27,13 +27,25 @@ const EditTaskScreen = ({ navigation, route }: Props) => {
     }
   }
 
+  function onDelete(editedTask: Task) {
+    if (householdId && task?.id) {
+      dispatch(deleteTask({ householdId: householdId, task: editedTask }));
+      navigation.navigate("Home", { screen: "Overview" });
+    }
+  }
+
   return (
     <View
       style={{
         backgroundColor: theme.colors.background,
       }}
     >
-      <TaskForm onSubmit={onSubmit} onCancel={() => navigation.goBack()} editTask={task} />
+      <TaskForm
+        onSubmit={onSubmit}
+        onDelete={onDelete}
+        onCancel={() => navigation.goBack()}
+        editTask={task}
+      />
     </View>
   );
 };

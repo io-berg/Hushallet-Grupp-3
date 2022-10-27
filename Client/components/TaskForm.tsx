@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { Button, Dialog, Paragraph, Portal } from "react-native-paper";
 import * as Yup from "yup";
 import { Task } from "../utils/type";
 import DualBottomButton from "./DualBottomButton";
@@ -12,9 +13,11 @@ interface Props {
   onSubmit: (Task: Task) => void;
   editTask?: Task;
   onCancel: () => void;
+  onDelete: (Task: Task) => void;
 }
 
-const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
+const TaskForm = ({ onSubmit, editTask, onCancel, onDelete }: Props) => {
+  const [visible, setVisible] = useState(false);
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("En syssla kräver en titel").min(1).label("Title"),
     description: Yup.string()
@@ -44,8 +47,18 @@ const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
     validationSchema,
   });
 
+  const hideDialog = () => setVisible(false);
+
   return (
     <View style={styles.container}>
+      <Portal>
+        <Dialog style={styles.dialog} visible={visible} onDismiss={hideDialog}>
+          <Paragraph>Är du säker på att du vill radera denna sysla?</Paragraph>
+          <Dialog.Actions>
+            <Button onPress={() => onDelete(values)}>Ok</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
       <TextInputField
         placeholder="Titel"
         onChange={formik.handleChange("title")}
@@ -84,6 +97,13 @@ const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
       />
       <View
         style={{
+          paddingVertical: 10,
+        }}
+      >
+        <Button onPress={() => setVisible(true)}> Radera Syssla </Button>
+      </View>
+      <View
+        style={{
           position: "absolute",
           bottom: 0,
           flex: 1,
@@ -109,5 +129,9 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     alignItems: "center",
     height: "100%",
+  },
+  dialog: {
+    alignItems: "center",
+    paddingTop: 15,
   },
 });

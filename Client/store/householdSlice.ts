@@ -6,6 +6,7 @@ import {
   createHouseholdRequest,
   createTaskHistoryItemRequest,
   createTaskRequest,
+  deleteTaskRequest,
   editTaskRequest,
   fetchMyHouseholdsRequest,
   leaveHouseholdRequest,
@@ -357,6 +358,18 @@ export const createTaskHistoryItem = createAsyncThunk<
   }
 });
 
+export const deleteTask = createAsyncThunk<Task, { householdId: number; task: Task }>(
+  "household/DeleteTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      await deleteTaskRequest(data.task, data.householdId);
+      return data.task;
+    } catch (error) {
+      return rejectWithValue("Failed to delete task");
+    }
+  }
+);
+
 const householdSlice = createSlice({
   name: "households",
   initialState,
@@ -453,6 +466,17 @@ const householdSlice = createSlice({
       }
     });
     builder.addCase(editTask.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = current.tasks.map((t) => {
+          if (t.id === action.payload.id) {
+            return action.payload;
+          }
+          return t;
+        });
+      }
+    });
+    builder.addCase(deleteTask.fulfilled, (state, action) => {
       const current = state.households.find((household) => household.id === state.current);
       if (current) {
         current.tasks = current.tasks.map((t) => {
