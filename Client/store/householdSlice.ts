@@ -54,7 +54,7 @@ const initialState: HouseholdState = {
           role: "user",
           avatar: {
             color: "#fcd933",
-            icon: "chicken",
+            icon: "🐥",
             token: true,
           },
           name: "User",
@@ -68,7 +68,7 @@ const initialState: HouseholdState = {
           role: "user",
           avatar: {
             color: "#ff7e46",
-            icon: "fox",
+            icon: "🦊",
             token: true,
           },
           name: "User2",
@@ -82,23 +82,8 @@ const initialState: HouseholdState = {
             "Kolla på kylskåpet vilken mat det är som ska lagas idag. Följ recept i receptboken som ligger på hyllan i köket",
           effort: 1,
           frequency: 1,
-          taskHistory: [
-            {
-              id: 0,
-              profileId: 0,
-              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
-            },
-            {
-              id: 1,
-              profileId: 1,
-              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
-            },
-            {
-              id: 2,
-              profileId: 2,
-              date: new Date().toISOString(),
-            },
-          ],
+          createdDateTask: new Date(new Date().setDate(new Date().getDate() - 30)).toISOString(),
+          taskHistory: [],
         },
         {
           id: 2,
@@ -106,22 +91,18 @@ const initialState: HouseholdState = {
           description:
             "Damma av alla ytor i alla rum. (ta bort dukar, blommor osv) Använd trasa, hink och rengöringsmedel som står i städskåpet i hallen.",
           effort: 2,
-          frequency: 2,
+          frequency: 5,
+          createdDateTask: new Date(new Date().setDate(new Date().getDate() - 8)).toISOString(),
           taskHistory: [
             {
               id: 0,
               profileId: 0,
-              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
+              date: new Date(new Date().setDate(new Date().getDate() - 30)).toISOString(),
             },
             {
               id: 1,
-              profileId: 1,
+              profileId: 0,
               date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
-            },
-            {
-              id: 2,
-              profileId: 2,
-              date: new Date().toISOString(),
             },
           ],
         },
@@ -132,6 +113,7 @@ const initialState: HouseholdState = {
             "Lägg in disk i diskmaskin. Övrig disk, diskas för hand så som stekpannor tex",
           effort: 1,
           frequency: 1,
+          createdDateTask: new Date().toISOString(),
           taskHistory: [
             {
               id: 0,
@@ -171,6 +153,7 @@ const initialState: HouseholdState = {
           description: "Ut och gå med My 4 gånger om dagen, ge mat morgon och kväll.",
           effort: 1,
           frequency: 1,
+          createdDateTask: new Date().toISOString(),
           taskHistory: [
             {
               id: 0,
@@ -190,6 +173,7 @@ const initialState: HouseholdState = {
           description: "Torka av golvet med mopp och rengöring som står i städskåpet",
           effort: 1,
           frequency: 1,
+          createdDateTask: new Date().toISOString(),
           taskHistory: [
             {
               id: 0,
@@ -204,6 +188,7 @@ const initialState: HouseholdState = {
           description: "Vattna alla blommor, ej plastblommorna ;)",
           effort: 1,
           frequency: 1,
+          createdDateTask: new Date().toISOString(),
           taskHistory: [
             {
               id: 0,
@@ -476,12 +461,25 @@ const householdSlice = createSlice({
         });
       }
     });
+
     builder.addCase(deleteTask.fulfilled, (state, action) => {
       const current = state.households.find((household) => household.id === state.current);
       if (current) {
         current.tasks = current.tasks.map((t) => {
           if (t.id === action.payload.id) {
             return action.payload;
+          }
+          return t;
+        });
+      }
+    });
+
+    builder.addCase(createTaskHistoryItem.fulfilled, (state, action) => {
+      const current = state.households.find((household) => household.id === state.current);
+      if (current) {
+        current.tasks = current.tasks.map((t) => {
+          if (t.id === action.payload.id) {
+            return { ...t, taskHistory: [...t.taskHistory, action.payload] };
           }
           return t;
         });
