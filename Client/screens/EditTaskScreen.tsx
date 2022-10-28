@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { useTheme, Dialog, Paragraph, Portal, Button } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import TaskForm from "../components/TaskForm";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { deleteTask, editTask } from "../store/householdSlice";
@@ -12,8 +12,6 @@ import { Task } from "../utils/type";
 type Props = NativeStackScreenProps<RootStackParamList, "EditTask">;
 
 const EditTaskScreen = ({ navigation, route }: Props) => {
-  const [visible, setVisible] = useState(false);
-  const hideDialog = () => setVisible(false);
   const householdId = useAppSelector(selectCurrentHousehold)?.id;
   const dispatch = useAppDispatch();
 
@@ -29,42 +27,12 @@ const EditTaskScreen = ({ navigation, route }: Props) => {
     }
   }
 
-  function onDelete(editedTask: Task) {
-    if (householdId && task?.id) {
-      dispatch(deleteTask({ householdId: householdId, task: editedTask }));
-      navigation.navigate("Home", { screen: "Overview" });
-    }
-  }
-
   return (
     <View
       style={{
         backgroundColor: theme.colors.background,
       }}
     >
-      <Portal>
-        <Dialog style={styles.dialog} visible={visible} onDismiss={hideDialog}>
-          <Paragraph>Är du säker på att du vill radera denna sysla?</Paragraph>
-          <Dialog.Actions>
-            <Button
-              onPress={() => {
-                if (task) {
-                  onDelete(task);
-                }
-              }}
-            >
-              Ok
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
-      <View
-        style={{
-          paddingVertical: 10,
-        }}
-      >
-        <Button onPress={() => setVisible(true)}> Radera Syssla </Button>
-      </View>
       <TaskForm onSubmit={onSubmit} onCancel={() => navigation.goBack()} editTask={task} />
     </View>
   );
@@ -74,10 +42,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     alignItems: "center",
     height: "100%",
-  },
-  dialog: {
-    alignItems: "center",
-    paddingTop: 15,
   },
 });
 
