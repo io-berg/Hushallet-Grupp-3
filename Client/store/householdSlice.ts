@@ -101,7 +101,7 @@ const initialState: HouseholdState = {
             {
               id: 1,
               profileId: 0,
-              date: new Date(new Date().setDate(new Date().getDate() - 4)).toISOString(),
+              date: new Date(new Date().setDate(new Date().getDate() - 6)).toISOString(),
             },
           ],
         },

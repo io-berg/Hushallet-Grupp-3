@@ -121,11 +121,11 @@ export default function HomeScreen({ navigation }: Props) {
       {isUserAdmin && (
         <DualBottomButton
           title1="Lägg till"
-          icon1="plus"
+          icon1="plus-circle-outline"
           onPress1={() => navigation.navigate("CreateTask")}
           title2="Ändra"
           icon2="pencil"
-          onPress2={() => navigation.navigate("Profile")}
+          onPress2={() => navigation.navigate("HouseholdOverview")}
         />
       )}
     </View>
