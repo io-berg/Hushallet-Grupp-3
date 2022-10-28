@@ -65,4 +65,19 @@ public class TaskController : ControllerBase
 
         return BadRequest();
     }
+
+    [HttpDelete]
+    [Route("DeleteTask")]
+    public async Task<IActionResult> DeleteTask(DeleteTaskModel model)
+    {
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var result = await _taskService.DeleteTask(model.Task, model.HouseholdId, user);
+
+        if (result)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
 }

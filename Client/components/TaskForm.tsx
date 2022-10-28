@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { Button } from "react-native-paper";
 import * as Yup from "yup";
 import { Task } from "../utils/type";
 import DualBottomButton from "./DualBottomButton";
@@ -83,6 +84,7 @@ const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
         value={formik.values.effort}
         onChange={(value) => formik.setFieldValue("effort", value)}
       />
+
       <View
         style={{
           position: "absolute",
@@ -110,5 +112,9 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     alignItems: "center",
     height: "100%",
+  },
+  dialog: {
+    alignItems: "center",
+    paddingTop: 15,
   },
 });
