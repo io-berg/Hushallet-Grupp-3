@@ -34,6 +34,7 @@ const TaskForm = ({ onSubmit, editTask, onCancel }: Props) => {
         effort: 1,
         frequency: 1,
         taskHistory: [],
+        createdDateTask: new Date().toISOString(),
       };
 
   const formik = useFormik<Task>({

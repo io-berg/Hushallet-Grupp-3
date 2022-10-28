@@ -24,7 +24,7 @@ const initialState: AuthState = {
   // registerSuccess: false,
   // loading: false,
 
-  // FÖR ATT SE LOGIN, ÄNDRA TILL NULL
+  // // FÖR ATT SE LOGIN, ÄNDRA TILL NULL
   user: null,
   token: "",
   expirationDate: "",
