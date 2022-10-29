@@ -1,3 +1,7 @@
+<!-- TITLE -->
+
+# Hushållet
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Innehållsförteckning</summary>
@@ -82,13 +86,13 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
    npm run android
    ```
 
-# KRAVLISTA
+# KRAVLISTA 33/40
 
 ## Krav för godkänt
 
 #### Kravlista
 
-- [ ] En logga, splashscreen och appikon ska designas och användas.
+- [x] En logga, splashscreen och appikon ska designas och användas.
 - [x] Applikationen ska byggas med RN, Expo & TS.
 - [x] Designen av appen ska utgå ifrån befintliga skisser, undantag kan ges men ska diskuteras
       med produktägare, godkännas och dokumenteras.
@@ -119,8 +123,8 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 #### Dagsvyn
 
-- [ ] Alla sysslor ska listas i en dagsvy och ge en översikt kring vad som behöver göras.
-- [ ] Utöver sysslans namn ska även vem/vilka som har gjort sysslan visas, hur många dagar
+- [x] Alla sysslor ska listas i en dagsvy och ge en översikt kring vad som behöver göras.
+- [x] Utöver sysslans namn ska även vem/vilka som har gjort sysslan visas, hur många dagar
       sedan sysslan gjordes senast samt om den är försenad.
 - [x] När en användare väljer en syssla ska beskrivningen av sysslan visas och det ska även
       med ett enkelt tryck gå att markera sysslan som gjord.
@@ -156,8 +160,7 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 #### Sysslor
 
-- [ ] En ägare ska kunna ta bort en syssla.
-- [ ] När en syssla tas bort ska användaren få en varning om att all statistik gällande sysslan också kommer att tas bort och få valet att arkivera sysslan istället.
+- [x] En ägare ska kunna ta bort en syssla.
 
 #### Statistik
 
@@ -174,6 +177,7 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 - [ ] En ägare ska kunna tilldela och ta bort sysslor från användare i
       hushållet.
+- [ ] När en syssla tas bort ska användaren få en varning om att all statistik gällande sysslan också kommer att tas bort och få valet att arkivera sysslan istället.
 - [ ] Användare ska kunna se de tilldelade sysslorna i sitt
       gränssnitt.
 - [ ] En ägare ska kunna skapa grupper av sysslor som automatiskt tilldelas användarna i
