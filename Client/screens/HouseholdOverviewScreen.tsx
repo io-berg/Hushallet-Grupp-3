@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { Button, Modal, Portal, Text, TouchableRipple, useTheme } from "react-native-paper";
 import OverViewUserButton from "../components/OverviewUserButton";
@@ -17,7 +17,9 @@ export default function HouseholdOverviewScreen() {
   const [selectedProfile, setSelectedProfile] = useState<Profile>();
   const [selectedApplication, setSelectedApplication] = useState<Application>();
   const [showNamechangeModal, setShowNamechangeModal] = useState(false);
-  const [householdName, setHouseholdName] = useState("");
+  const [householdName, setHouseholdName] = useState(
+    useAppSelector(selectCurrentHousehold)?.name || ""
+  );
 
   const household = useAppSelector(selectCurrentHousehold);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
@@ -25,12 +27,6 @@ export default function HouseholdOverviewScreen() {
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-
-  useEffect(() => {
-    if (household) {
-      setHouseholdName(household.name);
-    }
-  }, [household]);
 
   if (household) {
     return (

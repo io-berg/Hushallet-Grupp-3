@@ -1,7 +1,8 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import DualBottomButton from "../components/DualBottomButton";
 import EffortPicker from "../components/EffortPicker";
 import FrequencyPicker from "../components/FrequencyPicker";
@@ -18,6 +19,8 @@ export default function DetailScreen({ navigation, route }: Props) {
   const task = useAppSelector(selectCurrentHousehold)?.tasks.find((t) => t.id === taskId);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
   const dispatch = useAppDispatch();
+
+  const userIsOwner = currentUserProfile?.role === "admin";
 
   const theme = useTheme();
 
@@ -55,40 +58,84 @@ export default function DetailScreen({ navigation, route }: Props) {
           <EffortPicker value={task?.effort} />
         </View>
 
-        <Button onPress={() => navigation.navigate("EditTask", { taskId: taskId })}>
-          Redigera
-        </Button>
-
         <View
           style={{
             position: "absolute",
             bottom: 0,
             flex: 1,
+            width: "100%",
           }}
         >
-          <DualBottomButton
-            title1="Ändra"
-            icon1="pen"
-            title2="Klar"
-            icon2="close-circle-outline"
-            onPress1={() => navigation.navigate("EditTask", { taskId })}
-            onPress2={() => {
-              if (household && currentUserProfile) {
-                dispatch(
-                  createTaskHistoryItem({
-                    householdId: household.id,
-                    taskId: taskId,
-                    taskHistory: {
-                      id: 0,
-                      profileId: currentUserProfile.id,
-                      date: new Date().toISOString(),
-                    },
-                  })
-                );
-                navigation.navigate("Home", { screen: "Overview" });
-              }
-            }}
-          />
+          {userIsOwner ? (
+            <DualBottomButton
+              title1="Ändra"
+              icon1="pen"
+              title2="Klar"
+              icon2="close-circle-outline"
+              onPress1={() => navigation.navigate("EditTask", { taskId })}
+              onPress2={() => {
+                if (household && currentUserProfile) {
+                  dispatch(
+                    createTaskHistoryItem({
+                      householdId: household.id,
+                      taskId: taskId,
+                      taskHistory: {
+                        id: 0,
+                        profileId: currentUserProfile.id,
+                        date: new Date().toISOString(),
+                      },
+                    })
+                  );
+                  navigation.navigate("Home", { screen: "Overview" });
+                }
+              }}
+            />
+          ) : (
+            <TouchableRipple
+              style={{
+                backgroundColor: theme.colors.surface,
+                width: "100%",
+                height: 60,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onPress={() => {
+                if (household && currentUserProfile) {
+                  dispatch(
+                    createTaskHistoryItem({
+                      householdId: household.id,
+                      taskId: taskId,
+                      taskHistory: {
+                        id: 0,
+                        profileId: currentUserProfile.id,
+                        date: new Date().toISOString(),
+                      },
+                    })
+                  );
+                  navigation.navigate("Home", { screen: "Overview" });
+                }
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <MaterialIcons name="done" size={24} color={theme.colors.text} />
+                <Text
+                  style={{
+                    color: theme.colors.text,
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    marginLeft: 10,
+                  }}
+                >
+                  Markera som klar
+                </Text>
+              </View>
+            </TouchableRipple>
+          )}
         </View>
       </View>
     );
