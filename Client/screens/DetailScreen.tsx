@@ -66,6 +66,7 @@ export default function DetailScreen({ navigation, route }: Props) {
               >
                 Ok
               </Button>
+              <Button onPress={hideDialog}>Avbryt</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
