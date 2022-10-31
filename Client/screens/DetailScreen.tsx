@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Text, useTheme, Dialog, Paragraph, Portal } from "react-native-paper";
+import { Button, Dialog, Paragraph, Portal, Text, useTheme } from "react-native-paper";
 import DualBottomButton from "../components/DualBottomButton";
 import EffortPicker from "../components/EffortPicker";
 import FrequencyPicker from "../components/FrequencyPicker";
@@ -66,6 +66,7 @@ export default function DetailScreen({ navigation, route }: Props) {
               >
                 Ok
               </Button>
+              <Button onPress={hideDialog}>Avbryt</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
@@ -169,5 +170,3 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
 });
-
-//
