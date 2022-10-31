@@ -1,32 +1,75 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { Button, Dialog, Paragraph, Portal, Text, useTheme } from "react-native-paper";
 import DualBottomButton from "../components/DualBottomButton";
 import EffortPicker from "../components/EffortPicker";
 import FrequencyPicker from "../components/FrequencyPicker";
+import FullWidthButton from "../components/FullWidthButton";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { createTaskHistoryItem } from "../store/householdSlice";
+import { createTaskHistoryItem, deleteTask } from "../store/householdSlice";
 import { selectCurrentHousehold, selectCurrentUserProfile } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
+import { Task } from "../utils/type";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Details">;
 
 export default function DetailScreen({ navigation, route }: Props) {
+  const [visible, setVisible] = useState(false);
+  const hideDialog = () => setVisible(false);
   const household = useAppSelector(selectCurrentHousehold);
   const taskId = route.params.taskId;
   const task = useAppSelector(selectCurrentHousehold)?.tasks.find((t) => t.id === taskId);
   const currentUserProfile = useAppSelector(selectCurrentUserProfile);
   const dispatch = useAppDispatch();
-
-  const userIsOwner = currentUserProfile?.role === "admin";
+  const isUserAdmin = useAppSelector(selectCurrentUserProfile)?.role === "admin";
 
   const theme = useTheme();
+
+  function onDelete(editedTask: Task) {
+    if (household?.id && task?.id) {
+      dispatch(deleteTask({ householdId: household.id, task: editedTask }));
+      navigation.navigate("Home", { screen: "Overview" });
+    }
+  }
+
+  function onSubmit() {
+    if (household && currentUserProfile) {
+      dispatch(
+        createTaskHistoryItem({
+          householdId: household.id,
+          taskId: taskId,
+          taskHistory: {
+            id: 0,
+            profileId: currentUserProfile.id,
+            date: new Date().toISOString(),
+          },
+        })
+      );
+      navigation.navigate("Home", { screen: "Overview" });
+    }
+  }
 
   if (task) {
     return (
       <View style={{ ...styles.container, backgroundColor: theme.colors.background }}>
+        <Portal>
+          <Dialog style={styles.dialog} visible={visible} onDismiss={hideDialog}>
+            <Paragraph>Är du säker på att du vill radera denna sysla?</Paragraph>
+            <Dialog.Actions>
+              <Button
+                onPress={() => {
+                  if (task) {
+                    onDelete(task);
+                  }
+                }}
+              >
+                Ok
+              </Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+
         <Text style={styles.title}>{task?.title}</Text>
         <View
           style={{
@@ -60,81 +103,34 @@ export default function DetailScreen({ navigation, route }: Props) {
 
         <View
           style={{
+            marginTop: 15,
+            marginLeft: 20,
+          }}
+        >
+          <FullWidthButton onPress={onSubmit} text={"Markera som klar"}></FullWidthButton>
+        </View>
+        <View
+          style={{
             position: "absolute",
             bottom: 0,
             flex: 1,
-            width: "100%",
           }}
         >
-          {userIsOwner ? (
+          {isUserAdmin && (
             <DualBottomButton
               title1="Ändra"
               icon1="pen"
-              title2="Klar"
+              title2="Radera"
               icon2="close-circle-outline"
-              onPress1={() => navigation.navigate("EditTask", { taskId })}
-              onPress2={() => {
-                if (household && currentUserProfile) {
-                  dispatch(
-                    createTaskHistoryItem({
-                      householdId: household.id,
-                      taskId: taskId,
-                      taskHistory: {
-                        id: 0,
-                        profileId: currentUserProfile.id,
-                        date: new Date().toISOString(),
-                      },
-                    })
-                  );
-                  navigation.navigate("Home", { screen: "Overview" });
+              onPress1={() => {
+                if (currentUserProfile?.role == "admin") {
+                  navigation.navigate("EditTask", { taskId });
                 }
+              }}
+              onPress2={() => {
+                setVisible(true);
               }}
             />
-          ) : (
-            <TouchableRipple
-              style={{
-                backgroundColor: theme.colors.surface,
-                width: "100%",
-                height: 60,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              onPress={() => {
-                if (household && currentUserProfile) {
-                  dispatch(
-                    createTaskHistoryItem({
-                      householdId: household.id,
-                      taskId: taskId,
-                      taskHistory: {
-                        id: 0,
-                        profileId: currentUserProfile.id,
-                        date: new Date().toISOString(),
-                      },
-                    })
-                  );
-                  navigation.navigate("Home", { screen: "Overview" });
-                }
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <MaterialIcons name="done" size={24} color={theme.colors.text} />
-                <Text
-                  style={{
-                    color: theme.colors.text,
-                    fontSize: 16,
-                    fontWeight: "bold",
-                    marginLeft: 10,
-                  }}
-                >
-                  Markera som klar
-                </Text>
-              </View>
-            </TouchableRipple>
           )}
         </View>
       </View>
@@ -168,6 +164,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontSize: 15,
   },
+  dialog: {
+    alignItems: "center",
+    paddingTop: 15,
+  },
 });
-
-//

@@ -1,10 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { View } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
 import TaskForm from "../components/TaskForm";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { editTask } from "../store/householdSlice";
+import { deleteTask, editTask } from "../store/householdSlice";
 import { selectCurrentHousehold } from "../store/selectors";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { Task } from "../utils/type";
@@ -37,5 +37,12 @@ const EditTaskScreen = ({ navigation, route }: Props) => {
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 15,
+    alignItems: "center",
+    height: "100%",
+  },
+});
 
 export default EditTaskScreen;

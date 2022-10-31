@@ -129,4 +129,44 @@ public class TaskService
         return true;
 
     }
+
+    public async Task<Boolean> DeleteTask(HouseholdTaskDTO task, int householdId, IdentityUser sender)
+    {
+        var household = await _context.Households
+            .Include(h => h.Tasks)
+                .ThenInclude(t => t.History)
+                .ThenInclude(h => h.Profile)
+            .Include(h => h.Profiles)
+                .ThenInclude(p => p.User)
+            .Where(h => h.Id == householdId)
+            .FirstOrDefaultAsync();
+
+        if (household == null)
+        {
+            return false;
+        }
+
+        var senderProfile = household.Profiles
+            .Where(p => p.UserId == sender.Id)
+            .FirstOrDefault();
+
+        if (senderProfile.Role.ToLower() != "admin")
+        {
+            return false;
+        }
+
+        var taskToDelete = household.Tasks
+            .Where(t => t.Id == task.Id)
+            .FirstOrDefault();
+
+        if (taskToDelete == null)
+        {
+            return false;
+        }
+
+        household.Tasks.Remove(taskToDelete);
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }
