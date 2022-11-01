@@ -49,9 +49,6 @@ export const RootNavigator = () => {
         initialRouteName="Home"
         screenOptions={{
           header: (props) => <CustomNavigationBar {...props} />,
-          statusBarColor: theme.colors.surface,
-          statusBarStyle: "auto",
-          // statusBarTranslucent: true,
         }}
       >
         {isAuthenticated ? (

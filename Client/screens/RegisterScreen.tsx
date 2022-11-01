@@ -53,6 +53,7 @@ export default function RegisterScreen({ navigation }: Props) {
           value={email}
           onChange={setEmail}
           placeholder="E-post adress"
+          type="email"
           style={{
             marginTop: 40,
           }}
