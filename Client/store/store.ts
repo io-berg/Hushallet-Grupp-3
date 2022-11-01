@@ -13,6 +13,11 @@ export const store = configureStore({
     auth: authSlice,
     settings: settingsSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: { warnAfter: 256 },
+      serializableCheck: { warnAfter: 256 },
+    }),
 });
 
 store.subscribe(() => {
