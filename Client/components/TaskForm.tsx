@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Button } from "react-native-paper";
 import * as Yup from "yup";
 import { Task } from "../utils/type";
 import DualBottomButton from "./DualBottomButton";
