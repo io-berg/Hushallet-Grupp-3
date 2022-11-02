@@ -44,6 +44,7 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 - node.js: https://nodejs.org/en/download/
 - npm: https://www.npmjs.com/get-npm
 - dotnet SDK: https://dotnet.microsoft.com/download
+- Android Emulator: https://developer.android.com/studio/
 
 ### Installation
 
@@ -82,9 +83,6 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
    npm start
    ```
 4. Öppna appen genom en Android emulator
-   ```sh
-   npm run android
-   ```
 
 # KRAVLISTA 33/40
 
