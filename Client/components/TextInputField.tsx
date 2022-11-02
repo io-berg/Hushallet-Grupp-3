@@ -4,7 +4,7 @@ import { TextInput, useTheme } from "react-native-paper";
 interface TextInputFieldProps {
   value: string;
   onChange: (value: string) => void;
-  type?: "regular" | "password" | "multiline";
+  type?: "regular" | "password" | "multiline" | "email";
   placeholder: string;
   error?: string;
   style?: object;
@@ -29,6 +29,7 @@ const TextInputField = ({
       secureTextEntry={type === "password"}
       multiline={type === "multiline"}
       numberOfLines={type === "multiline" ? 4 : 1}
+      keyboardType={type === "email" ? "email-address" : "default"}
       style={{
         ...style,
         backgroundColor: theme.colors.surface,

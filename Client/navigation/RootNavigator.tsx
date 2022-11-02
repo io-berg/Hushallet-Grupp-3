@@ -1,6 +1,7 @@
 import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import { useTheme } from "react-native-paper";
 import { CustomNavigationBar } from "../components/CustomNavigationBar";
 import CreateTaskScreen from "../screens/CreateTaskScreen";
 import DetailScreen from "../screens/DetailScreen";
@@ -34,6 +35,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
   const auth = useAppSelector((state) => state.auth);
+  const theme = useTheme();
 
   const isAuthenticated = auth.expirationDate
     ? new Date(auth.expirationDate).getTime() > new Date().getTime() && !!auth.token
