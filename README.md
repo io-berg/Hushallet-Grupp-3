@@ -194,3 +194,8 @@ En app för att samla och visa statistik över sysslorna i ett hushåll.
 
 - Meny godkänd
 - Fortsätt att implementera funktionalitet
+
+#### v3: 
+
+- statistik godkännd
+- Fortsätt att implementera funktionalitet
