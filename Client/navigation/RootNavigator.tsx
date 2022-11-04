@@ -35,7 +35,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
   const auth = useAppSelector((state) => state.auth);
-  const theme = useTheme();
 
   const isAuthenticated = auth.expirationDate
     ? new Date(auth.expirationDate).getTime() > new Date().getTime() && !!auth.token
