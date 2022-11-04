@@ -97,7 +97,7 @@ export default function StartScreen({ navigation }: Props) {
         {fetchInfo && (
           <View
             style={{
-              backgroundColor: "white",
+              backgroundColor: theme.colors.surface,
               padding: 10,
               borderRadius: 10,
               marginVertical: 20,

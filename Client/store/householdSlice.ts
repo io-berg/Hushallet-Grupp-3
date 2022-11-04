@@ -376,6 +376,7 @@ const householdSlice = createSlice({
     builder.addCase(fetchMyHouseholds.fulfilled, (state, action) => {
       state.loading = false;
       state.households = action.payload;
+      state.fetchInfo = null;
     });
     builder.addCase(sendApplication.pending, (state) => {
       state.loading = true;
