@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 import TaskForm from "../components/TaskForm";
 import { RootStackParamList } from "../navigation/RootNavigator";
