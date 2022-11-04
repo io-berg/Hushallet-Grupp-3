@@ -37,12 +37,5 @@ const EditTaskScreen = ({ navigation, route }: Props) => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 15,
-    alignItems: "center",
-    height: "100%",
-  },
-});
 
 export default EditTaskScreen;
