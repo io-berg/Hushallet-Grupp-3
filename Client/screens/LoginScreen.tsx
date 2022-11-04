@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
+// TODO: Fix validation
+
 export default function LoginScreen({ navigation }: Props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

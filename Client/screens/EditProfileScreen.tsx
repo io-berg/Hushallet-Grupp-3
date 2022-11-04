@@ -15,6 +15,8 @@ import { Avatar as avatar } from "../utils/type";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditProfile">;
 
+// TODO: Fix validation
+
 export default function EditProfileScreen({ navigation }: Props) {
   const [profileName, setProfileName] = React.useState("");
   const [profileAvatar, setProfileAvatar] = React.useState<avatar | null>(null);
